@@ -5,23 +5,40 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.startach.yedidim.SplashScreenActivity"
-    android:background="@drawable/background">
+    android:background="#0f415e">
+
+    <ImageView
+        android:id="@+id/colorful_stripe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/colorful_stripe"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="310dp"
+        android:layout_height="84dp"
+        app:srcCompat="@drawable/logo"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.19" />
 
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyle"
-        android:layout_width="118dp"
-        android:layout_height="117dp"
-        android:layout_marginRight="8dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintVertical_bias="0.854"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
+        app:layout_constraintVertical_bias="0.854" />
 
 </android.support.constraint.ConstraintLayout>
