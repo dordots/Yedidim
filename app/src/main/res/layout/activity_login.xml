@@ -5,32 +5,48 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.startach.yedidim.LoginActivity"
-    android:background="#0f415e">
-
-    <ImageView
-        android:id="@+id/colorful_stripe"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/colorful_stripe"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toTopOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+    android:background="#e2e2e2">
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="339dp"
+        android:id="@+id/welcome"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/first_login_message"
-        android:textSize="20dp"
-        android:textColor="#fff"
+        android:text="@string/welcome"
+        android:textSize="30sp"
+        android:textColor="#000"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/firstLogin"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_bias="0.644"
-        app:layout_constraintVertical_bias="0.068" />
+        android:layout_margin="20dp"
+        app:layout_constraintVertical_bias="0.033" />
+
+    <TextView
+        android:id="@+id/firstLogin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/first_login_message"
+        android:textSize="20sp"
+        android:textColor="#000"
+        app:layout_constraintTop_toBottomOf="@+id/welcome"
+        app:layout_constraintBottom_toBottomOf="@+id/phoneField"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_margin="20dp"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/phoneField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/phone_number"
+        android:layout_margin="20dp"
+        android:inputType="phone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/firstLogin"
+        app:layout_constraintVertical_bias="0.03"/>
+
 
 </android.support.constraint.ConstraintLayout>

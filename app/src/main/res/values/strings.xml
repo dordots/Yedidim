@@ -1,7 +1,13 @@
 <resources>
-    <string name="app_name">Yedidim</string>
+    <string name="app_name">ידידים</string>
     <string name="title_activity_splash_screen">SplashScreenActivity</string>
+    <string name="first_login">התחברות ראשונית</string>
+    <string name="welcome">ברוכים הבאים!</string>
+    <string name="first_login_message">
+        לצורך זיהוי ואישור המערכת תשלח לך הודעה אשר תכיל קוד בעל 6 ספרות. אנא הכנס את מספר הפלאפון שלך וודא כי הוא תקין על מנת לקבל את הקוד ולהיכנס למערכת.
+    </string>
     <string name="first_code_title">אימות קוד ראשוני</string>
     <string name="first_code_hint">הכנס קוד ראשוני</string>
     <string name="first_code_check">בצע אימות</string>
+    <string name="phone_number">מס\' פלאפון</string>
 </resources>
