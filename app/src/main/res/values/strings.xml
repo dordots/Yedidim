@@ -10,4 +10,5 @@
     <string name="first_code_hint">הכנס קוד ראשוני</string>
     <string name="first_code_check">בצע אימות</string>
     <string name="phone_number">מס\' פלאפון</string>
+    <string name="verify_code">אישור קוד</string>
 </resources>

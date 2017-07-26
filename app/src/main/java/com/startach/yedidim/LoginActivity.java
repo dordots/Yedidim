@@ -63,6 +63,10 @@ public class LoginActivity extends AppCompatActivity {
             securityCode.append(randomNumber.nextInt(10));
 
         // TODO: Search a service for sending sms.
+        Toast.makeText(this, securityCode, Toast.LENGTH_LONG).show();
+        Intent verification = new Intent(this, VerifyCodeActivity.class);
+        verification.putExtra("securityCode", securityCode.toString());
+        startActivity(verification);
     }
 
     private boolean checkIfFirstLogin() {
