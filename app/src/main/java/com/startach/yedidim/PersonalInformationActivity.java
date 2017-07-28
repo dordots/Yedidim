@@ -262,7 +262,7 @@ public class PersonalInformationActivity extends AppCompatActivity {
 
     private boolean checkIDValidation() {
         Pattern idPattern = Pattern.compile("(\\d{9})");
-        return idPattern.matcher(_phoneNumber.getText()).matches();
+        return idPattern.matcher(_idNumber.getText()).matches();
     }
 
     private boolean checkMailValidation() {
@@ -289,8 +289,7 @@ public class PersonalInformationActivity extends AppCompatActivity {
     }
 
     private boolean checkApartmentNumberValidation() {
-        return _apartmentNumber.getText().length() > 0 &&
-                Integer.parseInt(_apartmentNumber.getText().toString()) > 0;
+        return _apartmentNumber.getText().length() > 0;
     }
 
     private boolean checkStreetValidation() {
