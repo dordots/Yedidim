@@ -76,7 +76,7 @@ public class VerifyCodeActivity extends AppCompatActivity {
     public void validateCode(String code) {
         if (mVerifyCode.getText().toString().equals(code)) {
             Toast.makeText(getApplicationContext(), "הקוד הוזן בהצלחה", Toast.LENGTH_SHORT).show();
-            Intent homeIntent = new Intent(getApplicationContext(), SplashScreenActivity.class);
+            Intent homeIntent = new Intent(getApplicationContext(), PersonalInformationActivity.class);
             startActivity(homeIntent);
         } else {
             Toast.makeText(getApplicationContext(), "הקוד שגוי", Toast.LENGTH_SHORT).show();

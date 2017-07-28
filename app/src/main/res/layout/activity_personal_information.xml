@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp">
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:useDefaultMargins="true"
+            android:columnCount="2">
+
+            <TextView
+                android:id="@+id/personalInformationTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnSpan="2"
+                android:layout_gravity="fill"
+                android:textSize="25sp"
+                android:gravity="center"
+                android:text="@string/personal_information_title" />
+
+            <TextView
+            android:id="@+id/fullNameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="1"
+            android:layout_gravity="fill"
+            android:gravity="center"
+            android:text="@string/full_name_text" />
+
+            <EditText
+                android:id="@+id/fullNameInput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:layout_columnSpan="1"
+                android:layout_gravity="fill"
+                android:hint="@string/full_name_input" />
+
+            <TextView
+                android:id="@+id/activeNumberText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnSpan="1"
+                android:layout_gravity="fill"
+                android:gravity="center"
+                android:text="@string/active_number_text" />
+
+            <EditText
+                android:id="@+id/activeNumberInput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:layout_columnSpan="1"
+                android:focusable="false"
+                android:layout_gravity="fill" />
+
+            <TextView
+                android:id="@+id/IDText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnSpan="1"
+                android:layout_gravity="fill"
+                android:gravity="center"
+                android:text="@string/id_text" />
+
+            <EditText
+                android:id="@+id/IDInput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="number"
+                android:layout_columnSpan="1"
+                android:layout_gravity="fill"
+                android:hint="@string/id_input" />
+
+            <TextView
+                android:id="@+id/birthdateText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnSpan="1"
+                android:layout_gravity="fill"
+                android:gravity="center"
+                android:text="@string/birthdate_text" />
+
+            <EditText
+                android:id="@+id/birthdateInput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:ems="10"
+                android:layout_columnSpan="1"
+                android:layout_gravity="fill" />
+
+            <TextView
+            android:id="@+id/professionText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="1"
+            android:layout_gravity="fill"
+            android:gravity="center"
+            android:text="@string/profession_text" />
+
+            <EditText
+                android:id="@+id/professionInput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="text"
+                android:layout_columnSpan="1"
+                android:layout_gravity="fill"
+                android:hint="@string/profession_input" />
+
+            <TextView
+                android:id="@+id/qualificationText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnSpan="1"
+                android:layout_gravity="fill"
+                android:gravity="center"
+                android:text="@string/qualification_text" />
+
+            <EditText
+                android:id="@+id/qualificationInput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:ems="10"
+                android:layout_columnSpan="1"
+                android:layout_gravity="fill"
+                android:hint="@string/qualification_input" />
+
+            <TextView
+                android:id="@+id/cityText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnSpan="1"
+                android:layout_gravity="fill"
+                android:gravity="center"
+                android:text="@string/city_text" />
+
+            <EditText
+                android:id="@+id/cityInput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="text"
+                android:layout_columnSpan="1"
+                android:layout_gravity="fill"
+                android:hint="@string/city_input" />
+
+            <TextView
+                android:id="@+id/neighborhoodText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnSpan="1"
+                android:layout_gravity="fill"
+                android:gravity="center"
+                android:text="@string/neighborhood_text" />
+
+            <EditText
+                android:id="@+id/neighborhoodInput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="text"
+                android:layout_columnSpan="1"
+                android:layout_gravity="fill"
+                android:hint="@string/neighborhood_input" />
+
+            <TextView
+                android:id="@+id/streetText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnSpan="1"
+                android:layout_gravity="fill"
+                android:gravity="center"
+                android:text="@string/street_text" />
+
+            <EditText
+                android:id="@+id/streetInput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="text"
+                android:layout_columnSpan="1"
+                android:layout_gravity="fill"
+                android:hint="@string/street_input" />
+
+            <TextView
+                android:id="@+id/buildingText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnSpan="1"
+                android:layout_gravity="fill"
+                android:gravity="center"
+                android:text="@string/building_text" />
+
+            <EditText
+                android:id="@+id/buildingInput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="text"
+                android:layout_columnSpan="1"
+                android:layout_gravity="fill"
+                android:hint="@string/building_input" />
+
+            <TextView
+            android:id="@+id/phoneText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="1"
+            android:layout_gravity="fill"
+            android:gravity="center"
+            android:text="@string/phone_text" />
+
+            <EditText
+                android:id="@+id/phoneInput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="phone"
+                android:layout_columnSpan="1"
+                android:layout_gravity="fill"
+                android:hint="@string/phone_input" />
+
+            <TextView
+                android:id="@+id/mailText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnSpan="1"
+                android:layout_gravity="fill"
+                android:gravity="center"
+                android:text="@string/mail_text" />
+
+            <EditText
+                android:id="@+id/mailInput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textEmailAddress"
+                android:layout_columnSpan="1"
+                android:layout_gravity="fill"
+                android:hint="@string/mail_input" />
+
+            <TextView
+                android:id="@+id/carTypeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnSpan="1"
+                android:layout_gravity="fill"
+                android:gravity="center"
+                android:text="@string/car_type_text" />
+
+            <EditText
+                android:id="@+id/carTypeInput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:ems="10"
+                android:layout_columnSpan="1"
+                android:layout_gravity="fill"
+                android:hint="@string/car_type_input" />
+
+            <TextView
+                android:id="@+id/carCompanyText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnSpan="1"
+                android:layout_gravity="fill"
+                android:gravity="center"
+                android:text="@string/car_company_text" />
+
+            <EditText
+                android:id="@+id/carCompanyInput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="text"
+                android:layout_columnSpan="1"
+                android:layout_gravity="fill"
+                android:hint="@string/car_company_input" />
+
+            <TextView
+                android:id="@+id/carModelText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnSpan="1"
+                android:layout_gravity="fill"
+                android:gravity="center"
+                android:text="@string/car_model_text" />
+
+            <EditText
+                android:id="@+id/carModelInput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="text"
+                android:layout_columnSpan="1"
+                android:layout_gravity="fill"
+                android:hint="@string/car_model_input" />
+
+            <TextView
+                android:id="@+id/LZText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnSpan="1"
+                android:layout_gravity="fill"
+                android:gravity="center"
+                android:text="ל.ז" />
+
+            <EditText
+                android:id="@+id/LZInput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="text"
+                android:layout_columnSpan="1"
+                android:layout_gravity="fill"
+                android:hint="הכנס ל.ז" />
+
+            <TextView
+                android:id="@+id/availableEquipmentText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnSpan="1"
+                android:layout_gravity="fill"
+                android:gravity="center"
+                android:text="@string/available_equipment_text" />
+
+            <EditText
+                android:id="@+id/availableEquipmentInput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:ems="10"
+                android:inputType="text"
+                android:layout_columnSpan="1"
+                android:layout_gravity="fill"
+                android:hint="@string/available_equipment_input" />
+
+            <Button
+                android:id="@+id/sendPersonalInformationData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnSpan="2"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:layout_gravity="fill"
+                android:text="@string/save_personal_information_data" />
+
+        </GridLayout>
+    </ScrollView>
+</android.support.constraint.ConstraintLayout>

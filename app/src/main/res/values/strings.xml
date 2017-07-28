@@ -11,4 +11,40 @@
     <string name="first_code_check">בצע אימות</string>
     <string name="phone_number">מס\' פלאפון</string>
     <string name="verify_code">אישור קוד</string>
+
+<!--this belongs to the personal information activity-->
+    <string name="personal_information_title">טופס מילוי פרטים אישיים</string>
+    <string name="full_name_text">שם מלא</string>
+    <string name="full_name_input">הכנס שם מלא</string>
+    <string name="active_number_text">מספר כונן</string>
+    <string name="active_number_input">הכנס מספר כונן</string>
+    <string name="id_text">תעודת זהות</string>
+    <string name="id_input">הכנס תעודת זהות</string>
+    <string name="birthdate_text">תאריך לידה</string>
+    <string name="birthdate_input">הכנס תאריך לידה</string>
+    <string name="profession_text">מקצוע</string>
+    <string name="profession_input">הכנס מקצוע</string>
+    <string name="qualification_text">הכשרה</string>
+    <string name="qualification_input">הכנס הכשרה</string>
+    <string name="city_text">עיר</string>
+    <string name="city_input">הכנס עיר</string>
+    <string name="neighborhood_text">שכונה</string>
+    <string name="neighborhood_input">הכנס שכונה</string>
+    <string name="street_text">רחוב</string>
+    <string name="street_input">הכנס רחוב + מס\' רחוב</string>
+    <string name="building_text">מס\' דירה</string>
+    <string name="building_input">הכנס מס\' דירה</string>
+    <string name="phone_text">פלאפון</string>
+    <string name="phone_input">הכנס פלאפון</string>
+    <string name="mail_text">אי-מייל</string>
+    <string name="mail_input">הכנס אי-מייל</string>
+    <string name="car_type_text">סוג רכב</string>
+    <string name="car_type_input">הכנס סוג רכב</string>
+    <string name="car_company_text">חברת רכב</string>
+    <string name="car_company_input">הכנס חברת רכב</string>
+    <string name="car_model_text">דגם רכב</string>
+    <string name="car_model_input">הכנס דגם רכב</string>
+    <string name="available_equipment_text">ציוד שברשותך</string>
+    <string name="available_equipment_input">הכנס ציוד שברשותך</string>
+    <string name="save_personal_information_data">שמירת נתונים</string>
 </resources>
