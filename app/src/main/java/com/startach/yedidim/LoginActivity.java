@@ -1,16 +1,15 @@
 package com.startach.yedidim;
 
-import android.app.PendingIntent;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.telephony.SmsManager;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.startach.yedidim.PlivoService.PhoneMessageTask;
 
 import java.security.SecureRandom;
 import java.util.regex.Pattern;
@@ -62,8 +61,8 @@ public class LoginActivity extends AppCompatActivity {
         for (int index = 0; index < 6; index++)
             securityCode.append(randomNumber.nextInt(10));
 
-        // TODO: Search a service for sending sms.
-        Toast.makeText(this, securityCode, Toast.LENGTH_LONG).show();
+        new PhoneMessageTask().execute(phoneNumber, "קוד האימות שלך הוא " + securityCode.toString());
+
         Intent verification = new Intent(this, VerifyCodeActivity.class);
         verification.putExtra("securityCode", securityCode.toString());
         startActivity(verification);
