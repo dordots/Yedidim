@@ -18,21 +18,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.startach.yedidim.PlivoService.PhoneMessageTask;
+
 import java.security.SecureRandom;
 import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText m_PhoneField;
-    private int MY_PERMISSIONS_REQUEST_SMS_RECEIVE = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        ActivityCompat.requestPermissions(this,
-                                          new String[]{Manifest.permission.RECEIVE_SMS},
-                                          MY_PERMISSIONS_REQUEST_SMS_RECEIVE);
 
         m_PhoneField = (EditText) findViewById(R.id.phoneField);
 
@@ -68,20 +65,6 @@ public class LoginActivity extends AppCompatActivity {
         for (int index = 0; index < 6; index++)
             securityCode.append(randomNumber.nextInt(10));
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)
-                != PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(this, "Message DIDN'T sent!", Toast.LENGTH_SHORT).show();
-            Intent splashScreen = new Intent(this, SplashScreenActivity.class);
-            startActivity(splashScreen);
-        } else {
-            SmsManager smsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage(phoneNumber, null, securityCode.toString(), null, null);
-            Toast.makeText(this, "Message sent!", Toast.LENGTH_SHORT).show();
-            // TODO: Search a service for sending sms.
-            Toast.makeText(this, securityCode, Toast.LENGTH_LONG).show();
-            Intent verification = new Intent(this, VerifyCodeActivity.class);
-            verification.putExtra("securityCode", securityCode.toString());
-            startActivity(verification);
-        }
+        new PhoneMessageTask().execute(phoneNumber, "קוד האימות שלך הוא " + securityCode + ".");
     }
 }

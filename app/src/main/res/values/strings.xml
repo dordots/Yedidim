@@ -13,7 +13,7 @@
     <string name="phone_number">מס\' פלאפון</string>
     <string name="verify_code">אישור קוד</string>
 
-<!--this belongs to the personal information activity-->
+    <!--this belongs to the personal information activity-->
     <string name="personal_information_title">טופס מילוי פרטים אישיים</string>
     <string name="full_name_text">שם מלא</string>
     <string name="full_name_input">הכנס שם מלא</string>
@@ -54,4 +54,13 @@
     <string name="first_page_variable">isFirstTime</string>
     <string name="main_page_id">main_page_id</string>
     <string name="personal_information_id">personal_information_id</string>
+    <string name="title_activity_main_page">מסך ראשי</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

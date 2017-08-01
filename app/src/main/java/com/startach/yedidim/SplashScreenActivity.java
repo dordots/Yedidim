@@ -20,7 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 public class SplashScreenActivity extends AppCompatActivity {
-    private CountDownTimer m_SplashTimer;
+    private CountDownTimer m_SplashTimer = null;
     private ImageView m_Logo;
 
     @Override
@@ -31,15 +31,22 @@ public class SplashScreenActivity extends AppCompatActivity {
         m_Logo = (ImageView) findViewById(R.id.logo);
         m_Logo.startAnimation(AnimationUtils.loadAnimation(this, R.anim.blink));
 
-        m_SplashTimer = new CountDownTimer(2500, 2500) {
-            public void onTick(long milis) {}
-            public void onFinish() { moveToNextScreen(); }
-        };
+        if (m_SplashTimer == null) {
+            m_SplashTimer = new CountDownTimer(2500, 100) {
+                public void onTick(long milis) {
+                }
+
+                public void onFinish() {
+                    moveToNextScreen();
+                }
+            };
+        }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+
         m_SplashTimer.start();
     }
 
@@ -47,7 +54,6 @@ public class SplashScreenActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
 
-        Log.d("Test", "Pause");
         m_SplashTimer.cancel();
     }
 
