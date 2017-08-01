@@ -2,10 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.startach.yedidim">
 
-    <uses-permission android:name="android.permission.WRITE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
-    <uses-permission android:name="android.permission.BROADCAST_SMS" />
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="19"/>
 
     <application
         android:allowBackup="true"
@@ -31,11 +34,8 @@
         <activity android:name=".VerifyCodeActivity"
             android:label="@string/verify_code"></activity>
 
-        <receiver android:name=".SmsListener" android:exported="true" android:permission="android.permission.BROADCAST_SMS" >
-            <intent-filter android:priority="999" >
-                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
-            </intent-filter>
-        </receiver>
+        <activity android:name=".MainPageActivity"
+            android:label="@string/main_page"></activity>
 
     </application>
 

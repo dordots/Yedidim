@@ -2,6 +2,7 @@
     <string name="app_name">ידידים</string>
     <string name="title_activity_splash_screen">SplashScreenActivity</string>
     <string name="first_login">התחברות ראשונית</string>
+    <string name="main_page">עמוד ראשי</string>
     <string name="welcome">ברוכים הבאים!</string>
     <string name="first_login_message">
         לצורך זיהוי ואישור המערכת תשלח לך הודעה אשר תכיל קוד בעל 6 ספרות. אנא הכנס את מספר הפלאפון שלך וודא כי הוא תקין על מנת לקבל את הקוד ולהיכנס למערכת.
@@ -47,4 +48,10 @@
     <string name="available_equipment_text">ציוד שברשותך</string>
     <string name="available_equipment_input">הכנס ציוד שברשותך</string>
     <string name="save_personal_information_data">שמירת נתונים</string>
+
+
+    <string name="preference_file_key">com.example.yedidim.preferenceFile</string>
+    <string name="first_page_variable">isFirstTime</string>
+    <string name="main_page_id">main_page_id</string>
+    <string name="personal_information_id">personal_information_id</string>
 </resources>

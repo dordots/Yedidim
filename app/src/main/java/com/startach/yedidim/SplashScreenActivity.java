@@ -1,6 +1,8 @@
 package com.startach.yedidim;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.Image;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -29,20 +31,15 @@ public class SplashScreenActivity extends AppCompatActivity {
         m_Logo = (ImageView) findViewById(R.id.logo);
         m_Logo.startAnimation(AnimationUtils.loadAnimation(this, R.anim.blink));
 
-        m_SplashTimer = new CountDownTimer(5000, 5000) {
-            public void onTick(long milis) {
-            }
-
-            public void onFinish() {
-                enterLoginScreen();
-            }
+        m_SplashTimer = new CountDownTimer(2500, 2500) {
+            public void onTick(long milis) {}
+            public void onFinish() { moveToNextScreen(); }
         };
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
         m_SplashTimer.start();
     }
 
@@ -54,8 +51,22 @@ public class SplashScreenActivity extends AppCompatActivity {
         m_SplashTimer.cancel();
     }
 
-    private void enterLoginScreen() {
-        Intent loginIntent = new Intent(this, LoginActivity.class);
-        startActivity(loginIntent);
+    private void moveToNextScreen() {
+        if (checkIfFirstLogin().equals(String.valueOf(R.string.personal_information_id))) {
+            Intent personalInformation = new Intent(getApplicationContext(), PersonalInformationActivity.class);
+            startActivity(personalInformation);
+        } else if(checkIfFirstLogin().equals(String.valueOf(R.string.main_page_id))) {
+            Intent mainPage = new Intent(getApplicationContext(), MainPageActivity.class);
+            startActivity(mainPage);
+        }else {
+            Intent loginIntent = new Intent(this, LoginActivity.class);
+            startActivity(loginIntent);
+        }
+    }
+
+    private String checkIfFirstLogin() {
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        return sharedPref.getString(String.valueOf(R.string.first_page_variable), "true");
     }
 }

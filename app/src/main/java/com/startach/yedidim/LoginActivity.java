@@ -1,8 +1,14 @@
 package com.startach.yedidim;
 
+import android.Manifest;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
@@ -17,19 +23,20 @@ import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText m_PhoneField;
+    private int MY_PERMISSIONS_REQUEST_SMS_RECEIVE = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        ActivityCompat.requestPermissions(this,
+                                          new String[]{Manifest.permission.RECEIVE_SMS},
+                                          MY_PERMISSIONS_REQUEST_SMS_RECEIVE);
+
         m_PhoneField = (EditText) findViewById(R.id.phoneField);
 
-        if (!checkIfFirstLogin()) {
-            // TODO: Move to the user home screen
-        } else {
-            proccessUserInput();
-        }
+        proccessUserInput();
     }
 
     private void proccessUserInput() {
@@ -39,7 +46,6 @@ public class LoginActivity extends AppCompatActivity {
                 // Check if the user pressed 'done'
                 if (actionId == EditorInfo.IME_ACTION_DONE)
                     validatePhoneNumber();
-
                 return false;
             }
         });
@@ -62,14 +68,20 @@ public class LoginActivity extends AppCompatActivity {
         for (int index = 0; index < 6; index++)
             securityCode.append(randomNumber.nextInt(10));
 
-        // TODO: Search a service for sending sms.
-        Toast.makeText(this, securityCode, Toast.LENGTH_LONG).show();
-        Intent verification = new Intent(this, VerifyCodeActivity.class);
-        verification.putExtra("securityCode", securityCode.toString());
-        startActivity(verification);
-    }
-
-    private boolean checkIfFirstLogin() {
-        return true;
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)
+                != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(this, "Message DIDN'T sent!", Toast.LENGTH_SHORT).show();
+            Intent splashScreen = new Intent(this, SplashScreenActivity.class);
+            startActivity(splashScreen);
+        } else {
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(phoneNumber, null, securityCode.toString(), null, null);
+            Toast.makeText(this, "Message sent!", Toast.LENGTH_SHORT).show();
+            // TODO: Search a service for sending sms.
+            Toast.makeText(this, securityCode, Toast.LENGTH_LONG).show();
+            Intent verification = new Intent(this, VerifyCodeActivity.class);
+            verification.putExtra("securityCode", securityCode.toString());
+            startActivity(verification);
+        }
     }
 }

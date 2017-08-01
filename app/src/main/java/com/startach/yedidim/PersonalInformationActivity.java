@@ -3,8 +3,10 @@ package com.startach.yedidim;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
@@ -88,19 +90,28 @@ public class PersonalInformationActivity extends AppCompatActivity {
     }
 
     private void initializeSaveInformationButton() {
-        final Intent homePageIntent = new Intent(getApplicationContext(), SplashScreenActivity.class);
+        final Intent mainPage = new Intent(getApplicationContext(), MainPageActivity.class);
         _saveInformation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (checkFormValidation())
                 {
+                    saveCommittedFirstLogin();
                     Toast.makeText(getApplicationContext(), "הפרטים נשמרו בהצלחה", Toast.LENGTH_SHORT).show();
-                    startActivity(homePageIntent);
+                    startActivity(mainPage);
                 } else {
                     Toast.makeText(getApplicationContext(), "אחד או יותר מהפרטים שהזנת אינו תקין", Toast.LENGTH_LONG).show();
                 }
             }
         });
+    }
+
+    private void saveCommittedFirstLogin() {
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(String.valueOf(R.string.first_page_variable), String.valueOf(R.string.main_page_id));
+        editor.commit();
     }
 
     private void initializeCarType() {
