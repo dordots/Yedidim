@@ -54,13 +54,14 @@
     <string name="first_page_variable">isFirstTime</string>
     <string name="main_page_id">main_page_id</string>
     <string name="personal_information_id">personal_information_id</string>
-    <string name="title_activity_main_page">מסך ראשי</string>
+    <string name="title_nav_main_page">מסך ראשי</string>
+    <string name="title_nav_personal_information">פרטים אישיים</string>
+    <string name="title_nav_settings">הגדרות</string>
+    <string name="title_nav_about_us">אודותינו</string>
+    <string name="title_nav_dispatchers">מוקדנים</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

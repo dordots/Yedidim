@@ -5,24 +5,24 @@
         <item
             android:id="@+id/nav_main_screen"
             android:icon="@drawable/ic_action_home"
-            android:title="מסך ראשי"
+            android:title="@string/title_nav_main_page"
             android:checked="true"/>
         <item
             android:id="@+id/nav_personal_info"
             android:icon="@drawable/ic_action_user"
-            android:title="פרטים אישיים" />
+            android:title="@string/title_nav_personal_information" />
         <item
             android:id="@+id/nav_about_us"
             android:icon="@drawable/ic_info"
-            android:title="אודותינו" />
+            android:title="@string/title_nav_about_us" />
         <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_settings"
-            android:title="הגדרות" />
+            android:title="@string/title_nav_settings" />
         <item
-            android:id="@+id/nav_mokdanim"
+            android:id="@+id/nav_dispatchers"
             android:icon="@drawable/ic_call"
-            android:title="מוקדנים" />
+            android:title="@string/title_nav_dispatchers" />
     </group>
 
 </menu>
