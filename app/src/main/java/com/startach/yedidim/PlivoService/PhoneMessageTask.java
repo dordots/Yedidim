@@ -49,12 +49,14 @@ public class PhoneMessageTask extends AsyncTask<String, Void, Void> {
             wr.flush();
             wr.close();
 
-            java.util.Scanner s = new java.util.Scanner(client.getErrorStream()).useDelimiter("\\A");
+            java.util.Scanner s = new java.util.Scanner(client.getInputStream()).useDelimiter("\\A");
             Log.d("sms", s.hasNext() ? s.next() : "");
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

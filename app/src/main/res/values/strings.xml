@@ -59,6 +59,7 @@
     <string name="title_nav_settings">הגדרות</string>
     <string name="title_nav_about_us">אודותינו</string>
     <string name="title_nav_dispatchers">מוקדנים</string>
+    <string name="title_nav_developers">על המפתחים</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

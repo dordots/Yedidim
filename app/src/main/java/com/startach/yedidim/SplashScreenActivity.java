@@ -71,8 +71,6 @@ public class SplashScreenActivity extends AppCompatActivity {
     }
 
     private String checkIfFirstLogin() {
-        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(
-                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        return sharedPref.getString(String.valueOf(R.string.first_page_variable), "true");
+        return "true";
     }
 }

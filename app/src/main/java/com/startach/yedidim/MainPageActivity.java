@@ -19,6 +19,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.startach.yedidim.MainPageFragments.AboutUsFragment;
+import com.startach.yedidim.MainPageFragments.DevelopersFragment;
 import com.startach.yedidim.MainPageFragments.DispatchersFragment;
 import com.startach.yedidim.MainPageFragments.MainPageFragment;
 import com.startach.yedidim.MainPageFragments.PersonalInfoFragment;
@@ -26,11 +27,13 @@ import com.startach.yedidim.MainPageFragments.SettingsFragment;
 
 public class MainPageActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    // TODO: Refactor to Factory
     private Fragment personalFragment = new PersonalInfoFragment();
-    private Fragment mainFragment = new MainPageFragment();
+    private Fragment mainFragment = null;
     private Fragment settingsFragment = new SettingsFragment();
     private Fragment aboutUsFragment = new AboutUsFragment();
     private Fragment dispatcherFragment = new DispatchersFragment();
+    private Fragment developersFragment = new DevelopersFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +50,10 @@ public class MainPageActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        startFragment(mainFragment);
+        if (mainFragment == null) {
+            mainFragment = new MainPageFragment();
+            startFragment(mainFragment);
+        }
     }
 
     @Override
@@ -82,6 +87,9 @@ public class MainPageActivity extends AppCompatActivity
         } else if (id == R.id.nav_settings) {
             setTitle(R.string.title_nav_settings);
             startFragment(settingsFragment);
+        } else if (id == R.id.nav_developers) {
+            setTitle(R.string.title_nav_developers);
+            startFragment(developersFragment);
         } else if (id == R.id.nav_about_us) {
             setTitle(R.string.title_nav_about_us);
             startFragment(aboutUsFragment);

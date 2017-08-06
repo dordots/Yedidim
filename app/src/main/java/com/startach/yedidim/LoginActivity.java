@@ -66,5 +66,9 @@ public class LoginActivity extends AppCompatActivity {
             securityCode.append(randomNumber.nextInt(10));
 
         new PhoneMessageTask().execute(phoneNumber, "קוד האימות שלך הוא " + securityCode + ".");
+
+        Intent verificationIntent = new Intent(this, VerifyCodeActivity.class);
+        verificationIntent.putExtra("securityCode", securityCode.toString());
+        startActivity(verificationIntent);
     }
 }
