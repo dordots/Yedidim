@@ -37,7 +37,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                 }
 
                 public void onFinish() {
-                    moveToNextScreen();
+                    navigateUserToFirstPage();
                 }
             };
         }
@@ -57,20 +57,27 @@ public class SplashScreenActivity extends AppCompatActivity {
         m_SplashTimer.cancel();
     }
 
-    private void moveToNextScreen() {
-        if (checkIfFirstLogin().equals(String.valueOf(R.string.personal_information_id))) {
+    private void navigateUserToFirstPage() {
+        // Todo: check if the user has saved id in the shared preferences file.
+        // if it does - navigate him to his first page.
+        // else - navigate him to the login page.
+
+        // for now - navigate the user by the data in the shared preferences file.
+        if (getUserFirstPage().equals(String.valueOf(R.string.personal_information_id))) {
             Intent personalInformation = new Intent(getApplicationContext(), PersonalInformationActivity.class);
             startActivity(personalInformation);
-        } else if(checkIfFirstLogin().equals(String.valueOf(R.string.main_page_id))) {
+        } else if(getUserFirstPage().equals(String.valueOf(R.string.main_page_id))) {
             Intent mainPage = new Intent(getApplicationContext(), MainPageActivity.class);
             startActivity(mainPage);
         }else {
             Intent loginIntent = new Intent(this, LoginActivity.class);
             startActivity(loginIntent);
         }
+        finish();
     }
 
-    private String checkIfFirstLogin() {
-        return "true";
+    private String getUserFirstPage() {
+        SharedPreferences prefs = this.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        return prefs.getString(String.valueOf(R.string.first_page_variable), "login_page");
     }
 }

@@ -67,8 +67,13 @@ public class LoginActivity extends AppCompatActivity {
 
         new PhoneMessageTask().execute(phoneNumber, "קוד האימות שלך הוא " + securityCode + ".");
 
+        // TODO: after paying the message service remove the toast
+        Toast.makeText(this, securityCode, Toast.LENGTH_LONG).show();
+
         Intent verificationIntent = new Intent(this, VerifyCodeActivity.class);
         verificationIntent.putExtra("securityCode", securityCode.toString());
+        verificationIntent.putExtra("phoneNumber", phoneNumber);
         startActivity(verificationIntent);
+        finish();
     }
 }

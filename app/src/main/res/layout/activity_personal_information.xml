@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -71,7 +70,8 @@
                 android:ems="10"
                 android:layout_columnSpan="1"
                 android:focusable="false"
-                android:layout_gravity="fill" />
+                android:layout_gravity="fill"
+                android:hint="@string/active_number_input"/>
 
             <TextView
                 android:id="@+id/IDText"
@@ -108,7 +108,8 @@
                 android:focusable="false"
                 android:ems="10"
                 android:layout_columnSpan="1"
-                android:layout_gravity="fill" />
+                android:layout_gravity="fill"
+                android:hint="@string/birthdate_input"/>
 
             <TextView
             android:id="@+id/professionText"
@@ -219,6 +220,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
+                android:inputType="number"
+                android:layout_columnSpan="1"
+                android:layout_gravity="fill"
+                android:hint="@string/building_input" />
+
+            <TextView
+                android:id="@+id/apartmentText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnSpan="1"
+                android:layout_gravity="fill"
+                android:gravity="center"
+                android:text="@string/building_text" />
+
+            <EditText
+                android:id="@+id/apartmentInput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
                 android:inputType="text"
                 android:layout_columnSpan="1"
                 android:layout_gravity="fill"
@@ -320,23 +340,23 @@
                 android:hint="@string/car_model_input" />
 
             <TextView
-                android:id="@+id/LZText"
+                android:id="@+id/carLicensePlateText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_columnSpan="1"
                 android:layout_gravity="fill"
                 android:gravity="center"
-                android:text="ל.ז" />
+                android:text="@string/car_license_plate_text" />
 
             <EditText
-                android:id="@+id/LZInput"
+                android:id="@+id/carLicensePlateInput"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="text"
                 android:layout_columnSpan="1"
                 android:layout_gravity="fill"
-                android:hint="הכנס ל.ז" />
+                android:hint="@string/car_license_plate_input" />
 
             <TextView
                 android:id="@+id/availableEquipmentText"

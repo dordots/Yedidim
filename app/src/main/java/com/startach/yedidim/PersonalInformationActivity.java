@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -20,7 +19,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Future;
 import java.util.regex.Pattern;
 
 /**
@@ -41,14 +43,17 @@ public class PersonalInformationActivity extends AppCompatActivity {
     EditText _city;
     EditText _neighborhood;
     EditText _street;
+    EditText _building;
     EditText _apartmentNumber;
     EditText _phoneNumber;
     EditText _mailAddress;
     EditText _carType;
     EditText _carCompany;
     EditText _carModel;
+    EditText _carLicensePlate;
     EditText _availableEquipment;
     Button _saveInformation;
+    EditText[] _fields;
     int _year, _month, _day;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -57,7 +62,13 @@ public class PersonalInformationActivity extends AppCompatActivity {
 
         findFormFields();
 
+        initializeFieldsList();
+
+        readValueFromSharedPreferences();
+
         initializeFormFields();
+
+        saveFieldsTextOnBlur();
     }
 
     private void findFormFields() {
@@ -70,12 +81,14 @@ public class PersonalInformationActivity extends AppCompatActivity {
         _city = (EditText) findViewById(R.id.cityInput);
         _neighborhood = (EditText) findViewById(R.id.neighborhoodInput);
         _street = (EditText) findViewById(R.id.streetInput);
-        _apartmentNumber = (EditText) findViewById(R.id.buildingInput);
+        _building = (EditText) findViewById(R.id.buildingInput);
+        _apartmentNumber = (EditText) findViewById(R.id.apartmentInput);
         _phoneNumber = (EditText) findViewById(R.id.phoneInput);
         _mailAddress = (EditText) findViewById(R.id.mailInput);
         _carType = (EditText) findViewById(R.id.carTypeInput);
         _carCompany = (EditText) findViewById(R.id.carCompanyInput);
         _carModel = (EditText) findViewById(R.id.carModelInput);
+        _carLicensePlate = (EditText) findViewById(R.id.carLicensePlateInput);
         _availableEquipment = (EditText) findViewById(R.id.availableEquipmentInput);
         _saveInformation = (Button) findViewById(R.id.sendPersonalInformationData);
     }
@@ -87,6 +100,53 @@ public class PersonalInformationActivity extends AppCompatActivity {
         initializeCarType();
         initializeAvailableEquipment();
         initializeSaveInformationButton();
+    }
+
+    private void initializeFieldsList() {
+        _fields = new EditText[] {
+                _fullName,
+                _activeNumber,
+                _idNumber,
+                _birthDate,
+                _profession,
+                _qualification,
+                _city,
+                _neighborhood,
+                _street,
+                _building,
+                _apartmentNumber,
+                _phoneNumber,
+                _mailAddress,
+                _carType,
+                _carCompany,
+                _carModel,
+                _carLicensePlate,
+                _availableEquipment
+        };
+    }
+
+    private void saveFieldsTextOnBlur() {
+        for (final EditText field: _fields) {
+            field.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if (!hasFocus){
+                        // TODO: save the input text in the shared preferences file
+                        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(getString(R.string.preference_file_personal_information_key), Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putString(String.valueOf(field.getId()), field.getText().toString());
+                        editor.commit();
+                    }
+                }
+            });
+        }
+    }
+
+    private void readValueFromSharedPreferences() {
+        for (EditText field :_fields) {
+            SharedPreferences prefs = this.getSharedPreferences(getString(R.string.preference_file_personal_information_key), Context.MODE_PRIVATE);
+            field.setText(prefs.getString(String.valueOf(field.getId()), ""));
+        }
     }
 
     private void initializeSaveInformationButton() {
@@ -189,7 +249,8 @@ public class PersonalInformationActivity extends AppCompatActivity {
                                                                      _month,
                                                                      _day);
             datePickerDialog.updateDate(_year, _month, _day);
-            datePickerDialog.setMessage("הכנס תאריך לידה");
+            datePickerDialog.setTitle("הכנס תאריך לידה");
+                datePickerDialog.setMessage("מתנדבים בעמותת ידידים צריכים להיות מעל גיל 14");
             datePickerDialog.getDatePicker().setMaxDate(new Date().getTime());
             return datePickerDialog;
         } else {
@@ -254,65 +315,116 @@ public class PersonalInformationActivity extends AppCompatActivity {
     }
 
     private boolean checkFormValidation() {
-        return  checkFullNameValidation() &&
-                checkActiveNumberValidation() &&
-                checkIDValidation() &&
-                checkBirthdateValidation() &&
-                checkProfessionValidation() &&
-                checkQualificationValidation() &&
-                checkCityValidation() &&
-                checkNeighborhoodValidation() &&
-                checkStreetValidation() &&
-                checkApartmentNumberValidation() &&
-                checkPhoneValidation() &&
-                checkMailValidation() &&
-                checkCarTypeValidation() &&
-                checkCarCompanyValidation() &&
-                checkCarModelValidation();
+        ArrayList<Boolean> validationResults = new ArrayList<Boolean>();
+        validationResults.add(checkIdValidation());
+        validationResults.add(checkLicensePlateValidation());
+        validationResults.add(checkPhoneValidation());
+        validationResults.add(checkMailValidation());
+        validationResults.add(checkFullNameValidation());
+//        checkBirthdateValidation();
+//        checkProfessionValidation();
+//        checkCityValidation();
+//        checkActiveNumberValidation();
+//        checkQualificationValidation();
+//        checkNeighborhoodValidation();
+//        checkStreetValidation();
+//        checkBuildingValidation();
+//        checkApartmentNumberValidation();
+//        checkCarTypeValidation();
+//        checkCarCompanyValidation();
+//        checkCarModelValidation();
+        for (Boolean result : validationResults) {
+            if (result == false) {
+                return false;
+            }
+        }
+        return true;
     }
 
-    private boolean checkIDValidation() {
+    private boolean checkIdValidation() {
         Pattern idPattern = Pattern.compile("(\\d{9})");
-        return idPattern.matcher(_idNumber.getText()).matches();
+        if (!idPattern.matcher(_idNumber.getText()).matches()) {
+            _idNumber.setError("תעודת הזהות צריכה להכיל 9 ספרות");
+            return false;
+        }
+        return true;
     }
 
     private boolean checkMailValidation() {
         Pattern mailPattern =
                 Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-        return mailPattern.matcher(_mailAddress.getText()).matches();
+        if (!mailPattern.matcher(_mailAddress.getText()).matches()) {
+            _mailAddress.setError("האימייל שהכנסת אינו תקין");
+            return false;
+        }
+        return true;
     }
 
     private boolean checkPhoneValidation() {
         Pattern phonePattern = Pattern.compile("(05)(\\d{8})");
-        return phonePattern.matcher(_phoneNumber.getText()).matches();
+        if (!phonePattern.matcher(_phoneNumber.getText()).matches()) {
+            _phoneNumber.setError("מספר הפלאפון שהכנסת אינו תקין");
+            return false;
+        }
+        return true;
     }
 
+    private boolean checkLicensePlateValidation() {
+        Pattern idPattern = Pattern.compile("(\\d{7})");
+        if (!idPattern.matcher(_carLicensePlate.getText()).matches()) {
+            _carLicensePlate.setError("מספר הרישוי שהכנסת אינו תקין");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean checkFullNameValidation() {
+        if(_fullName.getText().length() < 5) {
+            _fullName.setError("אנא הכנס שם מלא");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean checkBirthdateValidation() {return true;}
+
     private boolean checkCarModelValidation() {
-        return _carModel.getText().length() > 0;
+        return true;
+        //_carModel.getText().length() > 0;
     }
 
     private boolean checkCarCompanyValidation() {
-        return _carCompany.getText().length() > 0;
+        return true;
+        //_carCompany.getText().length() > 0;
     }
 
     private boolean checkCarTypeValidation() {
-        return _carType.getText().length() > 0;
+        return true;
+        //_carType.getText().length() > 0;
+    }
+
+    private boolean checkBuildingValidation() {
+        return true;
     }
 
     private boolean checkApartmentNumberValidation() {
-        return _apartmentNumber.getText().length() > 0;
+        return true;
+        //_apartmentNumber.getText().length() > 0;
     }
 
     private boolean checkStreetValidation() {
-        return _street.getText().length() > 0;
+        return true;
+        //_street.getText().length() > 0;
     }
 
     private boolean checkNeighborhoodValidation() {
-        return _neighborhood.getText().length() > 0;
+        return true;
+        //_neighborhood.getText().length() > 0;
     }
 
     private boolean checkCityValidation() {
-        return _city.getText().length() > 0;
+        return true;
+        //_city.getText().length() > 0;
     }
 
     private boolean checkQualificationValidation() {
@@ -320,18 +432,11 @@ public class PersonalInformationActivity extends AppCompatActivity {
     }
 
     private boolean checkProfessionValidation() {
-        return _profession.getText().length() > 0;
-    }
-
-    private boolean checkBirthdateValidation() {
         return true;
+        //_profession.getText().length() > 0;
     }
 
     private boolean checkActiveNumberValidation() {
         return true;
-    }
-
-    private boolean checkFullNameValidation() {
-        return _fullName.getText().length() > 0;
     }
 }

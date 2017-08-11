@@ -32,9 +32,11 @@
     <string name="neighborhood_text">שכונה</string>
     <string name="neighborhood_input">הכנס שכונה</string>
     <string name="street_text">רחוב</string>
-    <string name="street_input">הכנס רחוב + מס\' רחוב</string>
-    <string name="building_text">מס\' דירה</string>
-    <string name="building_input">הכנס מס\' דירה</string>
+    <string name="street_input">הכנס שם רחוב</string>
+    <string name="apartment_text">מס\' דירה</string>
+    <string name="apartment_input">הכנס מס\' דירה</string>
+    <string name="building_text">מס\' רחוב</string>
+    <string name="building_input">הכנס מס\' רחוב</string>
     <string name="phone_text">פלאפון</string>
     <string name="phone_input">הכנס פלאפון</string>
     <string name="mail_text">אי-מייל</string>
@@ -45,12 +47,15 @@
     <string name="car_company_input">הכנס חברת רכב</string>
     <string name="car_model_text">דגם רכב</string>
     <string name="car_model_input">הכנס דגם רכב</string>
+    <string name="car_license_plate_text">לוחית זיהוי</string>
+    <string name="car_license_plate_input">הכנס לוחית זיהוי</string>
     <string name="available_equipment_text">ציוד שברשותך</string>
     <string name="available_equipment_input">הכנס ציוד שברשותך</string>
     <string name="save_personal_information_data">שמירת נתונים</string>
 
 
     <string name="preference_file_key">com.example.yedidim.preferenceFile</string>
+    <string name="preference_file_personal_information_key">com.example.yedidim.preferenceFilePersonalInformation</string>
     <string name="first_page_variable">isFirstTime</string>
     <string name="main_page_id">main_page_id</string>
     <string name="personal_information_id">personal_information_id</string>
@@ -65,4 +70,6 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+    <string name="send_code_again_text"><a href="" >שלח קוד אישי פעם נוספת</a></string>
 </resources>

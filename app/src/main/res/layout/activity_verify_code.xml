@@ -42,8 +42,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/first_code_check"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="27dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginBottom="58dp"
+        app:layout_constraintBottom_toTopOf="@+id/sendAgainVerifyCode" />
+
+    <TextView
+        android:id="@+id/sendAgainVerifyCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/send_code_again_text"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="232dp"
+        android:layout_marginBottom="199dp"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="8dp"
