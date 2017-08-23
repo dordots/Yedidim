@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".SplashScreenActivity"
+            android:name=".Activity.SplashScreenActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,16 +23,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".Activity.LoginActivity"
             android:label="@string/first_login" />
         <activity
-            android:name=".PersonalInformationActivity"
+            android:name=".Activity.PersonalInformationActivity"
             android:label="@string/personal_information_title" />
         <activity
-            android:name=".VerifyCodeActivity"
+            android:name=".Activity.VerifyCodeActivity"
             android:label="@string/verify_code" />
         <activity
-            android:name=".MainPageActivity"
+            android:name=".Activity.MainPageActivity"
             android:label="@string/title_nav_main_page"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>

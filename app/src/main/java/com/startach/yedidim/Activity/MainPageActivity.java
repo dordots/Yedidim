@@ -1,4 +1,4 @@
-package com.startach.yedidim;
+package com.startach.yedidim.Activity;
 
 import android.content.Context;
 import android.support.v4.app.FragmentTransaction;
@@ -11,11 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.startach.yedidim.MainPageFragments.AboutUsFragment;
@@ -24,6 +20,7 @@ import com.startach.yedidim.MainPageFragments.DispatchersFragment;
 import com.startach.yedidim.MainPageFragments.MainPageFragment;
 import com.startach.yedidim.MainPageFragments.PersonalInfoFragment;
 import com.startach.yedidim.MainPageFragments.SettingsFragment;
+import com.startach.yedidim.R;
 
 public class MainPageActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
