@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.startach.yedidim.Adapter.DeviceInfo;
 import com.startach.yedidim.PlivoService.PhoneMessageTask;
 import com.startach.yedidim.R;
 
@@ -26,6 +27,11 @@ public class LoginActivity extends AppCompatActivity {
         m_PhoneField = (EditText) findViewById(R.id.phoneField);
 
         proccessUserInput();
+
+        //DeviceInfo deviceInfo = new DeviceInfo(this);
+        //String deviceID = deviceInfo.getIMEI();
+        //deviceInfo.loadIMEI();
+        //deviceInfo.doPermissionGrantedStuffs();
     }
 
     private void proccessUserInput() {

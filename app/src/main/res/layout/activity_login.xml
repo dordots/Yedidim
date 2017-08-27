@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.startach.yedidim.LoginActivity"
+    tools:context="com.startach.yedidim.Activity.LoginActivity"
     android:background="#e2e2e2">
 
     <TextView
@@ -37,7 +37,7 @@
 
     <EditText
         android:id="@+id/phoneField"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="@string/phone_number"
         android:layout_margin="20dp"
