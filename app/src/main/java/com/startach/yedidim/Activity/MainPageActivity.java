@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 
 import com.startach.yedidim.MainPageFragments.AboutUsFragment;
+import com.startach.yedidim.MainPageFragments.CallCenterMenuFragment;
 import com.startach.yedidim.MainPageFragments.DevelopersFragment;
 import com.startach.yedidim.MainPageFragments.DispatchersFragment;
 import com.startach.yedidim.MainPageFragments.MainPageFragment;
@@ -77,7 +78,7 @@ public class MainPageActivity extends AppCompatActivity
 
         if (id == R.id.nav_main_screen) {
             setTitle(R.string.title_nav_main_page);
-            startFragment(mainFragment);
+            startFragment(dispatcherFragment);
         } else if (id == R.id.nav_personal_info) {
             setTitle(R.string.title_nav_personal_information);
             startFragment(personalFragment);
@@ -92,7 +93,7 @@ public class MainPageActivity extends AppCompatActivity
             startFragment(aboutUsFragment);
         } else if (id == R.id.nav_val_screen) {
             setTitle(R.string.title_nav_val_page);
-            startFragment(dispatcherFragment);
+            startFragment(mainFragment);
         }
 
         if (getCurrentFocus() != null) {

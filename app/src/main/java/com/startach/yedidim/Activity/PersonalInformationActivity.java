@@ -21,6 +21,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.regex.Pattern;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by yuval on 26/07/2017.
  */
@@ -29,8 +32,10 @@ public class PersonalInformationActivity extends AppCompatActivity {
     // Finals
     final int DIALOG_ID = 3;
 
+    @BindView(R.id.fullNameInput) EditText _fullName;
+
     // Data members
-    EditText _fullName;
+    //EditText _fullName;
     EditText _activeNumber;
     EditText _idNumber;
     EditText _birthDate;
@@ -62,13 +67,15 @@ public class PersonalInformationActivity extends AppCompatActivity {
 
         readValueFromSharedPreferences();
 
+        ButterKnife.bind(this);
+
         initializeFormFields();
 
         saveFieldsTextOnBlur();
     }
 
     private void findFormFields() {
-        _fullName = (EditText) findViewById(R.id.fullNameInput);
+        //_fullName = (EditText) findViewById(R.id.fullNameInput);
         _activeNumber = (EditText) findViewById(R.id.activeNumberInput);
         _idNumber = (EditText) findViewById(R.id.IDInput);
         _birthDate = (EditText) findViewById(R.id.birthdateInput);
