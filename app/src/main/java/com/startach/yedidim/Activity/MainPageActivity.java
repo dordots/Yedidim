@@ -76,7 +76,7 @@ public class MainPageActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_main_screen) {
-            setTitle(R.string.main_page);
+            setTitle(R.string.title_nav_main_page);
             startFragment(mainFragment);
         } else if (id == R.id.nav_personal_info) {
             setTitle(R.string.title_nav_personal_information);
@@ -90,8 +90,8 @@ public class MainPageActivity extends AppCompatActivity
         } else if (id == R.id.nav_about_us) {
             setTitle(R.string.title_nav_about_us);
             startFragment(aboutUsFragment);
-        } else if (id == R.id.nav_dispatchers) {
-            setTitle(R.string.title_nav_dispatchers);
+        } else if (id == R.id.nav_val_screen) {
+            setTitle(R.string.title_nav_val_page);
             startFragment(dispatcherFragment);
         }
 
