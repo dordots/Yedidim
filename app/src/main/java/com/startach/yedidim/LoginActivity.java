@@ -1,77 +1,63 @@
 package com.startach.yedidim;
 
-import android.Manifest;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.telephony.SmsManager;
-import android.view.KeyEvent;
-import android.view.inputmethod.EditorInfo;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.startach.yedidim.PlivoService.PhoneMessageTask;
+import com.jakewharton.rxbinding2.widget.RxTextView;
 
-import java.security.SecureRandom;
-import java.util.regex.Pattern;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import io.reactivex.disposables.CompositeDisposable;
 
 public class LoginActivity extends AppCompatActivity {
-    private EditText m_PhoneField;
+
+    @BindView(R.id.phoneField)
+    EditText m_PhoneField;
+
+    LoginActivityViewModel loginActivityViewModel;
+    CompositeDisposable allObsevables = new CompositeDisposable();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        ButterKnife.bind(this);
+        loginActivityViewModel = new LoginActivityViewModelImpl();
+        loginActivityViewModel.initRetrofit();
 
-        m_PhoneField = (EditText) findViewById(R.id.phoneField);
+        RxTextView.textChanges(m_PhoneField).skip(1)
+                .map(loginActivityViewModel::validNumber)
+                .doOnNext(aBoolean -> {
+                    if (aBoolean)
+                        m_PhoneField.setError(null);
+                    else
+                        m_PhoneField.setError(getString(R.string.invalide_phone_number));
+                })
+                .subscribe();
 
-        proccessUserInput();
+        loginActivityViewModel.getEditActionDoneObservable(m_PhoneField)
+                .subscribe(aBoolean -> {
+                    if (aBoolean) {
+                        loginActivityViewModel.requestSMS()
+                                .subscribe(
+                                        (responseCode) -> smsCodeAccepted(responseCode.first, responseCode.second),
+                                        (throwable) -> Toast.makeText(getApplicationContext(), R.string.server_access_error, Toast.LENGTH_LONG).show());
+                    } else {
+                        // TODO: after paying the message service remove the toast
+                        Toast.makeText(getApplicationContext(), R.string.invalide_phone_number, Toast.LENGTH_LONG).show();
+                    }
+                });
+
     }
 
-    private void proccessUserInput() {
-        m_PhoneField.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                // Check if the user pressed 'done'
-                if (actionId == EditorInfo.IME_ACTION_DONE)
-                    validatePhoneNumber();
-                return false;
-            }
-        });
-    }
-
-    private void validatePhoneNumber() {
-        Pattern phonePattern = Pattern.compile("(05)(\\d{8})");
-
-        if(phonePattern.matcher(m_PhoneField.getText()).matches()) {
-            sendSecurityCode(m_PhoneField.getText().toString());
-        } else {
-            Toast.makeText(this, "מס' פלאפון לא תקין!", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    private void sendSecurityCode(String phoneNumber) {
-        SecureRandom randomNumber = new SecureRandom();
-        StringBuilder securityCode = new StringBuilder();
-
-        for (int index = 0; index < 6; index++)
-            securityCode.append(randomNumber.nextInt(10));
-
-        new PhoneMessageTask().execute(phoneNumber, "קוד האימות שלך הוא " + securityCode + ".");
-
-        // TODO: after paying the message service remove the toast
+    private void smsCodeAccepted(String phoneNumber, String securityCode) {
         Toast.makeText(this, securityCode, Toast.LENGTH_LONG).show();
 
         Intent verificationIntent = new Intent(this, VerifyCodeActivity.class);
-        verificationIntent.putExtra("securityCode", securityCode.toString());
+        verificationIntent.putExtra("securityCode", securityCode);
         verificationIntent.putExtra("phoneNumber", phoneNumber);
         startActivity(verificationIntent);
         finish();
