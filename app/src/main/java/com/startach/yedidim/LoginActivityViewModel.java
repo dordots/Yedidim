@@ -1,5 +1,6 @@
 package com.startach.yedidim;
 
+import android.util.Pair;
 import android.widget.EditText;
 
 import io.reactivex.Observable;
@@ -10,7 +11,11 @@ import io.reactivex.Observable;
 
 public interface LoginActivityViewModel {
 
+    void initRetrofit();
+
     boolean validNumber(CharSequence phoneNumber);
 
     Observable<Boolean> getEditActionDoneObservable(EditText m_phoneField);
+
+    Observable<Pair<String, String>> requestSMS();
 }

@@ -7,9 +7,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.jakewharton.rxbinding2.widget.RxTextView;
-import com.startach.yedidim.PlivoService.PhoneMessageTask;
-
-import java.security.SecureRandom;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         loginActivityViewModel = new LoginActivityViewModelImpl();
+        loginActivityViewModel.initRetrofit();
 
         RxTextView.textChanges(m_PhoneField).skip(1)
                 .map(loginActivityViewModel::validNumber)
@@ -43,28 +41,23 @@ public class LoginActivity extends AppCompatActivity {
         loginActivityViewModel.getEditActionDoneObservable(m_PhoneField)
                 .subscribe(aBoolean -> {
                     if (aBoolean) {
-                        sendSecurityCode(m_PhoneField.getText().toString());
+                        loginActivityViewModel.requestSMS()
+                                .subscribe(
+                                        (responseCode) -> smsCodeAccepted(responseCode.first, responseCode.second),
+                                        (throwable) -> Toast.makeText(getApplicationContext(), R.string.server_access_error, Toast.LENGTH_LONG).show());
                     } else {
+                        // TODO: after paying the message service remove the toast
                         Toast.makeText(getApplicationContext(), R.string.invalide_phone_number, Toast.LENGTH_LONG).show();
                     }
                 });
+
     }
 
-
-    private void sendSecurityCode(String phoneNumber) {
-        SecureRandom randomNumber = new SecureRandom();
-        StringBuilder securityCode = new StringBuilder();
-
-        for (int index = 0; index < 6; index++)
-            securityCode.append(randomNumber.nextInt(10));
-
-        new PhoneMessageTask().execute(phoneNumber, "קוד האימות שלך הוא " + securityCode + ".");
-
-        // TODO: after paying the message service remove the toast
+    private void smsCodeAccepted(String phoneNumber, String securityCode) {
         Toast.makeText(this, securityCode, Toast.LENGTH_LONG).show();
 
         Intent verificationIntent = new Intent(this, VerifyCodeActivity.class);
-        verificationIntent.putExtra("securityCode", securityCode.toString());
+        verificationIntent.putExtra("securityCode", securityCode);
         verificationIntent.putExtra("phoneNumber", phoneNumber);
         startActivity(verificationIntent);
         finish();
