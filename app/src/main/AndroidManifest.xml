@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activity.LoginActivity"
+            android:name=".LoginActivity"
             android:label="@string/first_login" />
         <activity
             android:name=".Activity.PersonalInformationActivity"

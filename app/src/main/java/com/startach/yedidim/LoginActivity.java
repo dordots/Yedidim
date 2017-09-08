@@ -1,4 +1,4 @@
-package com.startach.yedidim.Activity;
+package com.startach.yedidim;
 
 import android.content.Intent;
 import android.os.Bundle;

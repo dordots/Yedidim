@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
+import com.startach.yedidim.LoginActivity;
 import com.startach.yedidim.R;
 
 public class SplashScreenActivity extends AppCompatActivity {
