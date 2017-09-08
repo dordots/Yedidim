@@ -75,4 +75,6 @@
     <string name="send_code_again_text"><a href="" >שלח קוד אישי פעם נוספת</a></string>
     <string name="permission_read_phone_state">בקשת הרשאה לקריאת מספר המכשיר</string>
     <string name="permissions_not_granted_read_phone">לא ניתנה הרשאה לקריאת מספר המכשיר</string>
+    <string name="invalide_phone_number">מס\' פלאפון לא תקין!</string>
+    <string name="server_access_error">שגיאה גישה לשרת!!</string>
 </resources>
