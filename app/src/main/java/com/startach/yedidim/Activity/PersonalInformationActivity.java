@@ -107,7 +107,7 @@ public class PersonalInformationActivity extends AppCompatActivity {
 
     private void initializeFieldsList() {
         _fields = new EditText[] {
-                _fullName,
+                //_fullName,
                 _activeNumber,
                 _idNumber,
                 _birthDate,
