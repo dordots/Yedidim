@@ -63,4 +63,8 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(verificationIntent);
         finish();
     }
+
+    private void doNothing(){
+        
+    }
 }
