@@ -2,12 +2,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.startach.yedidim.MainPageFragments.MainPageFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.startach.yedidim.MainPageFragments.MainPageFragment"
+    android:background="#0f415e">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="@string/title_nav_main_page" />
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:gravity="top">
+        <io.ghyeok.stickyswitch.widget.StickySwitch
+            android:id="@+id/sticky_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            app:ss_animationDuration="600"
+            app:ss_iconPadding="18dp"
+            app:ss_iconSize="56dp"
+            app:ss_leftIcon="@android:drawable/star_on"
+            app:ss_leftText="On"
+            app:ss_rightIcon="@android:drawable/star_off"
+            app:ss_rightText="Off"
+            app:ss_selectedTextSize="20sp"
+            app:ss_sliderBackgroundColor="@color/colorAccent"
+            app:ss_switchColor="@color/colorPrimary"
+            app:ss_textColor="@color/colorPrimaryDark"
+            app:ss_textSize="20sp"
+            app:ss_animationType="line"/>
 
+        <ListView android:id="@+id/listview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </android.support.v7.widget.LinearLayoutCompat>
 </FrameLayout>

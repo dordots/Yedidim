@@ -8,6 +8,10 @@
             android:title="@string/title_nav_main_page"
             android:checked="true"/>
         <item
+            android:id="@+id/nav_val_screen"
+            android:icon="@drawable/ic_call"
+            android:title="@string/title_nav_val_page" />
+        <item
             android:id="@+id/nav_personal_info"
             android:icon="@drawable/ic_action_user"
             android:title="@string/title_nav_personal_information" />
@@ -23,10 +27,7 @@
             android:id="@+id/nav_developers"
             android:icon="@drawable/ic_developer_mode"
             android:title="@string/title_nav_developers" />
-        <item
-            android:id="@+id/nav_dispatchers"
-            android:icon="@drawable/ic_call"
-            android:title="@string/title_nav_dispatchers" />
+
     </group>
 
 </menu>

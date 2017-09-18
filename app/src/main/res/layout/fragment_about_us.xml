@@ -21,7 +21,7 @@
         android:id="@+id/firstLogin"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="קדאווה קדאווה קדאווה קדאווה קדאווה קדאווה קדאווה קדאווה קדאווה קדאווה קדאווה קדאווה קדאווה קדאווה קדאווה קדאווה קדאווה קדאווה"
+        android:text="@string/aboutus"
         android:textSize="18sp"
         android:textColor="#ffffff"
         app:layout_constraintTop_toBottomOf="@+id/logo"

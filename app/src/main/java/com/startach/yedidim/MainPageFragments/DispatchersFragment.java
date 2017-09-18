@@ -24,7 +24,7 @@ public class DispatchersFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_dispatchers, container, false);
+        return inflater.inflate(R.layout.fragment_call_center_menu, container, false);
     }
 
 }
