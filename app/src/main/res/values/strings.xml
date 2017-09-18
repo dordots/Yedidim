@@ -78,4 +78,15 @@
     <string name="invalide_phone_number">מס\' פלאפון לא תקין!</string>
     <string name="server_access_error">שגיאה גישה לשרת!!</string>
     <string name="aboutus">ארגון מתנדבים בפריסה ארצית ממטולה ועד אילת, הארגון מספק כל עזרה ראשונה שאינה רפואית ללא הבדל דת, גזע, ומין, וללא כל תמורה, במשך 24 שעות ביממה. 6 ימים בשבוע חשיבותו של הארגון מתבטאת במקרים בהם אנשי מקצוע או כלים מתאימים אינם בנמצא.</string>
+    <string name="day_default">day default</string>
+
+
+    <string-array name="days_array">
+        <item>יום ראשון</item>
+        <item>יום שני</item>
+        <item>יום שלישי</item>
+        <item>יום רביעי</item>
+        <item>יום חמישי</item>
+    </string-array>
+
 </resources>
