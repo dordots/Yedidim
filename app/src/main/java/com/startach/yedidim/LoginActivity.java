@@ -8,6 +8,9 @@ import android.widget.Toast;
 
 import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.startach.yedidim.Activity.VerifyCodeActivity;
+import com.startach.yedidim.modules.App;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,7 +21,9 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.phoneField)
     EditText m_PhoneField;
 
+    @Inject
     LoginActivityViewModel loginActivityViewModel;
+
     CompositeDisposable allObsevables = new CompositeDisposable();
 
     @Override
@@ -26,7 +31,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        loginActivityViewModel = new LoginActivityViewModelImpl();
+        ((App)getApplication()).getComponent().inject(this);
+
         loginActivityViewModel.initRetrofit();
 
         RxTextView.textChanges(m_PhoneField).skip(1)

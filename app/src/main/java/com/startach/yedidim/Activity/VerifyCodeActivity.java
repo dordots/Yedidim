@@ -14,6 +14,9 @@ import android.widget.Toast;
 import com.startach.yedidim.PlivoService.PhoneMessageTask;
 import com.startach.yedidim.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 import static android.widget.Toast.LENGTH_LONG;
 
 /**
@@ -21,22 +24,24 @@ import static android.widget.Toast.LENGTH_LONG;
  */
 
 public class VerifyCodeActivity extends AppCompatActivity {
-    private EditText _verifyCode;
-    private Button _checkCodeButton;
+
+    @BindView(R.id.verify_password) EditText verifyCodeEditText;
+    @BindView(R.id.check_password) Button checkCodeButton;
+
+    @BindView(R.id.sendAgainVerifyCode)
+    TextView sendCodeAgainTextView;
+
     private String _securityCode;
-    private TextView _sendCodeAgain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verify_code);
+        ButterKnife.bind(this);
 
-        _verifyCode = (EditText) findViewById(R.id.verify_password);
-        _checkCodeButton = (Button) findViewById(R.id.check_password);
         _securityCode = getSecurityCodeFromIntent();
-        _sendCodeAgain = (TextView) findViewById(R.id.sendAgainVerifyCode);
 
-        _sendCodeAgain.setOnClickListener(new View.OnClickListener() {
+        sendCodeAgainTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String phoneNumber = getPhoneNumberFromIntent();
@@ -45,7 +50,7 @@ public class VerifyCodeActivity extends AppCompatActivity {
             }
         });
 
-        _checkCodeButton.setOnClickListener(new View.OnClickListener() {
+        checkCodeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (userDidntEnterInput()) {
                     Toast.makeText(getApplicationContext(), "אנא הכנס קוד אישור", LENGTH_LONG).show();
@@ -67,7 +72,7 @@ public class VerifyCodeActivity extends AppCompatActivity {
     }
 
     private boolean userDidntEnterInput() {
-        return _verifyCode.getText().toString().equals("");
+        return verifyCodeEditText.getText().toString().equals("");
     }
 
     private void validateCode() {
@@ -85,7 +90,7 @@ public class VerifyCodeActivity extends AppCompatActivity {
     }
 
     private boolean codeIsCorrect() {
-        return _verifyCode.getText().toString().equals(_securityCode);
+        return verifyCodeEditText.getText().toString().equals(_securityCode);
     }
 
     private void updateUserFirstPage() {

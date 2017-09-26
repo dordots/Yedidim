@@ -22,7 +22,7 @@ import io.reactivex.schedulers.Schedulers;
  * Created by yb34982 on 06/09/2017.
  */
 
-class LoginActivityViewModelImpl implements LoginActivityViewModel {
+public class LoginActivityViewModelImpl implements LoginActivityViewModel {
 
     private static final String TAG = "LoginActivity";
     private YedidimRetrofitService yedidimRetrofitService;
