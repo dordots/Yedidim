@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
-        android:gravity="top">
+        android:gravity="center">
         <io.ghyeok.stickyswitch.widget.StickySwitch
             android:id="@+id/sticky_switch"
             android:layout_width="wrap_content"
@@ -23,10 +23,10 @@
             android:layout_centerInParent="true"
             app:ss_animationDuration="600"
             app:ss_iconPadding="18dp"
-            app:ss_iconSize="56dp"
-            app:ss_leftIcon="@android:drawable/star_on"
+            app:ss_iconSize="96dp"
+            app:ss_leftIcon="@drawable/process_on"
             app:ss_leftText="On"
-            app:ss_rightIcon="@android:drawable/star_off"
+            app:ss_rightIcon="@drawable/process_off"
             app:ss_rightText="Off"
             app:ss_selectedTextSize="20sp"
             app:ss_sliderBackgroundColor="@color/colorAccent"
@@ -35,9 +35,7 @@
             app:ss_textSize="20sp"
             app:ss_animationType="line"/>
 
-        <ListView android:id="@+id/listview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+
 
     </android.support.v7.widget.LinearLayoutCompat>
 </FrameLayout>
