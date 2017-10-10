@@ -61,10 +61,11 @@ dependencies {
     compile 'com.victor.ringbutton:lib:1.0.1'
     compile 'com.kyleduo.switchbutton:library:1.4.6'
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile 'com.jakewharton.timber:timber:4.5.1'
 
     compile 'com.google.dagger:dagger:2.5'
     kapt 'com.google.dagger:dagger-compiler:2.5'
-    
+
 }
 repositories {
     mavenCentral()
