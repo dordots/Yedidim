@@ -13,7 +13,9 @@ interface AuthEntity {
      */
     fun verifyPhoneNumber(phoneNum: String): Single<AuthState>
 
-    fun loginWithCode(code: String) : Single<AuthState>
+    fun loginWithCode(code: String): Single<AuthState>
+
+    fun logout()
 }
 
 enum class AuthState {
