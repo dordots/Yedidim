@@ -13,5 +13,7 @@ import dagger.Component;
 @Singleton
 @Component(modules = {AppModule.class,LoginActivityModule.class})
 public interface AppComponent {
+
+    void inject(App app);
     void inject(LoginActivity loginActivity);
 }
