@@ -19,5 +19,5 @@ interface AuthEntity {
 }
 
 enum class AuthState {
-    Success, CodeSent, Failure, UnknownUser
+    Success, CodeSent, Failure, UnregisteredUser
 }
