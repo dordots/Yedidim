@@ -1,4 +1,4 @@
-package com.startach.yedidim.modules;
+package com.startach.yedidim.modules.log;
 
 
 import android.util.Log;
