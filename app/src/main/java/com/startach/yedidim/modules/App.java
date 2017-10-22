@@ -20,7 +20,6 @@ public class App extends Application {
         super.onCreate();
         component = DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
-                .loginActivityModule(new LoginActivityModule())
                 .build();
         component.inject(this);
 

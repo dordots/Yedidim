@@ -1,6 +1,8 @@
 package com.startach.yedidim.modules;
 
-import com.startach.yedidim.LoginActivity;
+import com.startach.yedidim.modules.login.AuthModule;
+import com.startach.yedidim.modules.login.LoginActivityModule;
+import com.startach.yedidim.modules.login.LoginActivitySubComponent;
 import com.startach.yedidim.modules.network.NetworkModule;
 
 import javax.inject.Singleton;
@@ -12,10 +14,10 @@ import dagger.Component;
  */
 
 @Singleton
-@Component(modules = {AppModule.class, LoginActivityModule.class, NetworkModule.class})
+@Component(modules = {AppModule.class, NetworkModule.class})
 public interface AppComponent {
 
     void inject(App app);
-    void inject(LoginActivity loginActivity);
 
+    LoginActivitySubComponent newLoginActivitySubComponent(LoginActivityModule activityModule, AuthModule authModule);
 }
