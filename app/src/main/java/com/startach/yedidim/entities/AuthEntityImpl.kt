@@ -11,7 +11,7 @@ import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 
-class AuthEntityImpl(val activity: Activity) : AuthEntity {
+class AuthEntityImpl(val activity: Activity, val userRegistrationState: UserRegistrationStateEntity) : AuthEntity {
     companion object {
 
         val VERIFICATION_TIMEOUT_SEC = 120L
@@ -32,6 +32,17 @@ class AuthEntityImpl(val activity: Activity) : AuthEntity {
     }
 
     override fun verifyPhoneNumber(phoneNum: String): Single<AuthState> {
+        return userRegistrationState.isUserRegistered(phoneNum)
+                .flatMap { isRegistered ->
+                    if (isRegistered)
+                        return@flatMap firebaseVerification(phoneNum)
+                    else
+                        return@flatMap Single.just(AuthState.UnregisteredUser)
+                }
+
+    }
+
+    private fun firebaseVerification(phoneNum: String): Single<AuthState> {
         return Single.create<AuthState> {
             emitter = it
 
@@ -76,7 +87,7 @@ class AuthEntityImpl(val activity: Activity) : AuthEntity {
                         emitter.onSuccess(AuthState.Success)
                     } else {
                         emitter.onSuccess(AuthState.Failure)
-                        Timber.w("signInWithCredential:failure", task.exception)
+                        Timber.e(task.exception, "signInWithCredential:failure")
                     }
                 })
     }
