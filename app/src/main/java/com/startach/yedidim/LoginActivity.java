@@ -8,13 +8,19 @@ import android.widget.Toast;
 
 import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.startach.yedidim.Activity.VerifyCodeActivity;
+import com.startach.yedidim.entities.AuthEntity;
+import com.startach.yedidim.entities.AuthEntityImpl;
+import com.startach.yedidim.entities.UserRegistrationStateEntityImpl;
 import com.startach.yedidim.modules.App;
+import com.startach.yedidim.network.RetrofitProvider;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import retrofit2.Retrofit;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -24,6 +30,8 @@ public class LoginActivity extends AppCompatActivity {
     @Inject
     LoginActivityViewModel loginActivityViewModel;
 
+    AuthEntity authEntity;
+
     CompositeDisposable allObsevables = new CompositeDisposable();
 
     @Override
@@ -32,14 +40,21 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         ((App)getApplication()).getComponent().inject(this);
+        Retrofit yedidimApiService = RetrofitProvider.newRetrofitInstance();
+        authEntity = new AuthEntityImpl(this,new UserRegistrationStateEntityImpl(yedidimApiService));
 
         loginActivityViewModel.initRetrofit();
 
         RxTextView.textChanges(m_PhoneField).skip(1)
                 .map(loginActivityViewModel::validNumber)
                 .doOnNext(aBoolean -> {
-                    if (aBoolean)
+                    if (aBoolean) {
                         m_PhoneField.setError(null);
+                        authEntity.verifyPhoneNumber(m_PhoneField.getText().toString())
+                                .subscribeOn(io.reactivex.schedulers.Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(authState -> Toast.makeText(getApplicationContext(),authState.toString(),Toast.LENGTH_SHORT).show());
+                    }
                     else
                         m_PhoneField.setError(getString(R.string.invalide_phone_number));
                 })
