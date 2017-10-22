@@ -153,7 +153,6 @@ public class PersonalInformationActivity extends AppCompatActivity {
     }
 
     private void initializeSaveInformationButton() {
-        final Intent mainPage = new Intent(getApplicationContext(), MainPageActivity.class);
         _saveInformation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -161,12 +160,17 @@ public class PersonalInformationActivity extends AppCompatActivity {
                 {
                     saveCommittedFirstLogin();
                     Toast.makeText(getApplicationContext(), "הפרטים נשמרו בהצלחה", Toast.LENGTH_SHORT).show();
-                    startActivity(mainPage);
+                    loadMainApplicationActivity();
                 } else {
                     Toast.makeText(getApplicationContext(), "אחד או יותר מהפרטים שהזנת אינו תקין", Toast.LENGTH_LONG).show();
                 }
             }
         });
+    }
+
+    private void loadMainApplicationActivity() {
+        final Intent mainPage = new Intent(getApplicationContext(), MainPageActivity.class);
+        startActivity(mainPage);
     }
 
     private void saveCommittedFirstLogin() {
