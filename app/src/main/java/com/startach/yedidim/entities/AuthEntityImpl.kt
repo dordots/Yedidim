@@ -53,12 +53,14 @@ class AuthEntityImpl(val activity: Activity, val userRegistrationState: UserRegi
                         }
 
                         override fun onVerificationFailed(e: FirebaseException) {
+                            Timber.e(e, "verification failed")
                             emitter.onSuccess(AuthState.Failure)
                         }
 
                         override fun onCodeSent(verificationId: String?, token: PhoneAuthProvider.ForceResendingToken?) {
                             this@AuthEntityImpl.verificationId = verificationId
                             this@AuthEntityImpl.token = token
+                            Timber.d("code sent")
                             emitter.onSuccess(AuthState.CodeSent)
                         }
                     })
