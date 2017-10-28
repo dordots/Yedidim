@@ -14,7 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitProvider {
 
-    public static final String BASE_URL = "http://finbotapp.apphb.com/";
+    public static final String BASE_URL = "https://yedidim-sandbox-2.firebaseio.com/";
 
     public static Retrofit newRetrofitInstance(){
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();

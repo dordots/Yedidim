@@ -8,12 +8,16 @@ import android.widget.Toast;
 
 import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.startach.yedidim.Activity.VerifyCodeActivity;
+import com.startach.yedidim.entities.AuthEntity;
 import com.startach.yedidim.modules.App;
+import com.startach.yedidim.modules.login.AuthModule;
+import com.startach.yedidim.modules.login.LoginActivityModule;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 
 public class LoginActivity extends AppCompatActivity {
@@ -23,6 +27,8 @@ public class LoginActivity extends AppCompatActivity {
 
     @Inject
     LoginActivityViewModel loginActivityViewModel;
+    @Inject
+    AuthEntity authEntity;
 
     CompositeDisposable allObsevables = new CompositeDisposable();
 
@@ -31,16 +37,22 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        ((App)getApplication()).getComponent().inject(this);
+        ((App) getApplication()).getComponent()
+                .newLoginActivitySubComponent(new LoginActivityModule(this), new AuthModule())
+                .inject(this);
 
         loginActivityViewModel.initRetrofit();
 
         RxTextView.textChanges(m_PhoneField).skip(1)
                 .map(loginActivityViewModel::validNumber)
                 .doOnNext(aBoolean -> {
-                    if (aBoolean)
+                    if (aBoolean) {
                         m_PhoneField.setError(null);
-                    else
+                        authEntity.verifyPhoneNumber(m_PhoneField.getText().toString())
+                                .subscribeOn(io.reactivex.schedulers.Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(authState -> Toast.makeText(getApplicationContext(), authState.toString(), Toast.LENGTH_SHORT).show());
+                    } else
                         m_PhoneField.setError(getString(R.string.invalide_phone_number));
                 })
                 .subscribe();
@@ -70,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
-    private void doNothing(){
-        
+    private void doNothing() {
+
     }
 }

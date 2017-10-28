@@ -22,9 +22,8 @@ class UserRegistrationStateEntityImpl @Inject constructor(retrofitService: Retro
 
     override fun isUserRegistered(phoneNum: String): Single<Boolean> {
         return service.getRegistrationState(phoneNum)
-                .map { registrationState ->
-                    return@map STATE_REGISTERED == registrationState
-                }
+                .onErrorReturn { STATE_NOT_EXISTS }
+                .map { it == STATE_REGISTERED }
                 .subscribeOn(Schedulers.io())
     }
 
