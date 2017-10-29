@@ -80,6 +80,7 @@
     <string name="aboutus">ארגון מתנדבים בפריסה ארצית ממטולה ועד אילת, הארגון מספק כל עזרה ראשונה שאינה רפואית ללא הבדל דת, גזע, ומין, וללא כל תמורה, במשך 24 שעות ביממה. 6 ימים בשבוע חשיבותו של הארגון מתבטאת במקרים בהם אנשי מקצוע או כלים מתאימים אינם בנמצא.</string>
     <string name="day_default">day default</string>
     <string name="Send">שלח</string>
+    <string name="code_recieved">קוד שהתקבל בהודעה</string>
 
 
     <string-array name="days_array">

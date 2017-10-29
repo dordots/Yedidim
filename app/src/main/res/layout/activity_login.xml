@@ -1,66 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.startach.yedidim.LoginActivity"
-    android:background="#e2e2e2">
+    android:background="#e2e2e2"
+    android:orientation="vertical"
+    tools:context="com.startach.yedidim.LoginActivity">
 
     <TextView
         android:id="@+id/welcome"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="8dp"
+        android:layout_marginTop="16dp"
         android:text="@string/welcome"
-        android:textSize="30sp"
         android:textColor="#000"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="@+id/firstLogin"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_margin="20dp"
-        app:layout_constraintVertical_bias="0.033" />
+        android:textSize="30sp" />
 
     <TextView
         android:id="@+id/firstLogin"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="119dp"
+        android:layout_margin="8dp"
         android:text="@string/first_login_message"
-        android:textSize="20sp"
         android:textColor="#000"
-        app:layout_constraintTop_toBottomOf="@+id/welcome"
-        app:layout_constraintBottom_toBottomOf="@+id/phoneField"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_margin="20dp"
-        app:layout_constraintVertical_bias="0.0" />
+        android:textSize="20sp" />
 
-    <EditText
-        android:id="@+id/phoneField"
-        android:layout_width="350dp"
-        android:layout_height="51dp"
-        android:layout_margin="20dp"
-        android:layout_marginTop="8dp"
-        android:hint="@string/phone_number"
-        android:inputType="phone"
-        android:text=""
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/firstLogin"
-        app:layout_constraintVertical_bias="0.03"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
-    <Button
-        android:text="@string/Send"
-        android:layout_width="88dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp" />
+        android:layoutDirection="rtl"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/phoneField"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:hint="@string/phone_number"
+            android:inputType="phone"
+            android:text="" />
+
+        <Button
+            android:id="@+id/send_sms_button"
+            android:layout_width="88dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="@string/Send" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/code_field_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layoutDirection="rtl"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/codeField"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:hint="@string/phone_number"
+            android:inputType="phone"
+            android:text="" />
+
+        <Button
+            android:id="@+id/send_code_button"
+            android:layout_width="88dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="@string/Send" />
+
+    </LinearLayout>
 
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

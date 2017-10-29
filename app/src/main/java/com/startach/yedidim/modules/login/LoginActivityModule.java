@@ -5,6 +5,7 @@ import android.app.Activity;
 import com.startach.yedidim.LoginActivity;
 import com.startach.yedidim.LoginActivityViewModel;
 import com.startach.yedidim.LoginActivityViewModelImpl;
+import com.startach.yedidim.entities.AuthEntity;
 
 import dagger.Module;
 import dagger.Provides;
@@ -24,8 +25,8 @@ public class LoginActivityModule {
 
     @LoginActivityScope
     @Provides
-    LoginActivityViewModel provideLoginActivityViewModel() {
-        return new LoginActivityViewModelImpl();
+    LoginActivityViewModel provideLoginActivityViewModel(AuthEntity authEntity) {
+        return new LoginActivityViewModelImpl(authEntity);
     }
 
     @Provides

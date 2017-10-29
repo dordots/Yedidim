@@ -23,7 +23,11 @@ class AuthEntityImpl(val activity: Activity, val userRegistrationState: UserRegi
     private var token: PhoneAuthProvider.ForceResendingToken? = null
     override fun isAuthenticated(): Single<Boolean> {
         return Single.fromCallable({
-            return@fromCallable FirebaseAuth.getInstance().currentUser != null
+            val currentUser = FirebaseAuth.getInstance().currentUser
+            currentUser?.run {
+                Timber.d("Current User : name : $displayName phoneNumber : $phoneNumber UID :$uid")
+            }
+            return@fromCallable currentUser != null
         })
     }
 
