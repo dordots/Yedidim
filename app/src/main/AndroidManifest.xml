@@ -27,12 +27,6 @@
             android:label="@string/first_login"
             android:windowSoftInputMode="adjustResize"/>
         <activity
-            android:name=".Activity.PersonalInformationActivity"
-            android:label="@string/personal_information_title" />
-        <activity
-            android:name=".Activity.VerifyCodeActivity"
-            android:label="@string/verify_code" />
-        <activity
             android:name=".Activity.MainPageActivity"
             android:label="@string/title_nav_main_page"
             android:theme="@style/AppTheme.NoActionBar" />
