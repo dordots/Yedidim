@@ -26,7 +26,9 @@ class NetworkModule {
 
         val client = OkHttpClient.Builder()
                 .connectTimeout(CONNECTION_TIMEOUT_SEC, TimeUnit.SECONDS)
-                .addInterceptor(interceptor).build()
+                .addInterceptor(interceptor)
+                .addInterceptor(AuthInterceptor())
+                .build()
 
         val retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URL)
