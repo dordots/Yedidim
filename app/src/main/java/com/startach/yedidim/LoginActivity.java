@@ -23,6 +23,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import timber.log.Timber;
@@ -65,9 +66,9 @@ public class LoginActivity extends AppCompatActivity {
 
         loginActivityViewModel.checkIfAuthenticated()
                 .subscribe(aBoolean -> {
-                    Timber.d("Auth : %s",aBoolean);
+                    Timber.d("Auth : %s", aBoolean);
                     m_PhoneField.setVisibility(aBoolean ? View.INVISIBLE : View.VISIBLE);
-                    if (aBoolean){
+                    if (aBoolean) {
                         loadMainApplicationActivity();
                     }
                 });
@@ -85,22 +86,16 @@ public class LoginActivity extends AppCompatActivity {
         RxView.clicks(m_SendSMSButton)
                 .throttleFirst(5, TimeUnit.SECONDS)
                 .map(click -> m_PhoneField.getText().toString())
-                .map(number -> loginActivityViewModel.verifyPhoneNumberInServer(number)
-                        .subscribe(authResultMapper))
-                .subscribe()
-        ;
+                .flatMapSingle(number -> loginActivityViewModel.verifyPhoneNumberInServer(number))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(authResultMapper);
 
         RxView.clicks(m_SendCodeButton)
                 .throttleFirst(5, TimeUnit.SECONDS)
                 .map(click -> m_CodeField.getText().toString())
-                .doOnNext(code -> {
-                    loginActivityViewModel.verifyCodeInServer(code)
-                            .subscribe(authResultMapper);
-                })
-                .subscribe();
-
-
-
+                .flatMapSingle(code -> loginActivityViewModel.verifyCodeInServer(code))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(authResultMapper);
     }
 
     final Consumer<AuthState> authResultMapper =
@@ -116,7 +111,7 @@ public class LoginActivity extends AppCompatActivity {
             };
 
     private void showResults(AuthState results) {
-        Toast.makeText(this,"Results : " + results.toString(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Results : " + results.toString(), Toast.LENGTH_SHORT).show();
     }
 //     authEntity.verifyPhoneNumber(m_PhoneField.getText().toString())
 //            .subscribeOn(io.reactivex.schedulers.Schedulers.io())
