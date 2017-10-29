@@ -24,7 +24,8 @@
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:label="@string/first_login" />
+            android:label="@string/first_login"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".Activity.PersonalInformationActivity"
             android:label="@string/personal_information_title" />
