@@ -3,10 +3,10 @@ package com.startach.yedidim.modules.login;
 
 import android.app.Activity;
 
-import com.startach.yedidim.entities.AuthEntity;
-import com.startach.yedidim.entities.AuthEntityImpl;
-import com.startach.yedidim.entities.UserRegistrationStateEntity;
-import com.startach.yedidim.entities.UserRegistrationStateEntityImpl;
+import com.startach.yedidim.entities.authentication.AuthEntity;
+import com.startach.yedidim.entities.authentication.AuthEntityImpl;
+import com.startach.yedidim.entities.authentication.UserRegistrationStateEntity;
+import com.startach.yedidim.entities.authentication.UserRegistrationStateEntityImpl;
 
 import dagger.Module;
 import dagger.Provides;
