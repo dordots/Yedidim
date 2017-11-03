@@ -1,6 +1,6 @@
 package com.startach.yedidim.modules.network
 
-import com.startach.yedidim.entities.AuthTokenProvider
+import com.startach.yedidim.entities.authentication.AuthTokenProvider
 import okhttp3.Interceptor
 import okhttp3.Response
 import timber.log.Timber
