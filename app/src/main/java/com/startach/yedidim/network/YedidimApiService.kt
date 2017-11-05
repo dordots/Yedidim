@@ -1,10 +1,9 @@
 package com.startach.yedidim.network
 
 import com.startach.yedidim.Model.Volunteer
+import io.reactivex.Completable
 import io.reactivex.Single
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface YedidimApiService {
 
@@ -19,4 +18,7 @@ interface YedidimApiService {
      */
     @GET("volunteer.json?orderBy=\"MobilePhone\"")
     fun getVolunteerByPhoneNum(@Query("startAt") startPhoneNum: String, @Query("endAt") endPhoneNum: String): Single<Map<String, Volunteer>>
+
+    @PATCH("volunteer/{id}.json")
+    fun updateVolunteerFcmInstanceID(@Path("id") id: String, @Body volunteer: Volunteer): Completable
 }

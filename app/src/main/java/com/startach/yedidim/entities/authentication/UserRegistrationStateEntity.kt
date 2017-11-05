@@ -1,4 +1,4 @@
-package com.startach.yedidim.entities
+package com.startach.yedidim.entities.authentication
 
 import com.startach.yedidim.network.YedidimApiService
 import io.reactivex.Single
