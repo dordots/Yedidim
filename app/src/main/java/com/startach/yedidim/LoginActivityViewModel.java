@@ -1,6 +1,7 @@
 package com.startach.yedidim;
 
-import com.startach.yedidim.entities.AuthState;
+
+import com.startach.yedidim.entities.authentication.AuthState;
 
 import io.reactivex.Single;
 

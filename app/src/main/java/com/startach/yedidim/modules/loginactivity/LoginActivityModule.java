@@ -5,7 +5,7 @@ import android.app.Activity;
 import com.startach.yedidim.LoginActivity;
 import com.startach.yedidim.LoginActivityViewModel;
 import com.startach.yedidim.LoginActivityViewModelImpl;
-import com.startach.yedidim.entities.AuthEntity;
+import com.startach.yedidim.entities.authentication.AuthEntity;
 
 import dagger.Module;
 import dagger.Provides;
