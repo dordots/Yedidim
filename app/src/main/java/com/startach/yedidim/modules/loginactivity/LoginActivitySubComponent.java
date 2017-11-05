@@ -1,11 +1,13 @@
-package com.startach.yedidim.modules.login;
+package com.startach.yedidim.modules.loginactivity;
 
 
 import com.startach.yedidim.LoginActivity;
+import com.startach.yedidim.modules.ActivityScope;
+import com.startach.yedidim.modules.auth.AuthModule;
 
 import dagger.Subcomponent;
 
-@LoginActivityScope
+@ActivityScope
 @Subcomponent(modules = {LoginActivityModule.class, AuthModule.class})
 public interface LoginActivitySubComponent {
 

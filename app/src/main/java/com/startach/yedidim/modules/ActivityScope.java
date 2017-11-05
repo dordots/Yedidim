@@ -1,4 +1,4 @@
-package com.startach.yedidim.modules.login;
+package com.startach.yedidim.modules;
 
 
 import java.lang.annotation.Documented;
@@ -10,5 +10,5 @@ import javax.inject.Scope;
 @Scope
 @Documented
 @Retention(value = RetentionPolicy.RUNTIME)
-@interface LoginActivityScope {
+public @interface ActivityScope {
 }

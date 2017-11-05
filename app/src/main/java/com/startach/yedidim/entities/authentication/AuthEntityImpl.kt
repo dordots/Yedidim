@@ -1,4 +1,4 @@
-package com.startach.yedidim.entities
+package com.startach.yedidim.entities.authentication
 
 import android.app.Activity
 import com.google.firebase.FirebaseException
