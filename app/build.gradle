@@ -72,6 +72,7 @@ dependencies {
     kapt 'com.google.dagger:dagger-compiler:2.5'
 
     compile 'com.google.firebase:firebase-auth:11.4.0'
+    compile 'com.google.firebase:firebase-messaging:11.4.0'
 
 }
 repositories {

@@ -1,9 +1,12 @@
 package com.startach.yedidim.modules;
 
-import com.startach.yedidim.modules.login.AuthModule;
-import com.startach.yedidim.modules.login.LoginActivityModule;
-import com.startach.yedidim.modules.login.LoginActivitySubComponent;
+import com.startach.yedidim.entities.notification.YedidimFirebaseInstanceIdService;
+import com.startach.yedidim.modules.auth.AuthModule;
+import com.startach.yedidim.modules.loginactivity.LoginActivityModule;
+import com.startach.yedidim.modules.loginactivity.LoginActivitySubComponent;
 import com.startach.yedidim.modules.network.NetworkModule;
+import com.startach.yedidim.modules.testactivity.TestActivitySubComponent;
+import com.startach.yedidim.modules.testactivity.TestModule;
 
 import javax.inject.Singleton;
 
@@ -14,10 +17,15 @@ import dagger.Component;
  */
 
 @Singleton
-@Component(modules = {AppModule.class, NetworkModule.class})
+@Component(modules = {AppModule.class, NetworkModule.class, NotificationSyncerModule.class})
 public interface AppComponent {
 
     void inject(App app);
 
     LoginActivitySubComponent newLoginActivitySubComponent(LoginActivityModule activityModule, AuthModule authModule);
+
+    TestActivitySubComponent newTestActivitySubComponent(TestModule activityModule, AuthModule authModule);
+
+    void inject(YedidimFirebaseInstanceIdService yedidimFirebaseInstanceIdService);
+
 }

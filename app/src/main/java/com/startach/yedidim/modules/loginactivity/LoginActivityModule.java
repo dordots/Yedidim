@@ -1,10 +1,11 @@
-package com.startach.yedidim.modules.login;
+package com.startach.yedidim.modules.loginactivity;
 
 import android.app.Activity;
 
 import com.startach.yedidim.LoginActivity;
 import com.startach.yedidim.LoginActivityViewModel;
 import com.startach.yedidim.LoginActivityViewModelImpl;
+import com.startach.yedidim.modules.ActivityScope;
 
 import dagger.Module;
 import dagger.Provides;
@@ -22,7 +23,7 @@ public class LoginActivityModule {
         this.activity = activity;
     }
 
-    @LoginActivityScope
+    @ActivityScope
     @Provides
     LoginActivityViewModel provideLoginActivityViewModel() {
         return new LoginActivityViewModelImpl();

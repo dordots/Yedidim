@@ -11,7 +11,7 @@ data class Volunteer(
         @SerializedName("EmailAddress") val emailAddress: String? = null,
         @SerializedName("Equipment") val equipment: String? = null,
         @SerializedName("FirstName") val firstName: String? = null,
-        @SerializedName("IdentityNumber") val identityNumber: String? = null,
+        @SerializedName("IdentityNumber") val id: String? = null,
         @SerializedName("LastName") val lastName: String? = null,
         @SerializedName("LicenseNumber") val licenseNumber: String? = null,
         @SerializedName("LicenseNumber2") val licenseNumber2: String? = null,

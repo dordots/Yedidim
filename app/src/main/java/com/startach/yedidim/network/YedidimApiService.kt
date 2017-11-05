@@ -20,5 +20,5 @@ interface YedidimApiService {
     fun getVolunteerByPhoneNum(@Query("startAt") startPhoneNum: String, @Query("endAt") endPhoneNum: String): Single<Map<String, Volunteer>>
 
     @PATCH("volunteer/{id}.json")
-    fun updateVolunteerFcmInstanceID(id: String, volunteer : Volunteer) : Completable
+    fun updateVolunteerFcmInstanceID(@Path("id") id: String, @Body volunteer: Volunteer): Completable
 }

@@ -52,17 +52,13 @@ public class TestActivity extends AppCompatActivity {
                                 .observeOn(AndroidSchedulers.mainThread());
                     }
                 })
-                .subscribe(authState -> {
-                    Timber.d("sendSmsClicked autState = " + authState);
-                });
+                .subscribe(authState -> Timber.d("sendSmsClicked autState = " + authState));
     }
 
     @OnClick(R.id.button3)
     public void verifyClicked() {
         authEntity.loginWithCode(codeEditText.getText().toString())
-                .subscribe(authState -> {
-                    Timber.d("verifyClicked autState = " + authState);
-                });
+                .subscribe(authState -> Timber.d("verifyClicked autState = " + authState));
     }
 
     @OnClick(R.id.buttonLogOut)
@@ -75,4 +71,10 @@ public class TestActivity extends AppCompatActivity {
 
     }
 
+    @OnClick(R.id.btnDeviceId)
+    public void btnDeviceId() {
+        deviceIdSyncer.syncDeviceID()
+                .subscribe(() -> Timber.d("syncDeviceID success!"),
+                        throwable -> Timber.d(throwable, "syncDeviceID failed!"));
+    }
 }
