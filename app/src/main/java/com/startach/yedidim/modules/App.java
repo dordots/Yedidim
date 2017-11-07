@@ -2,6 +2,8 @@ package com.startach.yedidim.modules;
 
 import android.app.Application;
 
+import com.startach.yedidim.modules.network.NetworkModule;
+
 import javax.inject.Inject;
 
 import timber.log.Timber;
@@ -20,6 +22,8 @@ public class App extends Application {
         super.onCreate();
         component = DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
+                .networkModule(new NetworkModule())
+                .notificationSyncerModule(new NotificationSyncerModule())
                 .build();
         component.inject(this);
 

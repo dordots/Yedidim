@@ -8,14 +8,28 @@ import android.widget.ImageView;
 
 import com.startach.yedidim.LoginActivity;
 import com.startach.yedidim.R;
+import com.startach.yedidim.entities.authentication.AuthEntity;
+import com.startach.yedidim.modules.App;
+import com.startach.yedidim.modules.auth.AuthModule;
+import com.startach.yedidim.modules.splashactivity.SplashActivityModule;
+
+import javax.inject.Inject;
 
 public class SplashScreenActivity extends AppCompatActivity {
+
+    @Inject
+    AuthEntity authEntity;
+
     private ImageView m_Logo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+
+        ((App)getApplication()).getComponent()
+                .newSplashActivitySubComponent(new SplashActivityModule(this),new AuthModule())
+                .inject(this);
 
         m_Logo = (ImageView) findViewById(R.id.logo);
         m_Logo.startAnimation(AnimationUtils.loadAnimation(this, R.anim.blink));
