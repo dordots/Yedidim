@@ -38,27 +38,16 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-    }
-
     private void navigateUserToFirstPage() {
-        // Todo: check if the user has saved id in the shared preferences file.
-        // if it does - navigate him to his first page.
-        // else - navigate him to the login page.
-
-            Intent loginIntent = new Intent(this, LoginActivity.class);
-            startActivity(loginIntent);
-
+           authEntity.isAuthenticated()
+                    .subscribe(
+                            aBoolean -> goToActivity(aBoolean ? MainPageActivity.class : LoginActivity.class)
+                    );
     }
 
-
+    private void goToActivity(Class activityClass) {
+        Intent loginIntent = new Intent(this, activityClass);
+        loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(loginIntent);
+    }
 }
