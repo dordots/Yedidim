@@ -30,12 +30,6 @@ public class LoginActivityViewModelImpl implements LoginActivityViewModel {
     }
 
     @Override
-    public Single<Boolean> checkIfAuthenticated() {
-        return Single.just(false);
-//        return authEntity.isAuthenticated();
-    }
-
-    @Override
     public Single<AuthState> verifyPhoneNumberInServer(String phoneNumber) {
         return authEntity.verifyPhoneNumber(phoneNumber);
     }

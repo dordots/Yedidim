@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#e2e2e2"
+    android:background="#ffffff"
     android:orientation="vertical"
     tools:context="com.startach.yedidim.LoginActivity">
 
@@ -30,54 +30,65 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:layoutDirection="rtl"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:weightSum="1">
 
         <EditText
             android:id="@+id/phoneField"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="52dp"
             android:layout_margin="8dp"
-            android:layout_weight="1"
-            android:hint="@string/phone_number"
+            android:textAlignment="center"
+            android:hint="@string/enter_phone_number"
             android:inputType="phone"
+            android:background="@drawable/rounded_edittext"
+            android:elevation="4dp"
             android:text="" />
-
-        <Button
-            android:id="@+id/send_sms_button"
-            android:layout_width="88dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="@string/Send" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/code_field_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layoutDirection="rtl"
-        android:orientation="horizontal">
-
         <EditText
             android:id="@+id/codeField"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="52dp"
             android:layout_margin="8dp"
-            android:layout_weight="1"
-            android:hint="@string/phone_number"
+            android:textAlignment="center"
+            android:hint="@string/enter_code"
             android:inputType="phone"
+            android:background="@drawable/rounded_edittext"
+            android:elevation="4dp"
             android:text="" />
-
-        <Button
-            android:id="@+id/send_code_button"
-            android:layout_width="88dp"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="@string/Send" />
+            android:textColor="@color/error_red"
+            android:layout_margin="30dp"
+            android:id="@+id/error_msg"
+            android:textAlignment="center"
+            android:text="@string/unknown_phone_number"/>
+
+
 
     </LinearLayout>
 
+
+    <Button
+        android:id="@+id/send_phone_button"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/rounded_button"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/white"
+        android:text="@string/Send" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:id="@+id/resend_code"
+        android:textAlignment="center"
+        android:text="@string/resend_sms"/>
 
 </LinearLayout>

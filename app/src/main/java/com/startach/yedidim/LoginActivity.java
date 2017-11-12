@@ -2,11 +2,12 @@ package com.startach.yedidim;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jakewharton.rxbinding2.view.RxView;
@@ -23,9 +24,11 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.SingleSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 import timber.log.Timber;
 
 public class LoginActivity extends AppCompatActivity {
@@ -33,23 +36,25 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.phoneField)
     EditText m_PhoneField;
 
-    @BindView(R.id.send_sms_button)
-    Button m_SendSMSButton;
+    @BindView(R.id.send_phone_button)
+    Button m_SendPhoneButton;
 
     @BindView(R.id.codeField)
     EditText m_CodeField;
 
-    @BindView(R.id.send_code_button)
-    Button m_SendCodeButton;
+    @BindView(R.id.error_msg)
+    TextView m_ErrorMsg;
 
-    @BindView(R.id.code_field_layout)
-    LinearLayout codeFieldLayout;
+    @BindView(R.id.resend_code)
+    TextView m_ResendCode;
 
 
     @Inject
     LoginActivityViewModel loginActivityViewModel;
 
     CompositeDisposable allObsevables = new CompositeDisposable();
+
+    Boolean phoneMode = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,42 +65,36 @@ public class LoginActivity extends AppCompatActivity {
                 .newLoginActivitySubComponent(new LoginActivityModule(this), new AuthModule())
                 .inject(this);
 
-        m_PhoneField.setVisibility(View.INVISIBLE);
-        m_SendSMSButton.setEnabled(false);
-        codeFieldLayout.setVisibility(View.INVISIBLE);
-
-        loginActivityViewModel.checkIfAuthenticated()
-                .subscribe(aBoolean -> {
-                    Timber.d("Auth : %s", aBoolean);
-                    m_PhoneField.setVisibility(aBoolean ? View.INVISIBLE : View.VISIBLE);
-                    if (aBoolean) {
-                        loadMainApplicationActivity();
-                    }
-                });
+        setPhoneMode(phoneMode);
+        showError("");
 
         RxTextView.textChanges(m_PhoneField).skip(1)
                 .map(loginActivityViewModel::validNumber)
                 .subscribe(aBoolean -> {
-                    m_SendSMSButton.setEnabled(aBoolean);
+                    m_SendPhoneButton.setEnabled(aBoolean);
                     if (aBoolean) {
-                        m_PhoneField.setError(null);
+                        showError("");
                     } else
-                        m_PhoneField.setError(getString(R.string.invalide_phone_number));
+                        showError(getString(R.string.invalide_number));
                 });
 
-        RxView.clicks(m_SendSMSButton)
-                .throttleFirst(5, TimeUnit.SECONDS)
-                .map(click -> m_PhoneField.getText().toString())
-                .flatMapSingle(number -> loginActivityViewModel.verifyPhoneNumberInServer(number))
+        RxView.clicks(m_SendPhoneButton)
+                .throttleFirst(2, TimeUnit.SECONDS)
+                .map(click -> phoneMode
+                        ? m_PhoneField.getText().toString()
+                        : m_CodeField.getText().toString()
+                )
+                .switchMapSingle(handleSendButton())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(authResultMapper);
+    }
 
-        RxView.clicks(m_SendCodeButton)
-                .throttleFirst(5, TimeUnit.SECONDS)
-                .map(click -> m_CodeField.getText().toString())
-                .flatMapSingle(code -> loginActivityViewModel.verifyCodeInServer(code))
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(authResultMapper);
+    @NonNull
+    private Function<String, SingleSource<? extends AuthState>> handleSendButton() {
+        Timber.d("Number state : %s" , phoneMode.toString());
+        return (phoneMode)
+                ? number -> loginActivityViewModel.verifyPhoneNumberInServer(number)
+                : code -> loginActivityViewModel.verifyCodeInServer(code);
     }
 
     final Consumer<AuthState> authResultMapper =
@@ -103,25 +102,40 @@ public class LoginActivity extends AppCompatActivity {
                 showResults(results);
                 if (results.equals(AuthState.Success)) {
                     loadMainApplicationActivity();
+                } else if (results.equals(AuthState.UnregisteredUser)) {
+                    showError(getResources().getString(R.string.unknown_phone_number));
                 } else if (results.equals(AuthState.Failure)) {
-
+                    showError(getResources().getString(R.string.invalide_number));
                 } else if (results.equals(AuthState.CodeSent)) {
-                    codeFieldLayout.setVisibility(View.VISIBLE);
+                    phoneMode = false;
+                    setPhoneMode(phoneMode);
+                    showError("");
                 }
             };
+
+    private void loadMainApplicationActivity() {
+        Intent intent = new Intent(this,MainPageActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+    }
 
     private void showResults(AuthState results) {
         Toast.makeText(this, "Results : " + results.toString(), Toast.LENGTH_SHORT).show();
     }
-//     authEntity.verifyPhoneNumber(m_PhoneField.getText().toString())
-//            .subscribeOn(io.reactivex.schedulers.Schedulers.io())
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .subscribe(authState -> Toast.makeText(getApplicationContext(), authState.toString(), Toast.LENGTH_SHORT).show());
 
+    private void setPhoneMode(Boolean phoneMode){
+        m_CodeField.setVisibility(phoneMode ? View.GONE : View.VISIBLE);
+        m_PhoneField.setVisibility(phoneMode ? View.VISIBLE : View.GONE);
+        m_ResendCode.setVisibility(phoneMode ? View.GONE : View.VISIBLE);
 
-    private void loadMainApplicationActivity() {
-        final Intent mainPage = new Intent(getApplicationContext(), MainPageActivity.class);
-        startActivity(mainPage);
+    }
+
+    private void showError(String errorMsg){
+        m_PhoneField.setTextColor(errorMsg.isEmpty()
+                ? getResources().getColor(R.color.colorPrimary)
+                : getResources().getColor(R.color.error_red));
+            m_ErrorMsg.setText(errorMsg);
     }
 
 

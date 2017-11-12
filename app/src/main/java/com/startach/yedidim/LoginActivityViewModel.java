@@ -13,8 +13,6 @@ public interface LoginActivityViewModel {
 
     boolean validNumber(CharSequence phoneNumber);
 
-    Single<Boolean> checkIfAuthenticated();
-
     Single<AuthState> verifyPhoneNumberInServer(String phoneNumber);
 
     Single<AuthState> verifyCodeInServer(String code);
