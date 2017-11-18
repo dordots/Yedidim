@@ -4,10 +4,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
 
-import com.startach.yedidim.R;
 import com.startach.yedidim.entities.authentication.AuthEntity;
 import com.startach.yedidim.entities.authentication.AuthState;
 import com.startach.yedidim.entities.notification.NotificationDeviceIdSyncer;
+import com.startach.yedidim.entities.usermanagement.VolunteerLocationUpdater;
 import com.startach.yedidim.modules.App;
 import com.startach.yedidim.modules.auth.AuthModule;
 import com.startach.yedidim.modules.testactivity.TestModule;
@@ -19,7 +19,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.internal.disposables.DisposableHelper;
 import retrofit2.Retrofit;
 import timber.log.Timber;
 
@@ -28,6 +27,8 @@ public class TestActivity extends AppCompatActivity {
     @Inject Retrofit retrofit;
     @Inject AuthEntity authEntity;
     @Inject NotificationDeviceIdSyncer deviceIdSyncer;
+    @Inject VolunteerLocationUpdater volunteerLocationUpdater;
+
     @BindView(R.id.editText2) EditText codeEditText;
     @BindView(R.id.editTextPhone) EditText editTextPhone;
 
@@ -77,5 +78,12 @@ public class TestActivity extends AppCompatActivity {
         deviceIdSyncer.syncDeviceID()
                 .subscribe(() -> Timber.d("syncDeviceID success!"),
                         throwable -> Timber.d(throwable, "syncDeviceID failed!"));
+    }
+
+    @OnClick(R.id.btnUpdateLocation)
+    public void btnUpdateLocation() {
+        volunteerLocationUpdater.updateLocation(33.4, 23.4)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> Timber.d("update location succeed!"), throwable -> Timber.d(throwable, "update location failed!"));
     }
 }
