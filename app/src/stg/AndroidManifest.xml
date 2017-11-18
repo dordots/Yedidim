@@ -3,7 +3,7 @@
 
     <application>
         <activity
-            android:name="com.startach.TestActivity"
+            android:name=".TestActivity"
             android:label="TestActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

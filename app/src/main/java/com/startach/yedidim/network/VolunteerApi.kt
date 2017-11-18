@@ -7,12 +7,13 @@ import io.reactivex.schedulers.Schedulers
 import retrofit2.Retrofit
 
 
-class VolunteerApi(val retrofit: Retrofit) {
+class VolunteerApi(retrofit: Retrofit, retrofitCloudFunctions: Retrofit) {
 
     private val yedidimApi = retrofit.create(YedidimApiService::class.java)
+    private val yedidimCloudFunctionsApi = retrofitCloudFunctions.create(YedidimCloudFunctionsApiService::class.java)
 
     fun updateInstanceId(volunteerId: String, instanceId: String): Completable {
-        val volunteer = Volunteer(fcmToken = instanceId)
+        val volunteer = Volunteer(fcmToken = instanceId, deviceType = "android")
         return yedidimApi.updateVolunteerFcmInstanceID(volunteerId, volunteer)
                 .subscribeOn(Schedulers.io())
     }
@@ -27,6 +28,18 @@ class VolunteerApi(val retrofit: Retrofit) {
                     } else {
                         it.entries.first().value
                     }
+                }
+                .subscribeOn(Schedulers.io())
+    }
+
+    fun updateVolunteerLocation(volunteerId: String, latitude: Double, longitude: Double): Completable {
+        val request = LocationUpdateRequest(volunteerId, latitude, longitude)
+
+        return yedidimCloudFunctionsApi.updateLocation(request)
+                .flatMapCompletable { response ->
+                    if ("OK!" == response) {
+                        return@flatMapCompletable Completable.complete()
+                    } else Completable.error(Exception("cannot update location: $response"))
                 }
                 .subscribeOn(Schedulers.io())
     }

@@ -22,5 +22,6 @@ data class Volunteer(
         @SerializedName("VehicleMake") val vehicleMake: String? = null,
         @SerializedName("VehicleMake2") val vehicleMake2: String? = null,
         @SerializedName("YourVehicle") val yourVehicle: String? = null,
-        @SerializedName("FCMToken") val fcmToken: String? = null
+        @SerializedName("FCMToken") val fcmToken: String? = null,
+        @SerializedName("DeviceType") val deviceType: String? = null
 )

@@ -7,6 +7,7 @@ import com.startach.yedidim.entities.notification.NotificationDeviceIdSyncer;
 import com.startach.yedidim.entities.usermanagement.UserManager;
 import com.startach.yedidim.network.VolunteerApi;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -24,8 +25,8 @@ public class NotificationSyncerModule {
 
     @Provides
     @Singleton
-    VolunteerApi providesVolunteerApi(Retrofit retrofit) {
-        return new VolunteerApi(retrofit);
+    VolunteerApi providesVolunteerApi(Retrofit retrofit, @Named("cloud_functions") Retrofit cloudFunctionsRetrofit) {
+        return new VolunteerApi(retrofit, cloudFunctionsRetrofit);
     }
 
     @Provides
