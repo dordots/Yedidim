@@ -1,6 +1,6 @@
 package com.startach.yedidim.modules.testactivity;
 
-import com.startach.TestActivity;
+import com.startach.yedidim.TestActivity;
 import com.startach.yedidim.modules.ActivityScope;
 import com.startach.yedidim.modules.auth.AuthModule;
 

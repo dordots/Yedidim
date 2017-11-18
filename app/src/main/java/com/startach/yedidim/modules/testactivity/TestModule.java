@@ -3,7 +3,7 @@ package com.startach.yedidim.modules.testactivity;
 
 import android.app.Activity;
 
-import com.startach.TestActivity;
+import com.startach.yedidim.TestActivity;
 import com.startach.yedidim.modules.ActivityScope;
 
 import dagger.Module;

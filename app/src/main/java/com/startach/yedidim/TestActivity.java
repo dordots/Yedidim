@@ -1,4 +1,4 @@
-package com.startach;
+package com.startach.yedidim;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +19,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.internal.disposables.DisposableHelper;
 import retrofit2.Retrofit;
 import timber.log.Timber;
 
