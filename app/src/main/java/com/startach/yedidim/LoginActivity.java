@@ -84,6 +84,7 @@ public class LoginActivity extends AppCompatActivity {
                         ? m_PhoneField.getText().toString()
                         : m_CodeField.getText().toString()
                 )
+                .doOnNext(text->Timber.d(text))
                 .switchMapSingle(handleSendButton())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(authResultMapper);
