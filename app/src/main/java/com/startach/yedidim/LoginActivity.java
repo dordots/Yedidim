@@ -92,10 +92,12 @@ public class LoginActivity extends AppCompatActivity {
 
     @NonNull
     private Function<String, SingleSource<? extends AuthState>> handleSendButton() {
-        Timber.d("Number state : %s" , phoneMode.toString());
-        return (phoneMode)
-                ? number -> loginActivityViewModel.verifyPhoneNumberInServer(number)
-                : code -> loginActivityViewModel.verifyCodeInServer(code);
+        return numberOrCode -> {
+            Timber.d("Number state : %s" , phoneMode.toString());
+            return (phoneMode)
+                    ? loginActivityViewModel.verifyPhoneNumberInServer(numberOrCode)
+                    : loginActivityViewModel.verifyCodeInServer(numberOrCode);
+        };
     }
 
     final Consumer<AuthState> authResultMapper =
