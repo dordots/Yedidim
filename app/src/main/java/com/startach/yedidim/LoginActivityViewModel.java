@@ -1,9 +1,9 @@
 package com.startach.yedidim;
 
-import android.util.Pair;
-import android.widget.EditText;
 
-import io.reactivex.Observable;
+import com.startach.yedidim.entities.authentication.AuthState;
+
+import io.reactivex.Single;
 
 /**
  * Created by yb34982 on 06/09/2017.
@@ -11,11 +11,9 @@ import io.reactivex.Observable;
 
 public interface LoginActivityViewModel {
 
-    void initRetrofit();
-
     boolean validNumber(CharSequence phoneNumber);
 
-    Observable<Boolean> getEditActionDoneObservable(EditText m_phoneField);
+    Single<AuthState> verifyPhoneNumberInServer(String phoneNumber);
 
-    Observable<Pair<String, String>> requestSMS();
+    Single<AuthState> verifyCodeInServer(String code);
 }

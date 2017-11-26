@@ -11,6 +11,7 @@
     <string name="first_code_hint">הכנס קוד ראשוני</string>
     <string name="first_code_check">בצע אימות</string>
     <string name="phone_number">מס\' פלאפון</string>
+    <string name="enter_phone_number">הקלד את מספר הנייד שלך</string>
     <string name="verify_code">אישור קוד</string>
 
     <!--this belongs to the personal information activity-->
@@ -75,10 +76,15 @@
     <string name="send_code_again_text"><a href="">שלח קוד אישי פעם נוספת</a></string>
     <string name="permission_read_phone_state">בקשת הרשאה לקריאת מספר המכשיר</string>
     <string name="permissions_not_granted_read_phone">לא ניתנה הרשאה לקריאת מספר המכשיר</string>
-    <string name="invalide_phone_number">מס\' פלאפון לא תקין!</string>
+    <string name="invalide_number">הזנת מספר לא תקין אנא נסה שוב</string>
     <string name="server_access_error">שגיאה גישה לשרת!!</string>
     <string name="aboutus">ארגון מתנדבים בפריסה ארצית ממטולה ועד אילת, הארגון מספק כל עזרה ראשונה שאינה רפואית ללא הבדל דת, גזע, ומין, וללא כל תמורה, במשך 24 שעות ביממה. 6 ימים בשבוע חשיבותו של הארגון מתבטאת במקרים בהם אנשי מקצוע או כלים מתאימים אינם בנמצא.</string>
     <string name="day_default">day default</string>
+    <string name="Send">שליחה</string>
+    <string name="code_recieved">קוד שהתקבל בהודעה</string>
+    <string name="resend_sms">לא קיבלתי מסרון, שלח מסרון חדש</string>
+    <string name="enter_code">הזן קוד בן 4 ספרות שתקבל כעת במסרון</string>
+    <string name="unknown_phone_number">אנחנו לא מזהים אותך במאגר, אנא בדוק שהמספר שהזנת תקין</string>
 
 
     <string-array name="days_array">

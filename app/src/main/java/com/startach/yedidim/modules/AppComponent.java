@@ -5,6 +5,8 @@ import com.startach.yedidim.modules.auth.AuthModule;
 import com.startach.yedidim.modules.loginactivity.LoginActivityModule;
 import com.startach.yedidim.modules.loginactivity.LoginActivitySubComponent;
 import com.startach.yedidim.modules.network.NetworkModule;
+import com.startach.yedidim.modules.splashactivity.SplashActivityModule;
+import com.startach.yedidim.modules.splashactivity.SplashSubComponent;
 import com.startach.yedidim.modules.testactivity.TestActivitySubComponent;
 import com.startach.yedidim.modules.testactivity.TestModule;
 
@@ -25,6 +27,8 @@ public interface AppComponent {
     LoginActivitySubComponent newLoginActivitySubComponent(LoginActivityModule activityModule, AuthModule authModule);
 
     TestActivitySubComponent newTestActivitySubComponent(TestModule activityModule, AuthModule authModule);
+
+    SplashSubComponent newSplashActivitySubComponent(SplashActivityModule splashActivityModule, AuthModule authModule);
 
     void inject(YedidimFirebaseInstanceIdService yedidimFirebaseInstanceIdService);
 
