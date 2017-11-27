@@ -8,6 +8,8 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import com.startach.yedidim.Model.Event
+import com.startach.yedidim.modules.App
+import com.startach.yedidim.modules.eventinfoactivity.EventInfoActivityModule
 import timber.log.Timber
 
 class EventInfoActivity : AppCompatActivity() {
@@ -29,6 +31,11 @@ class EventInfoActivity : AppCompatActivity() {
         setContentView(R.layout.activity_event_info)
         val toolbar = findViewById(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
+
+        (application as App).component
+                .newEventInfoActivitySubComponent(EventInfoActivityModule(this))
+                .inject(this)
+
 
         Timber.d("event = " + (intent.extras[EXTRAS_EVENT] as Event))
         val fab = findViewById(R.id.fab) as FloatingActionButton
