@@ -30,7 +30,6 @@
             android:name=".Activity.MainPageActivity"
             android:label="@string/title_nav_main_page"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Event.OpenEventActivity" />
 
         <service android:name=".entities.notification.YedidimFirebaseInstanceIdService">
             <intent-filter>

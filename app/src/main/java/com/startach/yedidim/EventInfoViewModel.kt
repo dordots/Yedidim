@@ -8,4 +8,5 @@ interface EventInfoViewModel {
 
     fun eventLoadedObservable(): Observable<Event>
 
+    fun bindViewModel(event: Event)
 }
