@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.startach.yedidim.Event.OpenEventActivity"
+    tools:context="com.startach.yedidim.EventInfoActivity"
     android:background="@color/mainBackgroundColor">
     <ImageView
         android:id="@+id/colorful_stripe"

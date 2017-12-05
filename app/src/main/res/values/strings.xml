@@ -94,5 +94,17 @@
         <item>יום רביעי</item>
         <item>יום חמישי</item>
     </string-array>
-
+    <string name="title_activity_event_info">EventInfoActivity</string>
+    <string name="notif_event_title">אירוע חדש - %s</string>
+    <string-array name="event_cases">
+        <item>אחר</item>
+        <item>פנצ\'ר (אין רזרבי)</item>
+        <item>קודנית</item>
+        <item>חילוץ</item>
+        <item>שמן\\מים\\דלק</item>
+        <item>דלת נעולה</item>
+        <item>קומפרסור</item>
+        <item>פנצ\'ר</item>
+        <item>כבלים</item>
+    </string-array>
 </resources>

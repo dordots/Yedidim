@@ -30,13 +30,22 @@
             android:name=".Activity.MainPageActivity"
             android:label="@string/title_nav_main_page"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Event.OpenEventActivity" />
 
         <service android:name=".entities.notification.YedidimFirebaseInstanceIdService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
+        <service android:name=".entities.notification.YedidimFirebaseNotificationService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name=".EventInfoActivity"
+            android:label="@string/title_activity_event_info"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
