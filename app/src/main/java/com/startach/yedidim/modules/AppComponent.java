@@ -9,6 +9,8 @@ import com.startach.yedidim.modules.loginactivity.LoginActivitySubComponent;
 import com.startach.yedidim.modules.mainpageactivity.MainPageFragmentModule;
 import com.startach.yedidim.modules.mainpageactivity.MainPageFragmentSubComponent;
 import com.startach.yedidim.modules.network.NetworkModule;
+import com.startach.yedidim.modules.settingsfragment.SettingsFragmentModule;
+import com.startach.yedidim.modules.settingsfragment.SettingsFragmentSubComponent;
 import com.startach.yedidim.modules.splashactivity.SplashActivityModule;
 import com.startach.yedidim.modules.splashactivity.SplashSubComponent;
 import com.startach.yedidim.modules.testactivity.TestActivitySubComponent;
@@ -39,4 +41,6 @@ public interface AppComponent {
     void inject(YedidimFirebaseInstanceIdService yedidimFirebaseInstanceIdService);
 
     MainPageFragmentSubComponent newMainPageFragmentSubComponent(MainPageFragmentModule mainPageFragmentModule);
+
+    SettingsFragmentSubComponent newSettingsFragmentSubComponent(SettingsFragmentModule settingsFragmentModule,  AuthModule authModule);
 }
