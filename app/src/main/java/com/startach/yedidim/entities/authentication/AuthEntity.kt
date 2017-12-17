@@ -1,6 +1,5 @@
 package com.startach.yedidim.entities.authentication
 
-import com.google.firebase.auth.PhoneAuthProvider
 import io.reactivex.Single
 
 interface AuthEntity {
@@ -14,7 +13,7 @@ interface AuthEntity {
      */
     fun verifyPhoneNumber(phoneNum: String): Single<AuthState>
 
-    fun firebaseVerificationRetry(phoneNum: String,token: PhoneAuthProvider.ForceResendingToken? = null) : Single<AuthState>
+    fun firebaseVerificationRetry(phoneNum: String): Single<AuthState>
 
     fun loginWithCode(code: String): Single<AuthState>
 

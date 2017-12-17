@@ -46,7 +46,7 @@ class AuthEntityImpl(val activity: Activity, val userRegistrationState: UserRegi
 
     }
 
-    override fun firebaseVerificationRetry(phoneNum: String,token: PhoneAuthProvider.ForceResendingToken?): Single<AuthState> {
+    override fun firebaseVerificationRetry(phoneNum: String): Single<AuthState> {
         return Single.create<AuthState> {
             emitter = it
 
