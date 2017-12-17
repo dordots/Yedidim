@@ -2,13 +2,21 @@ package com.startach.yedidim.MainPageFragments;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.startach.yedidim.R;
+import com.startach.yedidim.entities.usermanagement.UserManager;
+import com.startach.yedidim.modules.App;
 
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.ghyeok.stickyswitch.widget.StickySwitch;
 
 
@@ -17,6 +25,11 @@ import io.ghyeok.stickyswitch.widget.StickySwitch;
  */
 public class MainPageFragment extends Fragment {
 
+    @BindView(R.id.sticky_switch)
+    StickySwitch stickySwitch;
+
+    @Inject
+    UserManager userManager;
 
     public MainPageFragment() {
         // Required empty public constructor
@@ -36,9 +49,21 @@ public class MainPageFragment extends Fragment {
 //            }
 //        });
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main_page, container, false);
+        final View view = inflater.inflate(R.layout.fragment_main_page, container, false);
+        ButterKnife.bind(this,view);
+        ((App)getActivity().getApplication()).getComponent().inject(this);
+        return view;
+
     }
 
-
-
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        stickySwitch.setDirection(userManager.getActive() ? StickySwitch.Direction.LEFT : StickySwitch.Direction.RIGHT);
+        stickySwitch.setOnSelectedChangeListener(
+                (direction, s) -> {
+                    userManager.setActive(direction.equals(StickySwitch.Direction.LEFT));
+                    Toast.makeText(MainPageFragment.this.getActivity(), "Direction : " + direction.name() + " String : " + s, Toast.LENGTH_SHORT).show();
+                });
+    }
 }

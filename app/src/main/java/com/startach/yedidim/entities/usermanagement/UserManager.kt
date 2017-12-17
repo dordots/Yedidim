@@ -13,7 +13,14 @@ class UserManager(context: Context, private val volunteerApi: VolunteerApi) {
 
     companion object {
         private val SHARED_PREF_KEY_CURRENT_USER = "SHARED_PREF_KEY_CURRENT_USER"
+        private val SHARED_PREF_KEY_ACTIVE = "SHARED_PREF_KEY_ACTIVE"
     }
+
+    public var active: Boolean
+        get() = pref.getBoolean(SHARED_PREF_KEY_ACTIVE, false)
+        set(value) {
+            pref.edit().putBoolean(SHARED_PREF_KEY_ACTIVE, value).apply()
+        }
 
     private val pref: SharedPreferences = context.getSharedPreferences(this.javaClass.simpleName, Context.MODE_PRIVATE)
     private var currentUser: Volunteer? = null
@@ -54,5 +61,6 @@ class UserManager(context: Context, private val volunteerApi: VolunteerApi) {
                 .putString(SHARED_PREF_KEY_CURRENT_USER, gson.toJson(user))
                 .apply()
     }
+
 }
 
