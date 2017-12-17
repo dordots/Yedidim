@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.startach.yedidim.EventInfoActivity"
+    android:background="@color/mainBackgroundColor">
+    <ImageView
+        android:id="@+id/colorful_stripe"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/colorful_stripe"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:id="@+id/linearLayoutCompat1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:orientation="horizontal"
+            android:gravity="right"
+            >
+        <TextView
+            android:id="@+id/textView0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:text="פרטי האירוע"
+            android:textColor="@android:color/white"
+            android:textSize="48sp"
+            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:layout_editor_absoluteY="168dp" />
+        </android.support.v7.widget.LinearLayoutCompat>
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:id="@+id/linearLayoutCompat2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="horizontal"
+        android:gravity="right"
+        android:layout_marginTop="16dp"
+        >
+
+        <TextView
+            android:id="@+id/address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:gravity="right|center_vertical"
+            android:text="ויצמן 6 תל אביב"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:layout_marginRight="16dp"/>
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="כתובת"
+            android:textColor="@android:color/white"
+            android:layout_gravity="right|center_vertical"
+            android:gravity="right|center_vertical"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:layout_marginRight="16dp"
+            />
+
+
+    </android.support.v7.widget.LinearLayoutCompat>
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:id="@+id/linearLayoutCompat3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="horizontal"
+        android:gravity="right"
+        >
+
+        <TextView
+            android:id="@+id/more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:gravity="right|center_vertical"
+            android:text="כל הצמיגים ללא אויר"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:layout_marginRight="16dp"/>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="16dp"
+            android:gravity="right|center_vertical"
+            android:text="האירוע"
+            android:textColor="@android:color/white"
+            android:textSize="32sp"
+            android:textStyle="bold" />
+
+
+    </android.support.v7.widget.LinearLayoutCompat>
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:id="@+id/linearLayoutCompat4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:orientation="horizontal"
+            android:gravity="right"
+            >
+
+            <TextView
+                android:id="@+id/callername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:gravity="right|center_vertical"
+                android:text="בוב הבנאי"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
+                android:layout_marginRight="16dp"/>
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="16dp"
+                android:gravity="right|center_vertical"
+                android:text="שם הפונה"
+                android:textColor="@android:color/white"
+                android:textSize="32sp"
+                android:textStyle="bold" />
+
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:id="@+id/linearLayoutCompat5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:orientation="horizontal"
+            android:gravity="right"
+            >
+
+            <TextView
+                android:id="@+id/phonenumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:gravity="right|center_vertical"
+                android:text="0547344452"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
+                android:layout_marginRight="16dp"/>
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="16dp"
+                android:gravity="right|center_vertical"
+                android:text="טלפון"
+                android:textColor="@android:color/white"
+                android:textSize="32sp"
+                android:textStyle="bold" />
+
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:id="@+id/linearLayoutCompat6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            >
+
+            <Button
+                android:id="@+id/navigateBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/darker_gray"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+
+                android:text=" נווט למיקום המשוער "
+                android:drawableLeft="@android:drawable/ic_menu_compass"
+                android:textSize="24sp"/>
+
+
+
+
+
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:id="@+id/linearLayoutCompat7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="32dp"
+            android:gravity="bottom"
+            android:layout_gravity="bottom"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <Button
+                android:id="@+id/cancelEvent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="8dp"
+                android:backgroundTint="@android:color/holo_red_light"
+                android:drawableLeft="@android:drawable/ic_menu_close_clear_cancel"
+                android:gravity="left"
+                android:padding="16dp"
+                android:text=" בטל אירוע "
+                android:textSize="24sp" />
+
+            <Button
+                android:id="@+id/takeEvent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="16dp"
+                android:backgroundTint="@android:color/holo_green_light"
+                android:drawableLeft="@android:drawable/checkbox_on_background"
+                android:padding="16dp"
+                android:text=" קח אירוע "
+                android:textSize="24sp" />
+
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

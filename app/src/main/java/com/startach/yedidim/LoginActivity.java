@@ -2,35 +2,59 @@ package com.startach.yedidim;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
-import com.startach.yedidim.Activity.VerifyCodeActivity;
-import com.startach.yedidim.entities.authentication.AuthEntity;
+import com.startach.yedidim.Activity.MainPageActivity;
+import com.startach.yedidim.entities.authentication.AuthState;
 import com.startach.yedidim.modules.App;
 import com.startach.yedidim.modules.auth.AuthModule;
 import com.startach.yedidim.modules.loginactivity.LoginActivityModule;
+
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.SingleSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import timber.log.Timber;
 
 public class LoginActivity extends AppCompatActivity {
 
     @BindView(R.id.phoneField)
     EditText m_PhoneField;
 
+    @BindView(R.id.send_phone_button)
+    Button m_SendPhoneButton;
+
+    @BindView(R.id.codeField)
+    EditText m_CodeField;
+
+    @BindView(R.id.error_msg)
+    TextView m_ErrorMsg;
+
+    @BindView(R.id.resend_code)
+    TextView m_ResendCode;
+
+
     @Inject
     LoginActivityViewModel loginActivityViewModel;
-    @Inject
-    AuthEntity authEntity;
 
     CompositeDisposable allObsevables = new CompositeDisposable();
+
+    Boolean phoneMode = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,46 +65,82 @@ public class LoginActivity extends AppCompatActivity {
                 .newLoginActivitySubComponent(new LoginActivityModule(this), new AuthModule())
                 .inject(this);
 
-        loginActivityViewModel.initRetrofit();
+        setPhoneMode(phoneMode);
+        showError("");
 
         RxTextView.textChanges(m_PhoneField).skip(1)
                 .map(loginActivityViewModel::validNumber)
-                .doOnNext(aBoolean -> {
-                    if (aBoolean) {
-                        m_PhoneField.setError(null);
-                        authEntity.verifyPhoneNumber(m_PhoneField.getText().toString())
-                                .subscribeOn(io.reactivex.schedulers.Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(authState -> Toast.makeText(getApplicationContext(), authState.toString(), Toast.LENGTH_SHORT).show());
-                    } else
-                        m_PhoneField.setError(getString(R.string.invalide_phone_number));
-                })
-                .subscribe();
-
-        loginActivityViewModel.getEditActionDoneObservable(m_PhoneField)
                 .subscribe(aBoolean -> {
+                    m_SendPhoneButton.setEnabled(aBoolean);
                     if (aBoolean) {
-                        loginActivityViewModel.requestSMS()
-                                .subscribe(
-                                        (responseCode) -> smsCodeAccepted(responseCode.first, responseCode.second),
-                                        (throwable) -> Toast.makeText(getApplicationContext(), R.string.server_access_error, Toast.LENGTH_LONG).show());
-                    } else {
-                        // TODO: after paying the message service remove the toast
-                        Toast.makeText(getApplicationContext(), R.string.invalide_phone_number, Toast.LENGTH_LONG).show();
-                    }
+                        showError("");
+                    } else
+                        showError(getString(R.string.invalide_number));
                 });
 
+        RxView.clicks(m_SendPhoneButton)
+                .throttleFirst(2, TimeUnit.SECONDS)
+                .map(click -> phoneMode
+                        ? m_PhoneField.getText().toString()
+                        : m_CodeField.getText().toString()
+                )
+                .doOnNext(text->Timber.d(text))
+                .switchMapSingle(handleSendButton())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(authResultMapper);
     }
 
-    private void smsCodeAccepted(String phoneNumber, String securityCode) {
-        Toast.makeText(this, securityCode, Toast.LENGTH_LONG).show();
+    @NonNull
+    private Function<String, SingleSource<? extends AuthState>> handleSendButton() {
+        return numberOrCode -> {
+            Timber.d("Number state : %s" , phoneMode.toString());
+            return (phoneMode)
+                    ? loginActivityViewModel.verifyPhoneNumberInServer(numberOrCode)
+                    : loginActivityViewModel.verifyCodeInServer(numberOrCode);
+        };
+    }
 
-        Intent verificationIntent = new Intent(this, VerifyCodeActivity.class);
-        verificationIntent.putExtra("securityCode", securityCode);
-        verificationIntent.putExtra("phoneNumber", phoneNumber);
-        startActivity(verificationIntent);
+    final Consumer<AuthState> authResultMapper =
+            (results) -> {
+                showResults(results);
+                if (results.equals(AuthState.Success)) {
+                    loadMainApplicationActivity();
+                } else if (results.equals(AuthState.UnregisteredUser)) {
+                    showError(getResources().getString(R.string.unknown_phone_number));
+                } else if (results.equals(AuthState.Failure)) {
+                    showError(getResources().getString(R.string.invalide_number));
+                } else if (results.equals(AuthState.CodeSent)) {
+                    phoneMode = false;
+                    setPhoneMode(phoneMode);
+                    showError("");
+                }
+            };
+
+    private void loadMainApplicationActivity() {
+        Intent intent = new Intent(this,MainPageActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
         finish();
     }
+
+    private void showResults(AuthState results) {
+        Toast.makeText(this, "Results : " + results.toString(), Toast.LENGTH_SHORT).show();
+    }
+
+    private void setPhoneMode(Boolean phoneMode){
+        m_CodeField.setVisibility(phoneMode ? View.GONE : View.VISIBLE);
+        m_PhoneField.setVisibility(phoneMode ? View.VISIBLE : View.GONE);
+        m_ResendCode.setVisibility(phoneMode ? View.GONE : View.VISIBLE);
+
+    }
+
+    private void showError(String errorMsg){
+        m_PhoneField.setTextColor(errorMsg.isEmpty()
+                ? getResources().getColor(R.color.colorPrimary)
+                : getResources().getColor(R.color.error_red));
+            m_ErrorMsg.setText(errorMsg);
+    }
+
 
     private void doNothing() {
 

@@ -4,6 +4,8 @@ import android.app.Application;
 
 import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
+import com.startach.yedidim.modules.network.NetworkModule;
+
 import javax.inject.Inject;
 
 import timber.log.Timber;
@@ -23,6 +25,8 @@ public class App extends Application {
         Fabric.with(this, new Crashlytics());
         component = DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
+                .networkModule(new NetworkModule())
+                .notificationSyncerModule(new NotificationSyncerModule())
                 .build();
         component.inject(this);
 

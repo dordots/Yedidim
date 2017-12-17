@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.startach.TestActivity"
+    tools:context=".TestActivity"
     tools:ignore="HardcodedText">
 
 
@@ -81,4 +81,14 @@
         android:text="Sync Device ID"
         app:layout_constraintBottom_toTopOf="@+id/button3"
         app:layout_constraintStart_toEndOf="@+id/btnTest" />
+
+    <Button
+        android:id="@+id/btnUpdateLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonLogOut"
+        app:layout_constraintStart_toEndOf="@+id/btnDeviceId"
+        android:text="update location" />
 </android.support.constraint.ConstraintLayout>

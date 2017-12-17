@@ -24,18 +24,12 @@
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:label="@string/first_login" />
-        <activity
-            android:name=".Activity.PersonalInformationActivity"
-            android:label="@string/personal_information_title" />
-        <activity
-            android:name=".Activity.VerifyCodeActivity"
-            android:label="@string/verify_code" />
+            android:label="@string/first_login"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".Activity.MainPageActivity"
             android:label="@string/title_nav_main_page"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Event.OpenEventActivity" />
 
         <service android:name=".entities.notification.YedidimFirebaseInstanceIdService">
             <intent-filter>
@@ -45,6 +39,16 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="5ea8168a30c78cbd50b7bca03cba8f4d71323fd5" />
+        <service android:name=".entities.notification.YedidimFirebaseNotificationService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name=".EventInfoActivity"
+            android:label="@string/title_activity_event_info"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
