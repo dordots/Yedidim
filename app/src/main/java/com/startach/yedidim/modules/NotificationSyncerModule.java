@@ -6,13 +6,13 @@ import android.content.Context;
 import com.startach.yedidim.entities.notification.NotificationDeviceIdSyncer;
 import com.startach.yedidim.entities.usermanagement.UserManager;
 import com.startach.yedidim.network.VolunteerApi;
+import com.startach.yedidim.network.YedidimApiService;
+import com.startach.yedidim.network.YedidimCloudFunctionsApiService;
 
-import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import retrofit2.Retrofit;
 
 @Module
 public class NotificationSyncerModule {
@@ -25,8 +25,8 @@ public class NotificationSyncerModule {
 
     @Provides
     @Singleton
-    VolunteerApi providesVolunteerApi(Retrofit retrofit, @Named("cloud_functions") Retrofit cloudFunctionsRetrofit) {
-        return new VolunteerApi(retrofit, cloudFunctionsRetrofit);
+    VolunteerApi providesVolunteerApi(YedidimCloudFunctionsApiService yedidimCloudFunctionsApiService, YedidimApiService yedidimApiService) {
+        return new VolunteerApi(yedidimApiService, yedidimCloudFunctionsApiService);
     }
 
     @Provides

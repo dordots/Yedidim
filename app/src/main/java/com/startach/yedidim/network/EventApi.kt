@@ -1,4 +1,3 @@
-/*
 package com.startach.yedidim.network
 
 import com.startach.yedidim.Model.Event
@@ -41,4 +40,4 @@ class EventApi(private val userManager: UserManager,
         val cancelledEvent = Event(key = eventKey, status = STATUS_SENT)
         return apiService.updateEvent(eventKey, cancelledEvent)
     }
-}*/
+}
