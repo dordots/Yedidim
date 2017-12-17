@@ -2,6 +2,8 @@ package com.startach.yedidim.modules;
 
 import android.app.Application;
 
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 import javax.inject.Inject;
 
 import timber.log.Timber;
@@ -18,6 +20,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
         component = DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
                 .build();
