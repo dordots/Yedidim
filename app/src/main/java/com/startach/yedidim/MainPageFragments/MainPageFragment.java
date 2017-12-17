@@ -7,9 +7,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
+import com.startach.yedidim.MainPageViewModel;
+import com.startach.yedidim.MainPageViewModelImpl;
 import com.startach.yedidim.R;
+import com.startach.yedidim.entities.notification.NotificationDeviceIdSyncer;
 import com.startach.yedidim.entities.usermanagement.UserManager;
 import com.startach.yedidim.modules.App;
 
@@ -18,6 +20,10 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.ghyeok.stickyswitch.widget.StickySwitch;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.disposables.Disposables;
+import timber.log.Timber;
 
 
 /**
@@ -31,6 +37,15 @@ public class MainPageFragment extends Fragment {
     @Inject
     UserManager userManager;
 
+    @Inject
+    NotificationDeviceIdSyncer deviceIdSyncer;
+
+    MainPageViewModel mainPageViewModel;
+
+    CompositeDisposable compositeDisposable = new CompositeDisposable();
+    Disposable disposable;
+    Disposable changeStateDisposable = Disposables.empty();
+
     public MainPageFragment() {
         // Required empty public constructor
     }
@@ -40,18 +55,12 @@ public class MainPageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Set Selected Change Listener
-//        StickySwitch stickySwitch = (StickySwitch) findViewById(R.id.sticky_switch);
-//        stickySwitch.setOnSelectedChangeListener(new StickySwitch.OnSelectedChangeListener() {
-//            @Override
-//            public void onSelectedChange(@NotNull StickySwitch.Direction direction, @NotNull String text) {
-//                Log.d(TAG, "Now Selected : " + direction.name() + ", Current Text : " + text);
-//            }
-//        });
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_main_page, container, false);
         ButterKnife.bind(this,view);
         ((App)getActivity().getApplication()).getComponent().inject(this);
+
+        mainPageViewModel = new MainPageViewModelImpl(userManager,deviceIdSyncer);
         return view;
 
     }
@@ -59,11 +68,30 @@ public class MainPageFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        stickySwitch.setDirection(userManager.getActive() ? StickySwitch.Direction.LEFT : StickySwitch.Direction.RIGHT);
+        disposable = mainPageViewModel.isActive()
+                .subscribe(this::setStickySwitchDirection);
+        compositeDisposable.add(disposable);
+
         stickySwitch.setOnSelectedChangeListener(
                 (direction, s) -> {
-                    userManager.setActive(direction.equals(StickySwitch.Direction.LEFT));
-                    Toast.makeText(MainPageFragment.this.getActivity(), "Direction : " + direction.name() + " String : " + s, Toast.LENGTH_SHORT).show();
+                    changeStateDisposable.dispose();
+                    changeStateDisposable =
+                            mainPageViewModel.setActivateState(direction.equals(StickySwitch.Direction.LEFT))
+                                    .subscribe(
+                                            () -> {
+                                            }
+                                            , throwable -> Timber.e(throwable, "can't refresh token"));
+                    compositeDisposable.add(changeStateDisposable);
                 });
+    }
+
+    private void setStickySwitchDirection(Boolean aBoolean) {
+        stickySwitch.setDirection(aBoolean ? StickySwitch.Direction.LEFT : StickySwitch.Direction.RIGHT);
+    }
+
+    @Override
+    public void onDestroyView() {
+        compositeDisposable.clear();
+        super.onDestroyView();
     }
 }

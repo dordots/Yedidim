@@ -8,6 +8,7 @@ import com.startach.yedidim.Model.Volunteer
 import com.startach.yedidim.network.VolunteerApi
 import com.startach.yedidim.utils.empty
 import io.reactivex.Single
+import io.reactivex.subjects.BehaviorSubject
 
 class UserManager(context: Context, private val volunteerApi: VolunteerApi) {
 
@@ -15,14 +16,16 @@ class UserManager(context: Context, private val volunteerApi: VolunteerApi) {
         private val SHARED_PREF_KEY_CURRENT_USER = "SHARED_PREF_KEY_CURRENT_USER"
         private val SHARED_PREF_KEY_ACTIVE = "SHARED_PREF_KEY_ACTIVE"
     }
+    private val pref: SharedPreferences = context.getSharedPreferences(this.javaClass.simpleName, Context.MODE_PRIVATE)
 
-    public var active: Boolean
+    var active: Boolean
         get() = pref.getBoolean(SHARED_PREF_KEY_ACTIVE, false)
         set(value) {
             pref.edit().putBoolean(SHARED_PREF_KEY_ACTIVE, value).apply()
+            activeStateSubject.onNext(value)
         }
+    val activeStateSubject : BehaviorSubject<Boolean> = BehaviorSubject.createDefault(active)
 
-    private val pref: SharedPreferences = context.getSharedPreferences(this.javaClass.simpleName, Context.MODE_PRIVATE)
     private var currentUser: Volunteer? = null
 
     fun getCurrentUser(): Single<Volunteer> {
