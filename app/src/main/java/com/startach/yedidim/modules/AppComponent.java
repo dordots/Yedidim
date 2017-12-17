@@ -1,12 +1,13 @@
 package com.startach.yedidim.modules;
 
-import com.startach.yedidim.MainPageFragments.MainPageFragment;
 import com.startach.yedidim.entities.notification.YedidimFirebaseInstanceIdService;
 import com.startach.yedidim.modules.auth.AuthModule;
 import com.startach.yedidim.modules.eventinfoactivity.EventInfoActivityModule;
 import com.startach.yedidim.modules.eventinfoactivity.EventInfoActivitySubComponent;
 import com.startach.yedidim.modules.loginactivity.LoginActivityModule;
 import com.startach.yedidim.modules.loginactivity.LoginActivitySubComponent;
+import com.startach.yedidim.modules.mainpageactivity.MainPageFragmentModule;
+import com.startach.yedidim.modules.mainpageactivity.MainPageFragmentSubComponent;
 import com.startach.yedidim.modules.network.NetworkModule;
 import com.startach.yedidim.modules.splashactivity.SplashActivityModule;
 import com.startach.yedidim.modules.splashactivity.SplashSubComponent;
@@ -37,5 +38,5 @@ public interface AppComponent {
 
     void inject(YedidimFirebaseInstanceIdService yedidimFirebaseInstanceIdService);
 
-    void inject(MainPageFragment mainPageFragment);
+    MainPageFragmentSubComponent newMainPageFragmentSubComponent(MainPageFragmentModule mainPageFragmentModule);
 }

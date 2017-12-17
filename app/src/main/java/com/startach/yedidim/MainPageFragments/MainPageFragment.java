@@ -9,11 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.startach.yedidim.MainPageViewModel;
-import com.startach.yedidim.MainPageViewModelImpl;
 import com.startach.yedidim.R;
-import com.startach.yedidim.entities.notification.NotificationDeviceIdSyncer;
-import com.startach.yedidim.entities.usermanagement.UserManager;
 import com.startach.yedidim.modules.App;
+import com.startach.yedidim.modules.mainpageactivity.MainPageFragmentModule;
 
 import javax.inject.Inject;
 
@@ -35,11 +33,6 @@ public class MainPageFragment extends Fragment {
     StickySwitch stickySwitch;
 
     @Inject
-    UserManager userManager;
-
-    @Inject
-    NotificationDeviceIdSyncer deviceIdSyncer;
-
     MainPageViewModel mainPageViewModel;
 
     CompositeDisposable compositeDisposable = new CompositeDisposable();
@@ -58,9 +51,12 @@ public class MainPageFragment extends Fragment {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_main_page, container, false);
         ButterKnife.bind(this,view);
-        ((App)getActivity().getApplication()).getComponent().inject(this);
 
-        mainPageViewModel = new MainPageViewModelImpl(userManager,deviceIdSyncer);
+        ((App)getActivity().getApplication())
+                .getComponent()
+                .newMainPageFragmentSubComponent(new MainPageFragmentModule(this))
+                .inject(this);
+
         return view;
 
     }
