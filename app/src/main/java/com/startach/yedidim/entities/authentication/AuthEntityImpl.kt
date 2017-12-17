@@ -39,35 +39,39 @@ class AuthEntityImpl(val activity: Activity, val userRegistrationState: UserRegi
         return userRegistrationState.isUserRegistered(phoneNum)
                 .flatMap { isRegistered ->
                     if (isRegistered)
-                        return@flatMap firebaseVerification(phoneNum)
+                        return@flatMap firebaseVerificationRetry(phoneNum)
                     else
                         return@flatMap Single.just(AuthState.UnregisteredUser)
                 }
 
     }
 
-    private fun firebaseVerification(phoneNum: String): Single<AuthState> {
+    override fun firebaseVerificationRetry(phoneNum: String,token: PhoneAuthProvider.ForceResendingToken?): Single<AuthState> {
         return Single.create<AuthState> {
             emitter = it
 
             PhoneAuthProvider.getInstance().verifyPhoneNumber(phoneNum, VERIFICATION_TIMEOUT_SEC, TimeUnit.SECONDS, activity,
-                    object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-                        override fun onVerificationCompleted(credential: PhoneAuthCredential) {
-                            signIn(credential)
-                        }
+                    onVerificationStateChangedCallbacks(),token)
+        }
+    }
 
-                        override fun onVerificationFailed(e: FirebaseException) {
-                            Timber.e(e, "verification failed")
-                            emitter.onSuccess(AuthState.Failure)
-                        }
+    private fun onVerificationStateChangedCallbacks(): PhoneAuthProvider.OnVerificationStateChangedCallbacks {
+        return object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+            override fun onVerificationCompleted(credential: PhoneAuthCredential) {
+                signIn(credential)
+            }
 
-                        override fun onCodeSent(verificationId: String?, token: PhoneAuthProvider.ForceResendingToken?) {
-                            this@AuthEntityImpl.verificationId = verificationId
-                            this@AuthEntityImpl.token = token
-                            Timber.d("code sent")
-                            emitter.onSuccess(AuthState.CodeSent)
-                        }
-                    })
+            override fun onVerificationFailed(e: FirebaseException) {
+                Timber.e(e, "verification failed")
+                emitter.onSuccess(AuthState.Failure)
+            }
+
+            override fun onCodeSent(verificationId: String?, token: PhoneAuthProvider.ForceResendingToken?) {
+                this@AuthEntityImpl.verificationId = verificationId
+                this@AuthEntityImpl.token = token
+                Timber.d("code sent")
+                emitter.onSuccess(AuthState.CodeSent)
+            }
         }
     }
 

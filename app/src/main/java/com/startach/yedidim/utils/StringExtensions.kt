@@ -6,7 +6,5 @@ class StringExtensions {
     }
 }
 
-val String.Companion.empty: String?
-    get() {
-        return StringExtensions.EMPTY_STRING
-    }
+val String.Companion.empty: String
+    get() = StringExtensions.EMPTY_STRING

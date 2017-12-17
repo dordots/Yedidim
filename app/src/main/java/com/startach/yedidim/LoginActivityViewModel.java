@@ -16,4 +16,6 @@ public interface LoginActivityViewModel {
     Single<AuthState> verifyPhoneNumberInServer(String phoneNumber);
 
     Single<AuthState> verifyCodeInServer(String code);
+
+    Single<AuthState> resendCode(String phoneNumber);
 }
