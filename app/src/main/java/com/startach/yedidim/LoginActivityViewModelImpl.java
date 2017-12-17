@@ -1,5 +1,6 @@
 package com.startach.yedidim;
 
+import com.google.firebase.auth.PhoneAuthProvider;
 import com.startach.yedidim.entities.authentication.AuthEntity;
 import com.startach.yedidim.entities.authentication.AuthState;
 
@@ -37,6 +38,11 @@ public class LoginActivityViewModelImpl implements LoginActivityViewModel {
     @Override
     public Single<AuthState> verifyCodeInServer(String code) {
         return authEntity.loginWithCode(code);
+    }
+
+    @Override
+    public Single<AuthState> resendCode(String phoneNumber) {
+        return authEntity.firebaseVerificationRetry(phoneNumber, PhoneAuthProvider.ForceResendingToken.zzbog());
     }
 
 

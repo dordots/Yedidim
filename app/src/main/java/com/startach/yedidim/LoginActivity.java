@@ -87,7 +87,18 @@ public class LoginActivity extends AppCompatActivity {
                 .doOnNext(text->Timber.d(text))
                 .switchMapSingle(handleSendButton())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(authResultMapper);
+                .subscribe(getAuthResultMapper());
+
+        RxView.clicks(m_ResendCode)
+                .throttleFirst(2, TimeUnit.SECONDS)
+                .map(clicks->m_PhoneField.getText().toString())
+                .switchMapSingle(handleResendButton())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(getAuthResultMapper());
+    }
+
+    private Function<String ,SingleSource<AuthState>> handleResendButton() {
+        return phoneNum -> loginActivityViewModel.resendCode(phoneNum);
     }
 
     @NonNull
@@ -100,21 +111,23 @@ public class LoginActivity extends AppCompatActivity {
         };
     }
 
-    final Consumer<AuthState> authResultMapper =
-            (results) -> {
-                showResults(results);
-                if (results.equals(AuthState.Success)) {
-                    loadMainApplicationActivity();
-                } else if (results.equals(AuthState.UnregisteredUser)) {
-                    showError(getResources().getString(R.string.unknown_phone_number));
-                } else if (results.equals(AuthState.Failure)) {
-                    showError(getResources().getString(R.string.invalide_number));
-                } else if (results.equals(AuthState.CodeSent)) {
-                    phoneMode = false;
-                    setPhoneMode(phoneMode);
-                    showError("");
-                }
-            };
+    final Consumer<AuthState> getAuthResultMapper(){
+        return results -> {
+            LoginActivity.this.showResults(results);
+            if (results.equals(AuthState.Success)) {
+                LoginActivity.this.loadMainApplicationActivity();
+            } else if (results.equals(AuthState.UnregisteredUser)) {
+                LoginActivity.this.showError(LoginActivity.this.getResources().getString(R.string.unknown_phone_number));
+            } else if (results.equals(AuthState.Failure)) {
+                LoginActivity.this.showError(LoginActivity.this.getResources().getString(R.string.invalide_number));
+            } else if (results.equals(AuthState.CodeSent)) {
+                phoneMode = false;
+                LoginActivity.this.setPhoneMode(phoneMode);
+                LoginActivity.this.showError("");
+            }
+        };
+    }
+
 
     private void loadMainApplicationActivity() {
         Intent intent = new Intent(this,MainPageActivity.class);
