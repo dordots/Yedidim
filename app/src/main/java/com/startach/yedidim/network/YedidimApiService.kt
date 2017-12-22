@@ -1,5 +1,6 @@
 package com.startach.yedidim.network
 
+import com.startach.yedidim.Model.Event
 import com.startach.yedidim.Model.Volunteer
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -21,4 +22,7 @@ interface YedidimApiService {
 
     @PATCH("volunteer/{id}.json")
     fun updateVolunteerFcmInstanceID(@Path("id") id: String, @Body volunteer: Volunteer): Completable
+
+    @PATCH("events/{key}.json")
+    fun updateEvent(@Path("key") key: String, @Body event: Event): Completable
 }

@@ -51,18 +51,18 @@ class EventInfoActivity : AppCompatActivity() {
         (application as App).component
                 .newEventInfoActivitySubComponent(EventInfoActivityModule(this))
                 .inject(this)
-        vm.bindViewModel(extractEvent(intent))
+        val event = extractEvent(intent)
+        Timber.d("event = " + event)
+        vm.bindViewModel(event)
 
         disposables += vm.eventLoadedObservable()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { event ->
-                    address.text = event.details.address
-                    callername.text = event.details.callerName
-                    phonenumber.text = event.details.phoneNumber
-                    more.text = event.details.more
+                    address.text = event.details?.address
+                    callername.text = event.details?.callerName
+                    phonenumber.text = event.details?.phoneNumber
+                    more.text = event.details?.more
                 }
-
-        Timber.d("event = " + (intent.extras[EXTRAS_EVENT] as Event))
     }
 
     override fun onDestroy() {

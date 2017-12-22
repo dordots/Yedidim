@@ -37,7 +37,7 @@ class YedidimFirebaseNotificationService : FirebaseMessagingService() {
                             .setSmallIcon(R.mipmap.ic_launcher)
                             .setContentIntent(pendingIntent)
                             .setContentTitle(getString(R.string.notif_event_title, case))
-                            .setContentText(event.details.fullAddress)
+                            .setContentText(event.details?.fullAddress)
                             .build()
                     NotificationManagerCompat.from(this)
                             .notify(getNotificationID(), notification)
@@ -49,9 +49,11 @@ class YedidimFirebaseNotificationService : FirebaseMessagingService() {
     private fun extractCase(event: Event): String? {
         var case: String? = String.empty
         val events = resources.getStringArray(R.array.event_cases)
-        val eventCase = event.details.case
-        if (events.indices.contains(eventCase)) {
-            case = events[eventCase]
+        val eventCase = event.details?.case
+        eventCase?.let {
+            if (events.indices.contains(eventCase)) {
+                case = events[eventCase]
+            }
         }
         return case
     }

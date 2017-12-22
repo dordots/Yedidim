@@ -1,6 +1,8 @@
 package com.startach.yedidim.modules.network
 
 import com.startach.yedidim.BuildConfig
+import com.startach.yedidim.network.YedidimApiService
+import com.startach.yedidim.network.YedidimCloudFunctionsApiService
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -32,6 +34,20 @@ class NetworkModule {
     @Named("cloud_functions")
     fun providesCloudFunctionsRetrofit(): Retrofit {
         return createRetrofit(BASE_URL_CLOUD_FUNCTIONS)
+    }
+
+    @Singleton
+    @Provides
+    fun providesCloudFunctionsService(): YedidimCloudFunctionsApiService {
+        return createRetrofit(BASE_URL_CLOUD_FUNCTIONS)
+                .create(YedidimCloudFunctionsApiService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun providesYedidimService(): YedidimApiService {
+        return createRetrofit(BASE_URL)
+                .create(YedidimApiService::class.java)
     }
 
     private fun createRetrofit(baseUrl: String): Retrofit {

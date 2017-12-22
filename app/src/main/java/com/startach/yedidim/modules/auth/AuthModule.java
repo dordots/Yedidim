@@ -8,18 +8,18 @@ import com.startach.yedidim.entities.authentication.AuthEntityImpl;
 import com.startach.yedidim.entities.authentication.UserRegistrationStateEntity;
 import com.startach.yedidim.entities.authentication.UserRegistrationStateEntityImpl;
 import com.startach.yedidim.modules.ActivityScope;
+import com.startach.yedidim.network.YedidimApiService;
 
 import dagger.Module;
 import dagger.Provides;
-import retrofit2.Retrofit;
 
 @Module
 public class AuthModule {
 
     @ActivityScope
     @Provides
-    UserRegistrationStateEntity providesUserRegistrationStateEntity(Retrofit retrofit) {
-        return new UserRegistrationStateEntityImpl(retrofit);
+    UserRegistrationStateEntity providesUserRegistrationStateEntity(YedidimApiService apiService) {
+        return new UserRegistrationStateEntityImpl(apiService);
     }
 
     @ActivityScope

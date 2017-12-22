@@ -4,13 +4,9 @@ import com.startach.yedidim.Model.Volunteer
 import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
-import retrofit2.Retrofit
 
 
-class VolunteerApi(retrofit: Retrofit, retrofitCloudFunctions: Retrofit) {
-
-    private val yedidimApi = retrofit.create(YedidimApiService::class.java)
-    private val yedidimCloudFunctionsApi = retrofitCloudFunctions.create(YedidimCloudFunctionsApiService::class.java)
+class VolunteerApi(private val yedidimApi: YedidimApiService, private val yedidimCloudFunctionsApi: YedidimCloudFunctionsApiService) {
 
     fun updateInstanceId(volunteerId: String, instanceId: String): Completable {
         val volunteer = Volunteer(fcmToken = instanceId, deviceType = "android")
