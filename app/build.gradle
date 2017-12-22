@@ -10,7 +10,6 @@ buildscript {
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 apply plugin: 'kotlin-android'
-apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'org.jetbrains.kotlin.android.extensions'
 
@@ -20,7 +19,7 @@ androidExtensions {
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.startach.yedidim"
         minSdkVersion 19
@@ -92,9 +91,5 @@ dependencies {
         transitive = true;
     }
 
-}
-repositories {
-    mavenCentral()
-    maven { url 'https://maven.fabric.io/public' }
 }
 apply plugin: 'com.google.gms.google-services'
