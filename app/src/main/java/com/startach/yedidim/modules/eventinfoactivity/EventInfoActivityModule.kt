@@ -4,6 +4,7 @@ import android.app.Activity
 import com.startach.yedidim.EventInfoActivity
 import com.startach.yedidim.EventInfoViewModel
 import com.startach.yedidim.EventInfoViewModelImpl
+import com.startach.yedidim.entities.notification.EventNotificationEntity
 import com.startach.yedidim.entities.usermanagement.UserManager
 import com.startach.yedidim.modules.ActivityScope
 import com.startach.yedidim.network.EventApi
@@ -24,8 +25,14 @@ class EventInfoActivityModule(private val activity: EventInfoActivity) {
 
     @ActivityScope
     @Provides
-    internal fun provideEventInfoActivityViewModel(eventApi: EventApi): EventInfoViewModel {
-        return EventInfoViewModelImpl(eventApi)
+    internal fun providesEventNotificationEntity(): EventNotificationEntity {
+        return EventNotificationEntity(activity)
+    }
+
+    @ActivityScope
+    @Provides
+    internal fun provideEventInfoActivityViewModel(eventApi: EventApi, eventNotificationEntity: EventNotificationEntity): EventInfoViewModel {
+        return EventInfoViewModelImpl(eventApi, eventNotificationEntity)
     }
 
     @Provides

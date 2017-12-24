@@ -97,6 +97,26 @@
     <string name="title_activity_event_info">EventInfoActivity</string>
     <string name="notif_event_title">אירוע חדש - %s</string>
     <string name="Logout">התנתקות</string>
+    <string name="event_info_title_event">האירוע:</string>
+    <string name="event_info_title">פרטי האירוע</string>
+    <string name="event_info_details_title">פרטים נוספים:</string>
+    <string name="event_info_cancel_event">בטל אירוע</string>
+    <string name="event_info_take_event">קח אירוע</string>
+    <string name="event_info_navigate">נווט למיקום המשוער</string>
+    <string name="event_info_loctaion">מיקום:</string>
+    <string name="event_info_title_name">שם:</string>
+    <string name="event_info_phone">טלפון:</string>
+    <string name="event_info_car_type">סוג רכב:</string>
+    <string name="event_info_call">התקשר לאדם התקוע</string>
+    <string name="event_info_event_taken_title">האירוע נלקח</string>
+    <string name="event_info_event_taken_message">לצערנו, מתנדב אחר לקח את הקריאה\nקבל טפיחה על השכם על הרצון הטוב</string>
+    <string name="event_info_take_event_title">אישור</string>
+    <string name="event_info_take_event_message">האם ברצונך לקחת את הקריאה?</string>
+    <string name="dialog_close">סגור</string>
+    <string name="event_info_close_event">סיים אירוע</string>
+    <string name="event_info_ignore_event">מחק אירוע</string>
+    <string name="event_info_close_event_error">לא ניתן לסיים אירוע, אנא נסה שנית</string>
+    <string name="event_info_take_event_error">אירעה שגיאה, לא ניתן לקחת אירוע</string>
     <string-array name="event_cases">
         <item>אחר</item>
         <item>פנצ\'ר (אין רזרבי)</item>
