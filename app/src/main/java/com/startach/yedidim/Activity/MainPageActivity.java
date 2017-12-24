@@ -12,12 +12,22 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 
 import com.startach.yedidim.MainPageFragments.AboutUsFragment;
 import com.startach.yedidim.MainPageFragments.MainPageFragment;
 import com.startach.yedidim.MainPageFragments.SettingsFragment;
 import com.startach.yedidim.R;
+import com.startach.yedidim.entities.usermanagement.UserManager;
+import com.startach.yedidim.modules.App;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import timber.log.Timber;
 
 public class MainPageActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -29,12 +39,23 @@ public class MainPageActivity extends AppCompatActivity
 //    private Fragment dispatcherFragment = new DispatchersFragment();
 //    private Fragment developersFragment = new DevelopersFragment();
 
+    @Inject
+    UserManager userManager;
+
+    @BindView(R.id.nav_view)
+    NavigationView navigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ((App)getApplication())
+                .getComponent()
+                .inject(this);
         setContentView(R.layout.activity_main_page);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        ButterKnife.bind(this);
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -48,6 +69,17 @@ public class MainPageActivity extends AppCompatActivity
             mainFragment = new MainPageFragment();
             startFragment(mainFragment);
         }
+
+        final View headerView = navigationView.getHeaderView(0);
+        TextView userNameTextView = (TextView) headerView.findViewById(R.id.username);
+        TextView emailTextView = (TextView) headerView.findViewById(R.id.email);
+
+        userManager.getCurrentUser()
+                .subscribe(volunteer -> {
+                    Timber.d("User Data : %s,%s", volunteer.getLastName(), volunteer.getEmailAddress());
+                    userNameTextView.setText(String.format("%s %s", volunteer.getFirstName(), volunteer.getLastName()));
+                    emailTextView.setText(volunteer.getEmailAddress());
+                });
     }
 
     @Override

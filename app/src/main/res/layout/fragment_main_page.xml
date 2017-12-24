@@ -6,11 +6,6 @@
     tools:context="com.startach.yedidim.MainPageFragments.MainPageFragment"
     android:background="#0f415e">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/title_nav_main_page" />
     <android.support.v7.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
