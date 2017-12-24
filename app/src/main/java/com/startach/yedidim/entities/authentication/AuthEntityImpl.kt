@@ -32,6 +32,8 @@ class AuthEntityImpl(val activity: Activity, val userRegistrationState: UserRegi
     }
 
     override fun logout() {
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        Timber.d("Logout user : %s , %s", currentUser?.displayName,currentUser?.email)
         FirebaseAuth.getInstance().signOut()
     }
 
