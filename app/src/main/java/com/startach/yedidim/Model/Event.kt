@@ -1,7 +1,10 @@
 package com.startach.yedidim.Model
 
+import android.content.res.Resources
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import com.startach.yedidim.R
+import com.startach.yedidim.utils.empty
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -12,8 +15,21 @@ data class Event(
         @SerializedName("psid") val psid: String? = null,
         @SerializedName("source") val source: String? = null,
         @SerializedName("status") val status: String? = null,
-        @SerializedName("timestamp") val timestamp: Long? = null
+        @SerializedName("timestamp") val timestamp: Long? = null,
+        @SerializedName("assignedTo") val assignedTo: String? = null
 ) : Parcelable
+
+fun Event.displayableCase(resources: Resources): String? {
+    var case: String? = String.empty
+    val events = resources.getStringArray(R.array.event_cases)
+    val eventCase = this.details?.case
+    eventCase?.let {
+        if (events.indices.contains(eventCase)) {
+            case = events[eventCase]
+        }
+    }
+    return case
+}
 
 @Parcelize
 data class Details(

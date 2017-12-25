@@ -2,8 +2,10 @@ package com.startach.yedidim.network
 
 import com.startach.yedidim.Model.Event
 import com.startach.yedidim.entities.usermanagement.UserManager
+import com.startach.yedidim.utils.empty
 import io.reactivex.Completable
 import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
 
 
 class EventApi(private val userManager: UserManager,
@@ -29,15 +31,18 @@ class EventApi(private val userManager: UserManager,
                                     }
                                 }
                 }
+                .subscribeOn(Schedulers.io())
     }
 
-    fun completeEvent(eventKey: String): Completable {
+    fun closeEvent(eventKey: String): Completable {
         val completedEvent = Event(key = eventKey, status = STATUS_COMPLETED)
         return apiService.updateEvent(eventKey, completedEvent)
+                .subscribeOn(Schedulers.io())
     }
 
     fun cancelEvent(eventKey: String): Completable {
-        val cancelledEvent = Event(key = eventKey, status = STATUS_SENT)
+        val cancelledEvent = Event(key = eventKey, status = STATUS_SENT, assignedTo = String.empty)
         return apiService.updateEvent(eventKey, cancelledEvent)
+                .subscribeOn(Schedulers.io())
     }
 }

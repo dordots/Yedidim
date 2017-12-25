@@ -14,5 +14,9 @@ interface EventInfoViewModel {
 
     fun takeEvent(): Single<Boolean>
 
+    fun closeEvent(): Completable
+
+    fun cancelEvent(): Completable
+
     fun ignoreEvent(): Completable
 }
