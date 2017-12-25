@@ -31,13 +31,13 @@ import timber.log.Timber;
 
 public class MainPageActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    // TODO: Refactor to Factory
-//    private Fragment personalFragment = new PersonalInfoFragment();
-    private Fragment mainFragment = null;
+    
     private Fragment settingsFragment = new SettingsFragment();
     private Fragment aboutUsFragment = new AboutUsFragment();
-//    private Fragment dispatcherFragment = new DispatchersFragment();
-//    private Fragment developersFragment = new DevelopersFragment();
+
+    //    private Fragment developersFragment = new DevelopersFragment();
+//    private Fragment personalFragment = new PersonalInfoFragment();
+    private Fragment mainFragment = null;
 
     @Inject
     UserManager userManager;
@@ -104,10 +104,7 @@ public class MainPageActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-//        if (id == R.id.nav_main_screen) {
-//            setTitle(R.string.title_nav_main_page);
-//            startFragment(dispatcherFragment);
-//        } else if (id == R.id.nav_personal_info) {
+// if (id == R.id.nav_personal_info) {
 //            setTitle(R.string.title_nav_personal_information);
 //            startFragment(personalFragment);
 //        } else

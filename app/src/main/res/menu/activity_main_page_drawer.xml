@@ -2,11 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
-        <!--<item-->
-            <!--android:id="@+id/nav_main_screen"-->
-            <!--android:icon="@drawable/ic_action_home"-->
-            <!--android:title="@string/title_nav_main_page"-->
-            <!--android:checked="true"/>-->
         <item
             android:id="@+id/nav_val_screen"
             android:icon="@drawable/ic_call"
