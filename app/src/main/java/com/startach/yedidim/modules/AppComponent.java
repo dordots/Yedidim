@@ -1,5 +1,6 @@
 package com.startach.yedidim.modules;
 
+import com.startach.yedidim.Activity.MainPageActivity;
 import com.startach.yedidim.entities.notification.YedidimFirebaseInstanceIdService;
 import com.startach.yedidim.modules.auth.AuthModule;
 import com.startach.yedidim.modules.eventinfoactivity.EventInfoActivityModule;
@@ -43,4 +44,6 @@ public interface AppComponent {
     MainPageFragmentSubComponent newMainPageFragmentSubComponent(MainPageFragmentModule mainPageFragmentModule);
 
     SettingsFragmentSubComponent newSettingsFragmentSubComponent(SettingsFragmentModule settingsFragmentModule,  AuthModule authModule);
+
+    void inject(MainPageActivity mainPageActivity);
 }

@@ -12,6 +12,7 @@ import com.startach.yedidim.entities.authentication.AuthEntity;
 import com.startach.yedidim.modules.App;
 import com.startach.yedidim.modules.auth.AuthModule;
 import com.startach.yedidim.modules.splashactivity.SplashActivityModule;
+import com.startach.yedidim.testfairy.TestFairyInit;
 
 import javax.inject.Inject;
 
@@ -24,6 +25,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        TestFairyInit.start(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
