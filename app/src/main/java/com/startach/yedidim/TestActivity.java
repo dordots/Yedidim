@@ -17,7 +17,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.reactivex.Single;
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import retrofit2.Retrofit;
 import timber.log.Timber;
@@ -45,10 +45,10 @@ public class TestActivity extends AppCompatActivity {
     @OnClick(R.id.button2)
     public void sendSmsClicked() {
         authEntity.isAuthenticated()
-                .flatMap(isAuthenticated -> {
+                .flatMapObservable(isAuthenticated -> {
                     Timber.d("isAuthenticated = " + isAuthenticated);
                     if (isAuthenticated) {
-                        return Single.just(AuthState.Success);
+                        return Observable.just(AuthState.Success);
                     } else {
                         return authEntity.verifyPhoneNumber(editTextPhone.getText().toString())
                                 .observeOn(AndroidSchedulers.mainThread());

@@ -24,7 +24,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.SingleSource;
+import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
@@ -85,24 +85,24 @@ public class LoginActivity extends AppCompatActivity {
                         : m_CodeField.getText().toString()
                 )
                 .doOnNext(text->Timber.d(text))
-                .switchMapSingle(handleSendButton())
+                .switchMap(handleSendButton())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(getAuthResultMapper());
 
         RxView.clicks(m_ResendCode)
                 .throttleFirst(2, TimeUnit.SECONDS)
                 .map(clicks->m_PhoneField.getText().toString())
-                .switchMapSingle(handleResendButton())
+                .switchMap(handleResendButton())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(getAuthResultMapper());
     }
 
-    private Function<String ,SingleSource<AuthState>> handleResendButton() {
+    private Function<String, ObservableSource<AuthState>> handleResendButton() {
         return phoneNum -> loginActivityViewModel.resendCode(phoneNum);
     }
 
     @NonNull
-    private Function<String, SingleSource<? extends AuthState>> handleSendButton() {
+    private Function<String, ObservableSource<? extends AuthState>> handleSendButton() {
         return numberOrCode -> {
             Timber.d("Number state : %s" , phoneMode.toString());
             return (phoneMode)
