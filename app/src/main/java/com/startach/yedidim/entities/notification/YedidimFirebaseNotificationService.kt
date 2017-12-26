@@ -16,8 +16,10 @@ class YedidimFirebaseNotificationService : FirebaseMessagingService() {
             Timber.d("Message data payload: " + remoteMessage.data)
             val rawEvent = remoteMessage.data["event"]
             rawEvent.let {
+                Timber.d("Incoming event Json : %s", it)
                 val gson = Gson()
                 val event = gson.fromJson<Event>(it, Event::class.java)
+                Timber.d("Event parsed successfully")
                 event.let {
                     NotificationsGenerator(this,it).notifyNow()
                 }
