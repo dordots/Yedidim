@@ -9,12 +9,22 @@
 
     <!--Profile image for the chat head.-->
     <ImageView
-        android:id="@+id/chat_head_profile_iv"
+        android:id="@+id/chat_head_event_page"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginTop="8dp"
         android:src="@mipmap/ic_launcher"
-        tools:ignore="ContentDescription"/>
+        tools:ignore="ContentDescription"
+        android:layout_alignParentTop="true"
+        />
+
+    <ImageView
+        android:id="@+id/chat_head_get_event"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_below="@+id/chat_head_event_page"
+        android:src="@mipmap/ic_launcher"
+        tools:ignore="ContentDescription" />
 
     <!--&lt;!&ndash;Close button&ndash;&gt;-->
     <!--<ImageView-->

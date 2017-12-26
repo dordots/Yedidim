@@ -19,6 +19,7 @@ data class Event(
         @SerializedName("assignedTo") val assignedTo: String? = null
 ) : Parcelable {
     constructor(caseIn: Int?) : this(Details(case = caseIn))
+    constructor(caseIn: Int?, lat: Double?, lon: Double?) : this(Details(case = caseIn,geo = Geo(lat,lon)))
 }
 
 fun Event.displayableCase(resources: Resources): String? {

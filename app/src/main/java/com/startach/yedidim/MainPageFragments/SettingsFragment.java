@@ -63,7 +63,8 @@ public class SettingsFragment extends Fragment {
         view.findViewById(R.id.not_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Event event = new Event(new Random().nextInt(10));
+                final int caseInTemp = new Random().nextInt(10);
+                final Event event = new Event(caseInTemp,32.186414,34.889700);
 
                 NotificationsGenerator notificationsGenerator = new NotificationsGenerator(getContext(), event);
                 notificationsGenerator.notifyNow();
