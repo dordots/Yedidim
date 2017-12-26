@@ -5,7 +5,7 @@ import com.startach.yedidim.entities.authentication.AuthState;
 
 import java.util.regex.Pattern;
 
-import io.reactivex.Single;
+import io.reactivex.Observable;
 
 /**
  * Created by yb34982 on 06/09/2017.
@@ -30,18 +30,18 @@ public class LoginActivityViewModelImpl implements LoginActivityViewModel {
     }
 
     @Override
-    public Single<AuthState> verifyPhoneNumberInServer(String phoneNumber) {
+    public Observable<AuthState> verifyPhoneNumberInServer(String phoneNumber) {
         return authEntity.verifyPhoneNumber(phoneNumber);
     }
 
     @Override
-    public Single<AuthState> verifyCodeInServer(String code) {
+    public Observable<AuthState> verifyCodeInServer(String code) {
         return authEntity.loginWithCode(code);
     }
 
     @Override
-    public Single<AuthState> resendCode(String phoneNumber) {
-        return authEntity.firebaseVerificationRetry(phoneNumber);
+    public Observable<AuthState> resendCode(String phoneNumber) {
+        return authEntity.verificationRetry(phoneNumber);
     }
 
 

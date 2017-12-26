@@ -5,8 +5,9 @@ import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
+import io.reactivex.Observable
+import io.reactivex.ObservableEmitter
 import io.reactivex.Single
-import io.reactivex.SingleEmitter
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
@@ -17,7 +18,7 @@ class AuthEntityImpl(val activity: Activity, val userRegistrationState: UserRegi
         val VERIFICATION_TIMEOUT_SEC = 120L
     }
 
-    private lateinit var emitter: SingleEmitter<AuthState>
+    private lateinit var emitter: ObservableEmitter<AuthState>
 
     private var verificationId: String? = null
     private var token: PhoneAuthProvider.ForceResendingToken? = null
@@ -37,19 +38,19 @@ class AuthEntityImpl(val activity: Activity, val userRegistrationState: UserRegi
         FirebaseAuth.getInstance().signOut()
     }
 
-    override fun verifyPhoneNumber(phoneNum: String): Single<AuthState> {
+    override fun verifyPhoneNumber(phoneNum: String): Observable<AuthState> {
         return userRegistrationState.isUserRegistered(phoneNum)
-                .flatMap { isRegistered ->
+                .flatMapObservable { isRegistered ->
                     if (isRegistered)
-                        return@flatMap firebaseVerificationRetry(phoneNum)
+                        return@flatMapObservable verificationRetry(phoneNum)
                     else
-                        return@flatMap Single.just(AuthState.UnregisteredUser)
+                        return@flatMapObservable Observable.just(AuthState.UnregisteredUser)
                 }
 
     }
 
-    override fun firebaseVerificationRetry(phoneNum: String): Single<AuthState> {
-        return Single.create<AuthState> {
+    override fun verificationRetry(phoneNum: String): Observable<AuthState> {
+        return Observable.create<AuthState> {
             emitter = it
 
             PhoneAuthProvider.getInstance().verifyPhoneNumber(phoneNum, VERIFICATION_TIMEOUT_SEC, TimeUnit.SECONDS, activity,
@@ -65,20 +66,21 @@ class AuthEntityImpl(val activity: Activity, val userRegistrationState: UserRegi
 
             override fun onVerificationFailed(e: FirebaseException) {
                 Timber.e(e, "verification failed")
-                emitter.onSuccess(AuthState.Failure)
+                emitter.onNext(AuthState.Failure)
+                emitter.onComplete()
             }
 
             override fun onCodeSent(verificationId: String?, token: PhoneAuthProvider.ForceResendingToken?) {
                 this@AuthEntityImpl.verificationId = verificationId
                 this@AuthEntityImpl.token = token
                 Timber.d("code sent")
-                emitter.onSuccess(AuthState.CodeSent)
+                emitter.onNext(AuthState.CodeSent)
             }
         }
     }
 
-    override fun loginWithCode(code: String): Single<AuthState> {
-        return Single.create<AuthState> {
+    override fun loginWithCode(code: String): Observable<AuthState> {
+        return Observable.create<AuthState> {
             emitter = it
             if (verificationId == null) {
                 val illegalStateException = IllegalStateException("loginWithCode must be invoked after receiving AuthState.CodeSent in verifyPhoneNumber")
@@ -96,9 +98,11 @@ class AuthEntityImpl(val activity: Activity, val userRegistrationState: UserRegi
                 .addOnCompleteListener(activity, { task ->
                     if (task.isSuccessful) {
                         Timber.d("signInWithCredential:success")
-                        emitter.onSuccess(AuthState.Success)
+                        emitter.onNext(AuthState.Success)
+                        emitter.onComplete()
                     } else {
-                        emitter.onSuccess(AuthState.Failure)
+                        emitter.onNext(AuthState.Failure)
+                        emitter.onComplete()
                         Timber.e(task.exception, "signInWithCredential:failure")
                     }
                 })
