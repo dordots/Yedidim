@@ -17,16 +17,25 @@ class NotificationDeviceIdSyncer(private val volunteerApi: VolunteerApi, private
                     return@flatMapCompletable Single.fromCallable {
                         return@fromCallable FirebaseInstanceId.getInstance().token ?: throw Exception("Instance ID token isn't initialized")
                     }
-                            .flatMapCompletable { instanceId -> volunteerApi.updateInstanceId(userId, instanceId) }
+                            .flatMapCompletable { instanceId ->
+                                volunteerApi.updateInstanceId(userId, instanceId)
+                                        .doOnComplete {
+                                            userManager.active = true
+                                        }
+                            }
                 }
     }
 
-    fun resetDeviceID() : Completable {
+    fun resetDeviceID(): Completable {
         return userManager.getCurrentUser()
                 .map { user ->
-                    val userID : String = user.id ?: throw Exception("user id is null")
+                    val userID: String = user.id ?: throw Exception("user id is null")
                     return@map userID
                 }
-                .flatMapCompletable { userID -> volunteerApi.updateInstanceId(userID, String.empty) }
+                .flatMapCompletable { userID ->
+                    volunteerApi.updateInstanceId(userID, String.empty).doOnComplete {
+                        userManager.active = false
+                    }
+                }
     }
 }

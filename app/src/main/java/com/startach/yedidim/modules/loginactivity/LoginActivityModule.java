@@ -6,6 +6,7 @@ import com.startach.yedidim.LoginActivity;
 import com.startach.yedidim.LoginActivityViewModel;
 import com.startach.yedidim.LoginActivityViewModelImpl;
 import com.startach.yedidim.entities.authentication.AuthEntity;
+import com.startach.yedidim.entities.notification.NotificationDeviceIdSyncer;
 import com.startach.yedidim.modules.ActivityScope;
 
 import dagger.Module;
@@ -26,8 +27,8 @@ public class LoginActivityModule {
 
     @ActivityScope
     @Provides
-    LoginActivityViewModel provideLoginActivityViewModel(AuthEntity authEntity) {
-        return new LoginActivityViewModelImpl(authEntity);
+    LoginActivityViewModel provideLoginActivityViewModel(AuthEntity authEntity, NotificationDeviceIdSyncer notificationDeviceIdSyncer) {
+        return new LoginActivityViewModelImpl(authEntity, notificationDeviceIdSyncer);
     }
 
     @Provides
