@@ -10,7 +10,6 @@ class MainPageViewModelImpl(private val userManager: UserManager, private val no
     override fun isActive(): Observable<Boolean> = userManager.activeStateSubject
 
     override fun setActivateState(state: Boolean) : Completable {
-        userManager.active = state
         return when(state){
             true -> notificationDeviceIdSyncer.syncDeviceID()
             false -> notificationDeviceIdSyncer.resetDeviceID()
