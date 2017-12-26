@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.startach.yedidim.MainPageFragments.AboutUsFragment;
+import com.startach.yedidim.MainPageFragments.EventsFragment;
 import com.startach.yedidim.MainPageFragments.MainPageFragment;
 import com.startach.yedidim.MainPageFragments.SettingsFragment;
 import com.startach.yedidim.R;
@@ -40,6 +41,7 @@ public class MainPageActivity extends AppCompatActivity
 
     private Fragment settingsFragment = new SettingsFragment();
     private Fragment aboutUsFragment = new AboutUsFragment();
+    private Fragment eventsFragment = new EventsFragment();
 
     //    private Fragment developersFragment = new DevelopersFragment();
 //    private Fragment personalFragment = new PersonalInfoFragment();
@@ -126,9 +128,9 @@ public class MainPageActivity extends AppCompatActivity
         if (id == R.id.nav_settings) {
             setTitle(R.string.title_nav_settings);
             startFragment(settingsFragment);
-//        } else if (id == R.id.nav_developers) {
-//            setTitle(R.string.title_nav_developers);
-//            startFragment(developersFragment);
+        } else if (id == R.id.nav_events) {
+            setTitle(R.string.title_events);
+            startFragment(eventsFragment);
         } else if (id == R.id.nav_about_us) {
             setTitle(R.string.title_nav_about_us);
             startFragment(aboutUsFragment);

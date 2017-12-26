@@ -6,10 +6,10 @@
             android:id="@+id/nav_val_screen"
             android:icon="@drawable/ic_call"
             android:title="@string/title_nav_val_page" />
-        <!--<item-->
-            <!--android:id="@+id/nav_personal_info"-->
-            <!--android:icon="@drawable/ic_action_user"-->
-            <!--android:title="@string/title_nav_personal_information" />-->
+        <item
+            android:id="@+id/nav_events"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/title_events" />
         <item
             android:id="@+id/nav_about_us"
             android:icon="@drawable/ic_info"

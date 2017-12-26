@@ -91,7 +91,9 @@ class EventInfoActivity : AppCompatActivity() {
 
     @OnClick(R.id.btn_navigate)
     fun navigate() {
-        val uri = String.format(ENGLISH, "geo:%f,%f", cevent.details?.geo?.lat, cevent.details?.geo?.lon)
+        val geo = cevent.details?.geo
+        Timber.d("Navigating to lat : %s, lon : %s",  geo?.lat, geo?.lng)
+        val uri = String.format(ENGLISH, "geo:%f,%f", geo?.lat, geo?.lng)
         val intentNav = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
         startActivity(Intent.createChooser(intentNav, "Select your maps app"))
 

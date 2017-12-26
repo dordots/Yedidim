@@ -7,20 +7,43 @@ import com.startach.yedidim.R
 import com.startach.yedidim.utils.empty
 import kotlinx.android.parcel.Parcelize
 
+
 @Parcelize
 data class Event(
-        @SerializedName("details") val details: Details? = null,
-        @SerializedName("key") val key: String? = null,
-        @SerializedName("lastMessage") val lastMessage: String? = null,
-        @SerializedName("psid") val psid: String? = null,
-        @SerializedName("source") val source: String? = null,
-        @SerializedName("status") val status: String? = null,
-        @SerializedName("timestamp") val timestamp: Long? = null,
-        @SerializedName("assignedTo") val assignedTo: String? = null
-) : Parcelable {
+		@SerializedName("details") val details: Details? = Details(),
+		@SerializedName("dispatcher") val dispatcher: String? = "", //003
+		@SerializedName("key") val key: String? = "", //-KwEbiayp9GQvqFESoFl
+		@SerializedName("lastMessage") val lastMessage: String? = "", //confirm_request
+		@SerializedName("psid") val psid: String? = "", //1895445410472195
+		@SerializedName("source") val source: String? = "", //fb-bot
+		@SerializedName("status") val status: String? = "", //completed
+		@SerializedName("timestamp") val timestamp: Long? = 0, //1507878934459
+		@SerializedName("assignedTo") val assignedTo: String? = null
+): Parcelable {
     constructor(caseIn: Int?) : this(Details(case = caseIn))
     constructor(caseIn: Int?, lat: Double?, lon: Double?) : this(Details(case = caseIn,geo = Geo(lat,lon)))
 }
+
+@Parcelize
+data class Details(
+		@SerializedName("address") val address: String? = "", //אבן גבירול 34 תל אביב
+		@SerializedName("caller name") val callerName: String? = "", //דני דין
+		@SerializedName("car type") val carType: String? = "", //מאזדה 5
+		@SerializedName("case") val case: Int? = 0, //4
+		@SerializedName("city") val city: String? = "", //תל אביב
+		@SerializedName("full_address") val fullAddress: String? = "", //בבלי 1, תל אביב יפו, ישראל
+		@SerializedName("geo") val geo: Geo? = Geo(),
+		@SerializedName("more") val more: String? = "", //נתקעתי בלי דלק
+		@SerializedName("phone number") val phoneNumber: String? = "" //0542269106
+) : Parcelable
+
+@Parcelize
+data class Geo(
+		@SerializedName("lat") val lat: Double? = 0.0, //32.09347220000001
+		@SerializedName("lng") val lng: Double? = 0.0 //34.8000213
+) : Parcelable
+
+
 
 fun Event.displayableCase(resources: Resources): String? {
     var case: String? = String.empty
@@ -33,24 +56,3 @@ fun Event.displayableCase(resources: Resources): String? {
     }
     return case
 }
-
-@Parcelize
-data class Details(
-        @SerializedName("address") val address: String? = null,
-        @SerializedName("caller name") val callerName: String? = null,
-        @SerializedName("car type") val carType: String? = null,
-        @SerializedName("case") val case: Int? = null,
-        @SerializedName("city") val city: String? = null,
-        @SerializedName("full_address") val fullAddress: String? = null,
-        @SerializedName("geo") val geo: Geo? = null,
-        @SerializedName("more") val more: String? = null,
-        @SerializedName("phone number") val phoneNumber: String? = null,
-        @SerializedName("street_name") val streetName: String? = null,
-        @SerializedName("street_number") val streetNumber: Int? = null
-) : Parcelable
-
-@Parcelize
-data class Geo(
-        @SerializedName("lat") val lat: Double? = null,
-        @SerializedName("lon") val lon: Double? = null
-) : Parcelable
