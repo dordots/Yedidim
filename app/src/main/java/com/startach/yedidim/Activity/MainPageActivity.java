@@ -27,6 +27,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import timber.log.Timber;
 
 public class MainPageActivity extends AppCompatActivity
@@ -75,6 +76,7 @@ public class MainPageActivity extends AppCompatActivity
         TextView emailTextView = (TextView) headerView.findViewById(R.id.email);
 
         userManager.getCurrentUser()
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(volunteer -> {
                     Timber.d("User Data : %s,%s", volunteer.getLastName(), volunteer.getEmailAddress());
                     userNameTextView.setText(String.format("%s %s", volunteer.getFirstName(), volunteer.getLastName()));
