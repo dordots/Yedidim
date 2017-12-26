@@ -24,6 +24,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class EventInfoActivity : AppCompatActivity() {
+    lateinit var cevent : Event
 
     companion object {
 
@@ -62,6 +63,7 @@ class EventInfoActivity : AppCompatActivity() {
                 .newEventInfoActivitySubComponent(EventInfoActivityModule(this))
                 .inject(this)
         val event = extractEvent(intent)
+        cevent = event
         Timber.d("event = " + event)
         vm.bindViewModel(event)
 
@@ -86,7 +88,10 @@ class EventInfoActivity : AppCompatActivity() {
 
     @OnClick(R.id.btn_navigate)
     fun navigate() {
-
+        val intent = Intent(this,ChatHeadService::class.java)
+        intent.putExtra(EXTRAS_EVENT, cevent)
+        startService(intent)
+        finish()
     }
 
     @OnClick(R.id.btn_call)

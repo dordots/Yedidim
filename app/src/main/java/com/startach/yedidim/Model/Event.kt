@@ -17,7 +17,9 @@ data class Event(
         @SerializedName("status") val status: String? = null,
         @SerializedName("timestamp") val timestamp: Long? = null,
         @SerializedName("assignedTo") val assignedTo: String? = null
-) : Parcelable
+) : Parcelable {
+    constructor(caseIn: Int?) : this(Details(case = caseIn))
+}
 
 fun Event.displayableCase(resources: Resources): String? {
     var case: String? = String.empty
