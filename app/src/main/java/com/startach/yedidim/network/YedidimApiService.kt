@@ -26,6 +26,9 @@ interface YedidimApiService {
     @PATCH("events/{key}.json")
     fun updateEvent(@Path("key") key: String, @Body event: Event): Completable
 
+//    @GET("events.json?orderBy=\"status\"")
+//    fun getEventsList(@Query("equalTo") eventStatus: String) : Single<Map<String,Event>>
+
     @GET("events.json")
     fun getEventsList() : Single<Map<String,Event>>
 }

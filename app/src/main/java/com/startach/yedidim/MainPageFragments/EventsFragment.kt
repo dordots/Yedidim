@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.startach.yedidim.EventInfoActivity
 import com.startach.yedidim.Model.Event
+import com.startach.yedidim.Model.EventStatus
 import com.startach.yedidim.R
 import com.startach.yedidim.modules.App
 import com.startach.yedidim.modules.eventfragment.EventsFragmentModule
@@ -52,9 +53,9 @@ class EventsFragment : Fragment() {
         val view = inflater!!.inflate(R.layout.fragment_eventitem_list, container, false)
 
 
-        eventapi.listOfEvents()
+        eventapi.listOfEvents(EventStatus.SENT).mergeWith(eventapi.listOfEvents(EventStatus.DRAFT))
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { data, thr ->
+                .subscribe { data ->
                     Timber.d(data.size.toString())
                     if (view is RecyclerView) {
                         val context = view.getContext()

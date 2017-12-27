@@ -40,7 +40,7 @@ data class Details(
 @Parcelize
 data class Geo(
 		@SerializedName("lat") val lat: Double? = 0.0, //32.09347220000001
-		@SerializedName("lng") val lng: Double? = 0.0 //34.8000213
+		@SerializedName("lon") val lon: Double? = 0.0 //34.8000213
 ) : Parcelable
 
 
@@ -56,3 +56,5 @@ fun Event.displayableCase(resources: Resources): String? {
     }
     return case
 }
+
+
