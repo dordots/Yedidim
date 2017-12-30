@@ -3,6 +3,8 @@ package com.startach.yedidim.modules;
 import com.startach.yedidim.Activity.MainPageActivity;
 import com.startach.yedidim.entities.notification.YedidimFirebaseInstanceIdService;
 import com.startach.yedidim.modules.auth.AuthModule;
+import com.startach.yedidim.modules.eventfragment.EventsFragmentModule;
+import com.startach.yedidim.modules.eventfragment.EventsFragmentSubComponent;
 import com.startach.yedidim.modules.eventinfoactivity.EventInfoActivityModule;
 import com.startach.yedidim.modules.eventinfoactivity.EventInfoActivitySubComponent;
 import com.startach.yedidim.modules.loginactivity.LoginActivityModule;
@@ -46,4 +48,6 @@ public interface AppComponent {
     SettingsFragmentSubComponent newSettingsFragmentSubComponent(SettingsFragmentModule settingsFragmentModule,  AuthModule authModule);
 
     void inject(MainPageActivity mainPageActivity);
+
+    EventsFragmentSubComponent newEventsFragmentSubComponent(EventsFragmentModule eventsFragmentModule);
 }

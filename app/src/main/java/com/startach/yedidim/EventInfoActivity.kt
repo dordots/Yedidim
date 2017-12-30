@@ -2,6 +2,7 @@ package com.startach.yedidim
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.annotation.StringRes
 import android.support.constraint.Group
@@ -21,9 +22,12 @@ import com.startach.yedidim.utils.plusAssign
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import timber.log.Timber
+import java.util.Locale.ENGLISH
 import javax.inject.Inject
 
+
 class EventInfoActivity : AppCompatActivity() {
+    lateinit var cevent : Event
 
     companion object {
 
@@ -62,6 +66,7 @@ class EventInfoActivity : AppCompatActivity() {
                 .newEventInfoActivitySubComponent(EventInfoActivityModule(this))
                 .inject(this)
         val event = extractEvent(intent)
+        cevent = event
         Timber.d("event = " + event)
         vm.bindViewModel(event)
 
@@ -86,7 +91,16 @@ class EventInfoActivity : AppCompatActivity() {
 
     @OnClick(R.id.btn_navigate)
     fun navigate() {
+        val geo = cevent.details?.geo
+        Timber.d("Navigating to lat : %s, lon : %s",  geo?.lat, geo?.lon)
+        val uri = String.format(ENGLISH, "geo:%f,%f", geo?.lat, geo?.lon)
+        val intentNav = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
+        startActivity(Intent.createChooser(intentNav, "Select your maps app"))
 
+        val intent = Intent(this,ChatHeadService::class.java)
+        intent.putExtra(EXTRAS_EVENT, cevent)
+        startService(intent)
+        finish()
     }
 
     @OnClick(R.id.btn_call)

@@ -1,7 +1,11 @@
 package com.startach.yedidim.Activity;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,8 +19,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.startach.yedidim.MainPageFragments.AboutUsFragment;
+import com.startach.yedidim.MainPageFragments.EventsFragment;
 import com.startach.yedidim.MainPageFragments.MainPageFragment;
 import com.startach.yedidim.MainPageFragments.SettingsFragment;
 import com.startach.yedidim.R;
@@ -32,9 +38,11 @@ import timber.log.Timber;
 
 public class MainPageActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    
+    private static final int CODE_DRAW_OVER_OTHER_APP_PERMISSION = 2084;
+
     private Fragment settingsFragment = new SettingsFragment();
     private Fragment aboutUsFragment = new AboutUsFragment();
+    private Fragment eventsFragment = new EventsFragment();
 
     //    private Fragment developersFragment = new DevelopersFragment();
 //    private Fragment personalFragment = new PersonalInfoFragment();
@@ -82,6 +90,15 @@ public class MainPageActivity extends AppCompatActivity
                     userNameTextView.setText(String.format("%s %s", volunteer.getFirstName(), volunteer.getLastName()));
                     emailTextView.setText(volunteer.getEmailAddress());
                 });
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
+
+            //If the draw over permission is not available open the settings screen
+            //to grant the permission.
+            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:" + getPackageName()));
+            startActivityForResult(intent, CODE_DRAW_OVER_OTHER_APP_PERMISSION);
+        }
     }
 
     @Override
@@ -113,9 +130,9 @@ public class MainPageActivity extends AppCompatActivity
         if (id == R.id.nav_settings) {
             setTitle(R.string.title_nav_settings);
             startFragment(settingsFragment);
-//        } else if (id == R.id.nav_developers) {
-//            setTitle(R.string.title_nav_developers);
-//            startFragment(developersFragment);
+        } else if (id == R.id.nav_events) {
+            setTitle(R.string.title_events);
+            startFragment(eventsFragment);
         } else if (id == R.id.nav_about_us) {
             setTitle(R.string.title_nav_about_us);
             startFragment(aboutUsFragment);
@@ -141,5 +158,24 @@ public class MainPageActivity extends AppCompatActivity
         transaction.replace(R.id.fragmentHolder, fragment);
         transaction.disallowAddToBackStack();
         transaction.commit();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CODE_DRAW_OVER_OTHER_APP_PERMISSION) {
+
+            //Check if the permission is granted or not.
+            if (resultCode == RESULT_OK) {
+
+            } else { //Permission is not available
+                Toast.makeText(this,
+                        "Draw over other app permission not available. Closing the application",
+                        Toast.LENGTH_SHORT).show();
+
+                finish();
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }

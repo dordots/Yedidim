@@ -10,11 +10,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.jakewharton.rxbinding2.view.RxView;
+import com.startach.yedidim.Model.Event;
 import com.startach.yedidim.R;
+import com.startach.yedidim.entities.notification.NotificationsGenerator;
 import com.startach.yedidim.modules.App;
 import com.startach.yedidim.modules.auth.AuthModule;
 import com.startach.yedidim.modules.settingsfragment.SettingsFragmentModule;
 import com.startach.yedidim.modules.settingsfragment.SettingsFragmentViewModel;
+
+import java.util.Random;
 
 import javax.inject.Inject;
 
@@ -56,6 +60,16 @@ public class SettingsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         RxView.clicks(logoutButton)
                 .subscribe(ignore->logOutApplication());
+        view.findViewById(R.id.not_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final int caseInTemp = new Random().nextInt(10);
+                final Event event = new Event(caseInTemp,32.186414,34.889700);
+
+                NotificationsGenerator notificationsGenerator = new NotificationsGenerator(getContext(), event);
+                notificationsGenerator.notifyNow();
+            }
+        });
     }
 
     private void logOutApplication() {

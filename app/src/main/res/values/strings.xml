@@ -117,6 +117,7 @@
     <string name="event_info_ignore_event">מחק אירוע</string>
     <string name="event_info_close_event_error">לא ניתן לסיים אירוע, אנא נסה שנית</string>
     <string name="event_info_take_event_error">אירעה שגיאה, לא ניתן לקחת אירוע</string>
+    <string name="title_events">אירועים</string>
     <string-array name="event_cases">
         <item>אחר</item>
         <item>פנצ\'ר (אין רזרבי)</item>
