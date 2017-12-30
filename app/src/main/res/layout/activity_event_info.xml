@@ -272,11 +272,11 @@
         android:padding="16dp"
         android:text="@string/event_info_close_event"
         android:textSize="24sp"
-        tools:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btn_cancel_event"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="gone" />
 
     <Button
         android:id="@+id/btn_cancel_event"
@@ -291,10 +291,32 @@
         android:padding="16dp"
         android:text="@string/event_info_cancel_event"
         android:textSize="24sp"
-        tools:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btn_close_event" />
+        app:layout_constraintStart_toEndOf="@+id/btn_close_event"
+        tools:visibility="gone" />
+
+    <View
+        android:id="@+id/mask_progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#a0000000"
+        android:backgroundTint="#a0000000" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.constraint.Group
+        android:id="@+id/group_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="mask_progress, progress_bar" />
 
 </android.support.constraint.ConstraintLayout>

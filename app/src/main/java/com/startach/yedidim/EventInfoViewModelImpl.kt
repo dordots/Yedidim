@@ -1,38 +1,71 @@
 package com.startach.yedidim
 
+import com.startach.yedidim.EventInfoViewModel.*
 import com.startach.yedidim.Model.Event
 import com.startach.yedidim.entities.notification.EventNotificationEntity
 import com.startach.yedidim.network.EventApi
-import io.reactivex.Completable
 import io.reactivex.Observable
-import io.reactivex.Single
 
-class EventInfoViewModelImpl(private val eventApi: EventApi, private val eventNotificationEntity: EventNotificationEntity) : EventInfoViewModel {
+class EventInfoViewModelImpl(private val eventApi: EventApi, private val eventNotificationEntity: EventNotificationEntity,
+                             private val navigator: Navigator) : EventInfoViewModel {
+    private lateinit var inputs: EventInfoViewModel.Inputs
     lateinit var event: Event
 
-    var eventTaken: Boolean = false
-    override fun bindViewModel(event: Event) {
+    private val stateObservables: MutableList<Observable<State>> = mutableListOf()
+
+    override fun bindViewModel(event: Event, inputs: EventInfoViewModel.Inputs) {
+        this.inputs = inputs
         this.event = event
+
+        stateObservables += inputs.takeEvent()
+                .flatMap {
+                    eventApi.takeEvent(event.key.orEmpty())
+                            .toObservable()
+                            .map {
+                                when (it) {
+                                    true -> HandlingState()
+                                    false -> AlreadyTakenState()
+                                }
+                            }
+                            .startWith(ProcessingState())
+                }
+                .onErrorReturn { ErrorState(ErrorState.OperationType.Take, it) }
+        stateObservables += inputs.cancelEvent()
+                .flatMap<State> {
+                    eventApi.cancelEvent(event.key.orEmpty())
+                            .andThen(Observable.just<State>(ExitState()))
+                            .startWith(ProcessingState())
+                }
+                .onErrorReturn { ErrorState(ErrorState.OperationType.Cancel, it) }
+
+        stateObservables += inputs.ignoreEvent()
+                .flatMap<State> {
+                    eventNotificationEntity.dismissNotification(event)
+                    Observable.just(ExitState())
+                }
+                .onErrorReturn { ErrorState(ErrorState.OperationType.Ignore, it) }
+        stateObservables += inputs.closeEvent()
+                .flatMap<State> {
+                    eventApi.closeEvent(event.key.orEmpty())
+                            .andThen(Observable.fromCallable<State> {
+                                eventNotificationEntity.dismissNotification(event)
+                                ExitState()
+                            })
+                            .startWith(ProcessingState())
+                }
+                .onErrorReturn { ErrorState(ErrorState.OperationType.Close, it) }
+        stateObservables += inputs.navigate()
+                .map<State> {
+                    navigator.openFloatingEvent(event)
+                    ExitState()
+                }
     }
 
-    override fun eventLoadedObservable(): Observable<Event> {
+    override fun event(): Observable<Event> {
         return Observable.just(event)
     }
 
-    override fun takeEvent(): Single<Boolean> {
-        return eventApi.takeEvent(event.key.orEmpty())
-    }
-
-    override fun ignoreEvent(): Completable {
-        return Completable.fromAction { eventNotificationEntity.dismissNotification(event) }
-    }
-
-    override fun closeEvent(): Completable {
-        return eventApi.closeEvent(event.key.orEmpty())
-                .doOnComplete { eventNotificationEntity.dismissNotification(event) }
-    }
-
-    override fun cancelEvent(): Completable {
-        return eventApi.cancelEvent(event.key.orEmpty())
+    override fun viewState(): Observable<State> {
+        return Observable.merge(stateObservables)
     }
 }

@@ -2,9 +2,7 @@ package com.startach.yedidim
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.support.annotation.StringRes
 import android.support.constraint.Group
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
@@ -13,25 +11,25 @@ import android.widget.TextView
 import android.widget.Toast
 import butterknife.BindView
 import butterknife.ButterKnife
-import butterknife.OnClick
+import com.jakewharton.rxbinding2.view.RxView
 import com.startach.yedidim.Model.Event
 import com.startach.yedidim.Model.displayableCase
 import com.startach.yedidim.modules.App
 import com.startach.yedidim.modules.eventinfoactivity.EventInfoActivityModule
 import com.startach.yedidim.utils.plusAssign
+import com.startach.yedidim.utils.showDialog
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import timber.log.Timber
-import java.util.Locale.ENGLISH
 import javax.inject.Inject
 
 
-class EventInfoActivity : AppCompatActivity() {
-    lateinit var cevent : Event
+class EventInfoActivity : AppCompatActivity(), EventInfoViewModel.Inputs {
 
     companion object {
 
-        private val EXTRAS_EVENT = "event"
+        val EXTRAS_EVENT = "event"
 
         fun createIntent(context: Context, event: Event): Intent {
             val intent = Intent(context, EventInfoActivity::class.java)
@@ -53,6 +51,14 @@ class EventInfoActivity : AppCompatActivity() {
     @BindView(R.id.phone) lateinit var phone: TextView
     @BindView(R.id.group_extended_details) lateinit var extendedDetailsGroup: Group
     @BindView(R.id.group_basic_details) lateinit var basicDetailsGroup: Group
+    @BindView(R.id.group_progress) lateinit var progressGroup: Group
+
+    @BindView(R.id.btn_cancel_event) lateinit var cancelBtn: View
+    @BindView(R.id.btn_close_event) lateinit var closeBtn: View
+    @BindView(R.id.btn_ignore_event) lateinit var ignoreBtn: View
+    @BindView(R.id.btn_take_event) lateinit var takeBtn: View
+    @BindView(R.id.btn_navigate) lateinit var navigateBtn: View
+
 
     @Inject lateinit var vm: EventInfoViewModel
     private val disposables: CompositeDisposable = CompositeDisposable()
@@ -66,13 +72,10 @@ class EventInfoActivity : AppCompatActivity() {
                 .newEventInfoActivitySubComponent(EventInfoActivityModule(this))
                 .inject(this)
         val event = extractEvent(intent)
-        cevent = event
         Timber.d("event = " + event)
-        vm.bindViewModel(event)
+        vm.bindViewModel(event, this)
 
-        extendedDetailsGroup.visibility = View.GONE
-        basicDetailsGroup.visibility = View.VISIBLE
-        disposables += vm.eventLoadedObservable()
+        disposables += vm.event()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     address.text = it.details?.address
@@ -82,6 +85,41 @@ class EventInfoActivity : AppCompatActivity() {
                     eventType.text = it.displayableCase(resources)
                     car.text = it.details?.carType
                 }
+        progressGroup.visibility = View.GONE
+        extendedDetailsGroup.visibility = View.GONE
+        basicDetailsGroup.visibility = View.VISIBLE
+        disposables += vm.viewState()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { state ->
+                    when (state) {
+                        is EventInfoViewModel.AlreadyTakenState -> {
+                            progressGroup.visibility = View.GONE
+                            AlertDialog.Builder(this)
+                                    .setTitle(R.string.event_info_event_taken_title)
+                                    .setMessage(R.string.event_info_event_taken_message)
+                                    .setPositiveButton(android.R.string.ok, null)
+                                    .show()
+                        }
+                        is EventInfoViewModel.ProcessingState -> {
+                            progressGroup.visibility = View.VISIBLE
+                        }
+                        is EventInfoViewModel.ExitState -> {
+                            this.moveTaskToBack(false)
+                            finish()
+                        }
+                        is EventInfoViewModel.HandlingState -> {
+                            progressGroup.visibility = View.GONE
+                            extendedDetailsGroup.visibility = View.VISIBLE
+                            basicDetailsGroup.visibility = View.GONE
+                        }
+                        is EventInfoViewModel.ErrorState -> {
+                            progressGroup.visibility = View.GONE
+                            Toast.makeText(this, R.string.event_info_error_msg, Toast.LENGTH_LONG).show()
+                            Timber.d(state.throwable, "error occurred with operation = {${state.operation}}")
+                        }
+                    }
+
+                }
     }
 
     override fun onDestroy() {
@@ -89,86 +127,27 @@ class EventInfoActivity : AppCompatActivity() {
         disposables.clear()
     }
 
-    @OnClick(R.id.btn_navigate)
-    fun navigate() {
-        val geo = cevent.details?.geo
-        Timber.d("Navigating to lat : %s, lon : %s",  geo?.lat, geo?.lon)
-        val uri = String.format(ENGLISH, "geo:%f,%f", geo?.lat, geo?.lon)
-        val intentNav = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
-        startActivity(Intent.createChooser(intentNav, "Select your maps app"))
-
-        val intent = Intent(this,ChatHeadService::class.java)
-        intent.putExtra(EXTRAS_EVENT, cevent)
-        startService(intent)
-        finish()
+    override fun takeEvent(): Observable<Any> {
+        return RxView.clicks(takeBtn)
+                .showDialog(this, R.string.event_info_take_event_title, R.string.event_info_take_event_message)
     }
 
-    @OnClick(R.id.btn_call)
-    fun call() {
-
+    override fun cancelEvent(): Observable<Any> {
+        return RxView.clicks(cancelBtn)
+                .showDialog(this, R.string.event_info_cance_title, R.string.event_info_cancel_message)
     }
 
-    @OnClick(R.id.btn_cancel_event)
-    fun cancelEvent() {
-        vm.cancelEvent()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::finish,
-                        { t -> handleError(t, R.string.event_info_close_event_error, "cant cancel event") }
-                )
+    override fun closeEvent(): Observable<Any> {
+        return RxView.clicks(closeBtn)
+                .showDialog(this, R.string.event_info_close_title, R.string.event_info_close_message)
     }
 
-    @OnClick(R.id.btn_close_event)
-    fun closeEvent() {
-        vm.closeEvent()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::finish,
-                        { t -> handleError(t, R.string.event_info_close_event_error, "cant close event") }
-                )
+    override fun ignoreEvent(): Observable<Any> {
+        return RxView.clicks(ignoreBtn)
+                .showDialog(this, R.string.event_info_ignore_title, R.string.event_info_ignore_message)
     }
 
-    @OnClick(R.id.btn_ignore_event)
-    fun ignoreEvent() {
-        vm.ignoreEvent()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::finish)
-    }
-
-    @OnClick(R.id.btn_take_event)
-    fun takeEvent() {
-        AlertDialog.Builder(this)
-                .setTitle(R.string.event_info_take_event_title)
-                .setMessage(R.string.event_info_take_event_message)
-                .setPositiveButton(android.R.string.ok, { dialog, which ->
-                    vm.takeEvent()
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe({ res ->
-                                if (!res) {
-                                    AlertDialog.Builder(this)
-                                            .setTitle(R.string.event_info_event_taken_title)
-                                            .setMessage(R.string.event_info_event_taken_message)
-                                            .setIcon(R.drawable.ic_menu_gallery)
-                                            .setPositiveButton(R.string.dialog_close, { dialog, which ->
-                                                dialog.dismiss()
-                                            })
-                                            .show()
-                                } else {
-                                    extendedDetailsGroup.visibility = View.VISIBLE
-                                    basicDetailsGroup.visibility = View.GONE
-                                }
-                            },
-                                    { t -> handleError(t, R.string.event_info_take_event_error, "cant take event") }
-                            )
-                    dialog.dismiss()
-                })
-                .setNegativeButton(android.R.string.cancel, { dialog, which ->
-                    dialog.cancel()
-                })
-                .show()
-
-    }
-
-    private fun handleError(t: Throwable, @StringRes msg: Int, log: String) {
-        Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
-        Timber.d(t, log)
+    override fun navigate(): Observable<Any> {
+        return RxView.clicks(navigateBtn)
     }
 }

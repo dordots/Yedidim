@@ -1,22 +1,32 @@
 package com.startach.yedidim
 
 import com.startach.yedidim.Model.Event
-import io.reactivex.Completable
 import io.reactivex.Observable
-import io.reactivex.Single
 
 
 interface EventInfoViewModel {
 
-    fun bindViewModel(event: Event)
+    interface Inputs {
+        fun takeEvent(): Observable<Any>
+        fun cancelEvent(): Observable<Any>
+        fun closeEvent(): Observable<Any>
+        fun ignoreEvent(): Observable<Any>
+        fun navigate(): Observable<Any>
+    }
 
-    fun eventLoadedObservable(): Observable<Event>
+    interface State
 
-    fun takeEvent(): Single<Boolean>
+    class HandlingState : State
+    class ProcessingState : State
+    class AlreadyTakenState : State
+    class ExitState : State
+    class ErrorState(val operation: OperationType, val throwable: Throwable) : State {
+        enum class OperationType { Cancel, Take, Close, Ignore }
+    }
 
-    fun closeEvent(): Completable
+    fun bindViewModel(event: Event, inputs: Inputs)
 
-    fun cancelEvent(): Completable
+    fun event(): Observable<Event>
 
-    fun ignoreEvent(): Completable
+    fun viewState(): Observable<State>
 }
