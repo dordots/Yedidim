@@ -27,7 +27,20 @@ android {
         versionCode 1
         versionName "1.0.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation":
+                                     "$projectDir/schemas".toString()]
+            }
+        }
     }
+    // used by Room, to test migrations
+    sourceSets {
+        androidTest.assets.srcDirs +=
+                files("$projectDir/schemas".toString())
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -92,6 +105,8 @@ dependencies {
         transitive = true;
     }
     compile 'testfairy:testfairy-android-sdk:1.5.7@aar'
+    compile 'android.arch.persistence.room:runtime:1.0.0-alpha4'
+    kapt 'android.arch.persistence.room:compiler:1.0.0-alpha4'
 
 }
 apply plugin: 'com.google.gms.google-services'

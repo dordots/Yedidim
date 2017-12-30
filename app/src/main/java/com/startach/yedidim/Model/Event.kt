@@ -1,5 +1,6 @@
 package com.startach.yedidim.Model
 
+import android.arch.persistence.room.Entity
 import android.content.res.Resources
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
@@ -7,7 +8,7 @@ import com.startach.yedidim.R
 import com.startach.yedidim.utils.empty
 import kotlinx.android.parcel.Parcelize
 
-
+@Entity(primaryKeys = ["key"])
 @Parcelize
 data class Event(
 		@SerializedName("details") val details: Details? = Details(),

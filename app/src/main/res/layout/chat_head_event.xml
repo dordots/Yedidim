@@ -13,7 +13,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginTop="8dp"
-        android:src="@mipmap/ic_launcher"
+        android:src="@drawable/chat_head_return"
         tools:ignore="ContentDescription"
         android:layout_alignParentTop="true"
         />
@@ -23,7 +23,14 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_below="@+id/chat_head_event_page"
-        android:src="@mipmap/ic_launcher"
+        android:src="@drawable/chat_head_took"
+        tools:ignore="ContentDescription" />
+ <ImageView
+        android:id="@+id/chat_head_giveup_event"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_below="@+id/chat_head_get_event"
+        android:src="@drawable/chat_head_giveup"
         tools:ignore="ContentDescription" />
 
     <!--&lt;!&ndash;Close button&ndash;&gt;-->
