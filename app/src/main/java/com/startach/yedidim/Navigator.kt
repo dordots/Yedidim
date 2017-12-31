@@ -18,7 +18,9 @@ class Navigator(private val context: Context) {
         context.startActivity(Intent.createChooser(intentNav, "Select your maps app"))
 
         val intent = Intent(context, ChatHeadService::class.java)
-        intent.putExtra(EventInfoActivity.EXTRAS_EVENT, event)
+                .apply {
+                    this.putExtra(ChatHeadService.SERVICE_EVENT, event)
+                }
         context.startService(intent)
     }
 }

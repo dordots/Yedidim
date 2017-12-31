@@ -2,7 +2,6 @@ package com.startach.yedidim.MainPageFragments
 
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -11,8 +10,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.startach.yedidim.EventInfoActivity
+import com.startach.yedidim.EventState
 import com.startach.yedidim.Model.Event
-import com.startach.yedidim.Model.EventStatus
 import com.startach.yedidim.R
 import com.startach.yedidim.modules.App
 import com.startach.yedidim.modules.eventfragment.EventsFragmentModule
@@ -53,14 +52,14 @@ class EventsFragment : Fragment() {
         val view = inflater!!.inflate(R.layout.fragment_eventitem_list, container, false)
 
 
-        eventapi.listOfEvents(EventStatus.SENT).mergeWith(eventapi.listOfEvents(EventStatus.DRAFT))
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { data ->
+        eventapi.listOfEvents()
+                ?.observeOn(AndroidSchedulers.mainThread())
+                ?.subscribe { data ->
                     Timber.d(data.size.toString())
                     if (view is RecyclerView) {
                         val context = view.getContext()
                         view.layoutManager = LinearLayoutManager(context)
-                        view.adapter = MyEventItemRecyclerViewAdapter(data.values.toList(), mListener,resources)
+                        view.adapter = MyEventItemRecyclerViewAdapter(data.toList(), mListener,resources)
                     }
                 }
         // Set the adapter
@@ -77,9 +76,7 @@ class EventsFragment : Fragment() {
         } else {
             mListener = object : OnListFragmentInteractionListener {
                 override fun onListFragmentInteraction(item: Event) {
-                    val intent = Intent(activity, EventInfoActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    intent.putExtra("event", item)
+                    val intent = EventInfoActivity.createIntent(activity,item,EventState.PreDecision)
                     startActivity(intent)
                 }
 

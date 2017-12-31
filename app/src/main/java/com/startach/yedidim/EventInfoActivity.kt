@@ -29,18 +29,25 @@ class EventInfoActivity : AppCompatActivity(), EventInfoViewModel.Inputs {
 
     companion object {
 
-        val EXTRAS_EVENT = "event"
+        private val EXTRAS_EVENT = "event"
+        private val EXTRAS_EVENT_STATE = "event_state"
 
-        fun createIntent(context: Context, event: Event): Intent {
-            val intent = Intent(context, EventInfoActivity::class.java)
-            intent.putExtra(EXTRAS_EVENT, event)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            return intent
+        fun createIntent(context: Context, event: Event, eventState: EventState = EventState.PreDecision): Intent {
+            return Intent(context, EventInfoActivity::class.java).apply {
+                val extrasBundle = Bundle()
+                extrasBundle.putParcelable(EXTRAS_EVENT, event)
+                extrasBundle.putSerializable(EXTRAS_EVENT_STATE, eventState)
+                putExtras(extrasBundle)
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            }
         }
 
-        private fun extractEvent(intent: Intent): Event {
-            return intent.extras[EXTRAS_EVENT] as Event
-        }
+        private fun extractEvent(intent: Intent): Event =
+                intent.extras.getParcelable(EXTRAS_EVENT) as Event
+
+        private fun extractEventState(intent: Intent): EventState =
+                intent.extras.getSerializable(EXTRAS_EVENT_STATE) as EventState
+
     }
 
     @BindView(R.id.event_type) lateinit var eventType: TextView
@@ -62,6 +69,7 @@ class EventInfoActivity : AppCompatActivity(), EventInfoViewModel.Inputs {
 
     @Inject lateinit var vm: EventInfoViewModel
     private val disposables: CompositeDisposable = CompositeDisposable()
+    lateinit var extenalEventStatePublishSubject : Observable<EventState>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,6 +80,8 @@ class EventInfoActivity : AppCompatActivity(), EventInfoViewModel.Inputs {
                 .newEventInfoActivitySubComponent(EventInfoActivityModule(this))
                 .inject(this)
         val event = extractEvent(intent)
+        val eventState = extractEventState(intent)
+        extenalEventStatePublishSubject = Observable.just(eventState)
         Timber.d("event = " + event)
         vm.bindViewModel(event, this)
 
@@ -129,6 +139,7 @@ class EventInfoActivity : AppCompatActivity(), EventInfoViewModel.Inputs {
 
     override fun takeEvent(): Observable<Any> {
         return RxView.clicks(takeBtn)
+                .mergeWith(extenalEventStatePublishSubject.filter { it == EventState.Take })
                 .showDialog(this, R.string.event_info_take_event_title, R.string.event_info_take_event_message)
     }
 
@@ -144,10 +155,17 @@ class EventInfoActivity : AppCompatActivity(), EventInfoViewModel.Inputs {
 
     override fun ignoreEvent(): Observable<Any> {
         return RxView.clicks(ignoreBtn)
+                .mergeWith(extenalEventStatePublishSubject.filter { it == EventState.GiveUp })
                 .showDialog(this, R.string.event_info_ignore_title, R.string.event_info_ignore_message)
     }
 
     override fun navigate(): Observable<Any> {
         return RxView.clicks(navigateBtn)
     }
+}
+
+enum class EventState {
+    PreDecision,
+    Take,
+    GiveUp
 }

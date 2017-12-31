@@ -126,14 +126,15 @@
     <string name="event_info_ignore_message">אינני מעוניין לקחת את הקריאה</string>
     <string name="event_info_error_msg">לא ניתן לבצע את הפעולה</string>
     <string-array name="event_cases">
-        <item>אחר</item>
-        <item>פנצ\'ר (אין רזרבי)</item>
-        <item>קודנית</item>
-        <item>חילוץ</item>
-        <item>שמן\\מים\\דלק</item>
-        <item>דלת נעולה</item>
-        <item>קומפרסור</item>
-        <item>פנצ\'ר</item>
         <item>כבלים</item>
+        <item>פנצ\'ר</item>
+        <item>קומפרסור</item>
+        <item>דלת נעולה</item>
+        <item>שמן\\מים\\דלק</item>
+        <item>חילוץ</item>
+        <item>קודנית</item>
+        <item>פנצ\'ר (אין רזרבי)</item>
+        <item>אחר</item>
+        <item>רכב נעול</item>
     </string-array>
 </resources>

@@ -29,6 +29,7 @@ class NotificationsGenerator(val context: Context, val event: Event) {
                 .setContentText(event.details?.fullAddress)
                 .setGroup(GROUP_KEY_EVENTS)
                 .setGroupSummary(false)
+                .setAutoCancel(true)
                 .build()
     }
 

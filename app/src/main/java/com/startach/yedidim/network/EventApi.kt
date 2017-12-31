@@ -46,9 +46,8 @@ class EventApi(private val userManager: UserManager,
                 .subscribeOn(Schedulers.io())
     }
 
-    fun listOfEvents(eventStatus : String): Single<Map<String, Event>> {
-//        return apiService.getEventsList(eventStatus)
-        return apiService.getEventsList()
+    fun listOfEvents(): Single<Set<Event>>? {
+        return cloudFunctionsApiService.getEventsList()
                 .subscribeOn(Schedulers.io())
     }
 }

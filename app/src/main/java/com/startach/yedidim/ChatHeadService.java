@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.startach.yedidim.Model.Event;
 
@@ -18,13 +17,15 @@ import com.startach.yedidim.Model.Event;
  */
 
 public class ChatHeadService extends Service {
+    public static final String SERVICE_EVENT = "event_service";
+
     private WindowManager mWindowManager;
     private View mChatHeadView;
     private Event yedidimCurrentEvent;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        yedidimCurrentEvent = (Event) intent.getExtras().get("event");
+        yedidimCurrentEvent = (Event) intent.getExtras().get(SERVICE_EVENT);
         return flags;
     }
 
@@ -64,22 +65,30 @@ public class ChatHeadService extends Service {
 
         final ImageView chatHeadImage = (ImageView) mChatHeadView.findViewById(R.id.chat_head_event_page);
         final ImageView chatHeadImageGet = (ImageView) mChatHeadView.findViewById(R.id.chat_head_get_event);
+        final ImageView chatHeadImageGiveUp = (ImageView) mChatHeadView.findViewById(R.id.chat_head_giveup_event);
 
 
         chatHeadImage.setOnClickListener(v -> {
             //Open the chat conversation click.
-                        Intent intent = new Intent(ChatHeadService.this, EventInfoActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        intent.putExtra( "event", yedidimCurrentEvent);
-                        startActivity(intent);
-                        stopSelf();
+            returnBackToEventActivity(EventState.PreDecision);
         });
 
         chatHeadImageGet.setOnClickListener(v -> {
-            Toast.makeText(getApplicationContext(), " case :" + yedidimCurrentEvent.getDetails().getCase(), Toast.LENGTH_SHORT).show();
-            stopSelf();
+            returnBackToEventActivity(EventState.Take);
         });
 
+        chatHeadImageGiveUp.setOnClickListener(v -> {
+            returnBackToEventActivity(EventState.GiveUp);
+        });
+
+
+    }
+
+    private void returnBackToEventActivity(EventState eventState) {
+
+        Intent intent = EventInfoActivity.Companion.createIntent(ChatHeadService.this, yedidimCurrentEvent,eventState);
+        startActivity(intent);
+        stopSelf();
     }
 
 
