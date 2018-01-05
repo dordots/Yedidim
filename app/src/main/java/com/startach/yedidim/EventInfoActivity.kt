@@ -65,6 +65,7 @@ class EventInfoActivity : AppCompatActivity(), EventInfoViewModel.Inputs {
     @BindView(R.id.btn_ignore_event) lateinit var ignoreBtn: View
     @BindView(R.id.btn_take_event) lateinit var takeBtn: View
     @BindView(R.id.btn_navigate) lateinit var navigateBtn: View
+    @BindView(R.id.btn_call) lateinit var callButton: View
 
 
     @Inject lateinit var vm: EventInfoViewModel
@@ -159,13 +160,18 @@ class EventInfoActivity : AppCompatActivity(), EventInfoViewModel.Inputs {
                 .showDialog(this, R.string.event_info_ignore_title, R.string.event_info_ignore_message)
     }
 
-    override fun navigate(): Observable<Any> {
-        return RxView.clicks(navigateBtn)
-    }
+    override fun navigate(): Observable<Any> = RxView.clicks(navigateBtn)
+
+    override fun call(): Observable<Any> = RxView.clicks(callButton)
+
+    override fun returnHandled(): Observable<Any> =
+            Observable.never<Any>()
+                    .mergeWith(extenalEventStatePublishSubject.filter { it == EventState.Handling })
 }
 
 enum class EventState {
     PreDecision,
     Take,
-    GiveUp
+    GiveUp,
+    Handling
 }

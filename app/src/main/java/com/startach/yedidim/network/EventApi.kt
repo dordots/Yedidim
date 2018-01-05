@@ -49,5 +49,6 @@ class EventApi(private val userManager: UserManager,
     fun listOfEvents(): Single<Set<Event>>? {
         return cloudFunctionsApiService.getEventsList()
                 .subscribeOn(Schedulers.io())
+                .onErrorReturnItem(HashSet())
     }
 }

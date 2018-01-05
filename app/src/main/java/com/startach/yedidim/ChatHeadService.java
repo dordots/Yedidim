@@ -18,14 +18,18 @@ import com.startach.yedidim.Model.Event;
 
 public class ChatHeadService extends Service {
     public static final String SERVICE_EVENT = "event_service";
+    public static final String SERVICE_MY_EVENT = "event_my_event";
 
     private WindowManager mWindowManager;
     private View mChatHeadView;
     private Event yedidimCurrentEvent;
+    private Boolean ownEvent;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         yedidimCurrentEvent = (Event) intent.getExtras().get(SERVICE_EVENT);
+        ownEvent = intent.getBooleanExtra(SERVICE_MY_EVENT,false);
+
         return flags;
     }
 
@@ -70,7 +74,7 @@ public class ChatHeadService extends Service {
 
         chatHeadImage.setOnClickListener(v -> {
             //Open the chat conversation click.
-            returnBackToEventActivity(EventState.PreDecision);
+            returnBackToEventActivity(ownEvent ? EventState.Handling : EventState.PreDecision);
         });
 
         chatHeadImageGet.setOnClickListener(v -> {

@@ -12,6 +12,8 @@ interface EventInfoViewModel {
         fun closeEvent(): Observable<Any>
         fun ignoreEvent(): Observable<Any>
         fun navigate(): Observable<Any>
+        fun call(): Observable<Any>
+        fun returnHandled(): Observable<Any>
     }
 
     interface State

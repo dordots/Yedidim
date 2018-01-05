@@ -83,7 +83,7 @@
     <string name="Send">שליחה</string>
     <string name="code_recieved">קוד שהתקבל בהודעה</string>
     <string name="resend_sms">לא קיבלתי מסרון, שלח מסרון חדש</string>
-    <string name="enter_code">הזן קוד בן 4 ספרות שתקבל כעת במסרון</string>
+    <string name="enter_code">הזן קוד בן 6 ספרות שתקבל כעת במסרון</string>
     <string name="unknown_phone_number">אנחנו לא מזהים אותך במאגר, אנא בדוק שהמספר שהזנת תקין</string>
 
 

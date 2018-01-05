@@ -10,6 +10,7 @@ class EventInfoViewModelImpl(private val eventApi: EventApi, private val eventNo
                              private val navigator: Navigator) : EventInfoViewModel {
     private lateinit var inputs: EventInfoViewModel.Inputs
     lateinit var event: Event
+    private var myOwnEvent = false
 
     private val stateObservables: MutableList<Observable<State>> = mutableListOf()
 
@@ -23,7 +24,7 @@ class EventInfoViewModelImpl(private val eventApi: EventApi, private val eventNo
                             .toObservable()
                             .map {
                                 when (it) {
-                                    true -> HandlingState()
+                                    true -> HandlingState().also { myOwnEvent = true }
                                     false -> AlreadyTakenState()
                                 }
                             }
@@ -56,8 +57,17 @@ class EventInfoViewModelImpl(private val eventApi: EventApi, private val eventNo
                 .onErrorReturn { ErrorState(ErrorState.OperationType.Close, it) }
         stateObservables += inputs.navigate()
                 .map<State> {
-                    navigator.openFloatingEvent(event)
+                    navigator.openFloatingEvent(event,myOwnEvent)
                     ExitState()
+                }
+       stateObservables += inputs.call()
+                .map<State> {
+                    navigator.openCaller(event)
+                    HandlingState()
+                }
+       stateObservables += inputs.returnHandled()
+                .map<State> {
+                    HandlingState()
                 }
     }
 

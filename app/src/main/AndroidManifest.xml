@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:name=".modules.App"
@@ -16,7 +17,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Activity.SplashScreenActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,11 +28,13 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/first_login"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Activity.MainPageActivity"
             android:label="@string/title_nav_main_page"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
 
         <service android:name=".entities.notification.YedidimFirebaseInstanceIdService">
             <intent-filter>
@@ -49,7 +53,8 @@
         <activity
             android:name=".EventInfoActivity"
             android:label="@string/title_activity_event_info"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
 
         <service android:name=".ChatHeadService"
             android:label="ChatService"/>
