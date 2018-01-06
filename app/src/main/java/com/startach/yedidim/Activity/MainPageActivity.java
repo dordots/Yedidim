@@ -21,6 +21,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.startach.yedidim.BuildConfig;
 import com.startach.yedidim.MainPageFragments.AboutUsFragment;
 import com.startach.yedidim.MainPageFragments.EventsFragment;
 import com.startach.yedidim.MainPageFragments.MainPageFragment;
@@ -55,6 +56,9 @@ public class MainPageActivity extends AppCompatActivity
     @BindView(R.id.nav_view)
     NavigationView navigationView;
 
+    @BindView(R.id.version_number)
+    TextView versionNumber;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,12 +77,15 @@ public class MainPageActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+//        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         if (mainFragment == null) {
             mainFragment = new MainPageFragment();
             startFragment(mainFragment);
         }
+
+        versionNumber.setText(BuildConfig.VERSION_NAME);
 
         final View headerView = navigationView.getHeaderView(0);
         TextView userNameTextView = (TextView) headerView.findViewById(R.id.username);
