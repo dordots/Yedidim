@@ -60,7 +60,6 @@
     <string name="first_page_variable">isFirstTime</string>
     <string name="main_page_id">main_page_id</string>
     <string name="personal_information_id">personal_information_id</string>
-    <string name="title_nav_main_page">מסך מוקדן</string>
     <string name="title_nav_val_page">מסך מתנדב</string>
     <string name="title_nav_personal_information">פרטים אישיים</string>
     <string name="title_nav_settings">הגדרות</string>
