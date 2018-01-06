@@ -9,6 +9,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import butterknife.BindView
+import butterknife.ButterKnife
 import com.startach.yedidim.EventInfoActivity
 import com.startach.yedidim.EventState
 import com.startach.yedidim.Model.Event
@@ -17,25 +20,21 @@ import com.startach.yedidim.modules.App
 import com.startach.yedidim.modules.eventfragment.EventsFragmentModule
 import com.startach.yedidim.network.EventApi
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposables
 import timber.log.Timber
 import javax.inject.Inject
 
-/**
- * A fragment representing a list of Items.
- *
- *
- * Activities containing this fragment MUST implement the [OnListFragmentInteractionListener]
- * interface.
- */
-/**
- * Mandatory empty constructor for the fragment manager to instantiate the
- * fragment (e.g. upon screen orientation changes).
- */
 class EventsFragment : Fragment() {
+
+    val disposables = CompositeDisposable()
 
     @Inject
     lateinit var eventapi : EventApi
-    // TODO: Customize parameters
+
+    @BindView(R.id.loding_progress)
+    lateinit var progressBar : ProgressBar
+
     private var mListener: OnListFragmentInteractionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,19 +49,23 @@ class EventsFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.fragment_eventitem_list, container, false)
+        ButterKnife.bind(this,view)
 
+        val recycler = view.findViewById(R.id.events_list) as RecyclerView
 
-        eventapi.listOfEvents()
+        disposables.add(eventapi.listOfEvents()
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribe { data ->
+                    progressBar.visibility = View.GONE
+
                     Timber.d(data.size.toString())
-                    if (view is RecyclerView) {
+                    val currentActivity = activity
+                    if (currentActivity != null) {
                         val context = view.getContext()
-                        view.layoutManager = LinearLayoutManager(context)
-                        view.adapter = MyEventItemRecyclerViewAdapter(data.toList(), mListener,resources)
+                        recycler.layoutManager = LinearLayoutManager(context)
+                        recycler.adapter = MyEventItemRecyclerViewAdapter(data.toList(), mListener, resources)
                     }
-                }
-        // Set the adapter
+                } ?: Disposables.empty())
 
         return view
     }
@@ -84,37 +87,20 @@ class EventsFragment : Fragment() {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        disposables.clear()
+    }
+
     override fun onDetach() {
         super.onDetach()
         mListener = null
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments](http://developer.android.com/training/basics/fragments/communicating.html) for more information.
-     */
+
     interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
         fun onListFragmentInteraction(item: Event)
     }
 
-//    companion object {
-//
-//        // TODO: Customize parameter argument names
-//        private val ARG_COLUMN_COUNT = "column-count"
-//
-//        // TODO: Customize parameter initialization
-//        fun newInstance(columnCount: Int): EventsFragment {
-//            val fragment = EventsFragment()
-//            val args = Bundle()
-//            args.putInt(ARG_COLUMN_COUNT, columnCount)
-//            fragment.arguments = args
-//            return fragment
-//        }
-//    }
 }

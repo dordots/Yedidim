@@ -12,6 +12,8 @@ import com.startach.yedidim.MainPageFragments.dummy.DummyContent.DummyItem
 import com.startach.yedidim.Model.Event
 import com.startach.yedidim.Model.displayableCase
 import com.startach.yedidim.R
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * [RecyclerView.Adapter] that can display a [DummyItem] and makes a call to the
@@ -28,30 +30,38 @@ class MyEventItemRecyclerViewAdapter(private val mValues: List<Event>, private v
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.mItem = mValues[position]
-        holder.mIdView.text = mValues[position].displayableCase(resources)
-        holder.mContentView.text = mValues[position].details?.address
+        holder.mEventCase.text = mValues[position].displayableCase(resources)
+        holder.mEventAddress.text = mValues[position].details?.address
+        holder.timeDate.text = convertTime(mValues[position].timestamp)?:"No time"
 
         holder.mView.setOnClickListener {
             mListener?.onListFragmentInteraction(holder.mItem!!)
         }
     }
 
+    fun convertTime(time: Long?): String? {
+        val date = time?.let { Date(it) }
+        val format = SimpleDateFormat("dd/MM/yy HH:mm")
+        return format.format(date)
+    }
     override fun getItemCount(): Int {
         return mValues.size
     }
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
-        val mIdView: TextView
-        val mContentView: TextView
+        val mEventCase: TextView
+        val mEventAddress: TextView
         var mItem: Event? = null
+        val timeDate: TextView
 
         init {
-            mIdView = mView.findViewById(R.id.id) as TextView
-            mContentView = mView.findViewById(R.id.content) as TextView
+            mEventCase = mView.findViewById(R.id.event_case) as TextView
+            mEventAddress = mView.findViewById(R.id.event_address) as TextView
+            timeDate = mView.findViewById(R.id.time) as TextView
         }
 
         override fun toString(): String {
-            return super.toString() + " '" + mContentView.text + "'"
+            return super.toString() + " '" + mEventAddress.text + "'"
         }
     }
 }

@@ -28,6 +28,7 @@ import com.startach.yedidim.MainPageFragments.SettingsFragment;
 import com.startach.yedidim.R;
 import com.startach.yedidim.entities.usermanagement.UserManager;
 import com.startach.yedidim.modules.App;
+import com.testfairy.TestFairy;
 
 import javax.inject.Inject;
 
@@ -87,8 +88,10 @@ public class MainPageActivity extends AppCompatActivity
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(volunteer -> {
                     Timber.d("User Data : %s,%s", volunteer.getLastName(), volunteer.getEmailAddress());
-                    userNameTextView.setText(String.format("%s %s", volunteer.getFirstName(), volunteer.getLastName()));
+                    final String userName = String.format("%s %s", volunteer.getFirstName(), volunteer.getLastName());
+                    userNameTextView.setText(userName);
                     emailTextView.setText(volunteer.getEmailAddress());
+                    TestFairy.setUserId(userName);
                 });
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {

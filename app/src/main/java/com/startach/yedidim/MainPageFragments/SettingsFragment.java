@@ -59,16 +59,12 @@ public class SettingsFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         RxView.clicks(logoutButton)
-                .subscribe(ignore->logOutApplication());
-        view.findViewById(R.id.not_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final int caseInTemp = new Random().nextInt(10);
-                final Event event = new Event(caseInTemp,32.186414,34.889700);
-
-                NotificationsGenerator notificationsGenerator = new NotificationsGenerator(getContext(), event);
-                notificationsGenerator.notifyNow();
-            }
+                .subscribe(ignore -> logOutApplication());
+        view.findViewById(R.id.not_button).setOnClickListener(v -> {
+            final int caseInTemp = new Random().nextInt(10);
+            final Event event = new Event(caseInTemp, 32.186414, 34.889700);
+            NotificationsGenerator notificationsGenerator = new NotificationsGenerator(getContext(), event);
+            notificationsGenerator.notifyNow();
         });
     }
 
