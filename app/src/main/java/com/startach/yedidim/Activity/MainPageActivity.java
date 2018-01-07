@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -62,7 +63,7 @@ public class MainPageActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((App)getApplication())
+        ((App) getApplication())
                 .getComponent()
                 .inject(this);
         setContentView(R.layout.activity_main_page);
@@ -94,11 +95,21 @@ public class MainPageActivity extends AppCompatActivity
         userManager.getCurrentUser()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(volunteer -> {
-                    Timber.d("User Data : %s,%s", volunteer.getLastName(), volunteer.getEmailAddress());
-                    final String userName = String.format("%s %s", volunteer.getFirstName(), volunteer.getLastName());
-                    userNameTextView.setText(userName);
-                    emailTextView.setText(volunteer.getEmailAddress());
-                    TestFairy.setUserId(userName);
+                    if (volunteer.getId() == null || volunteer.getId().isEmpty()) {
+                        Timber.e("no user id, user probably not exists in volunteer table");
+                        new AlertDialog.Builder(this)
+                                .setTitle(R.string.error_no_volunteer_found_title)
+                                .setMessage(R.string.error_no_volunteer_found_message)
+                                .setPositiveButton(android.R.string.ok, (dialog, which) -> this.finish())
+                                .setCancelable(false)
+                                .show();
+                    } else {
+                        Timber.d("User Data : %s,%s", volunteer.getLastName(), volunteer.getEmailAddress());
+                        final String userName = String.format("%s %s", volunteer.getFirstName(), volunteer.getLastName());
+                        userNameTextView.setText(userName);
+                        emailTextView.setText(volunteer.getEmailAddress());
+                        TestFairy.setUserId(userName);
+                    }
                 });
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
@@ -152,7 +163,7 @@ public class MainPageActivity extends AppCompatActivity
         }
 
         if (getCurrentFocus() != null) {
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }
 

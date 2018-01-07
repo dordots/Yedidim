@@ -124,6 +124,8 @@
     <string name="event_info_ignore_title">ביטול</string>
     <string name="event_info_ignore_message">אינני מעוניין לקחת את הקריאה</string>
     <string name="event_info_error_msg">לא ניתן לבצע את הפעולה</string>
+    <string name="error_no_volunteer_found_title">שגיאה</string>
+    <string name="error_no_volunteer_found_message">אירעה שגיאה בטעינת הפרטים, אנא פנה לתמיכה</string>
     <string-array name="event_cases">
         <item>כבלים</item>
         <item>פנצ\'ר</item>

@@ -8,9 +8,10 @@ import io.reactivex.schedulers.Schedulers
 
 class VolunteerApi(private val yedidimApi: YedidimApiService, private val yedidimCloudFunctionsApi: YedidimCloudFunctionsApiService) {
 
-    fun updateInstanceId(volunteerId: String, instanceId: String): Completable {
+    fun updateInstanceId(volunteerPhone: String, instanceId: String): Completable {
         val volunteer = Volunteer(fcmToken = instanceId, deviceType = "android")
-        return yedidimApi.updateVolunteerFcmInstanceID(volunteerId, volunteer)
+
+        return yedidimApi.updateVolunteerFcmInstanceID("%2b972${volunteerPhone.drop(1)}", volunteer)
                 .subscribeOn(Schedulers.io())
     }
 
