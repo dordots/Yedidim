@@ -35,6 +35,7 @@ class UserManager(context: Context, private val volunteerApi: VolunteerApi) {
                 if (currentUserJson.isEmpty()) {
                     return@defer extractCurrentUser()
                             .doOnSuccess(this::cacheCurrentUser)
+                            .onErrorReturn { Volunteer() }
                 } else {
                     return@defer parseJson(currentUserJson)
                             .doOnSuccess(this::cacheCurrentUser)
