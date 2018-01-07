@@ -103,7 +103,7 @@ class EventInfoActivity : AppCompatActivity(), EventInfoViewModel.Inputs {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { state ->
                     when (state) {
-                        is EventInfoViewModel.AlreadyTakenState -> {
+                        is AlreadyTakenState -> {
                             progressGroup.visibility = View.GONE
                             AlertDialog.Builder(this)
                                     .setTitle(R.string.event_info_event_taken_title)
@@ -111,19 +111,19 @@ class EventInfoActivity : AppCompatActivity(), EventInfoViewModel.Inputs {
                                     .setPositiveButton(android.R.string.ok, null)
                                     .show()
                         }
-                        is EventInfoViewModel.ProcessingState -> {
+                        is ProcessingState -> {
                             progressGroup.visibility = View.VISIBLE
                         }
-                        is EventInfoViewModel.ExitState -> {
+                        is ExitState -> {
                             this.moveTaskToBack(false)
                             finish()
                         }
-                        is EventInfoViewModel.HandlingState -> {
+                        is HandlingState -> {
                             progressGroup.visibility = View.GONE
                             extendedDetailsGroup.visibility = View.VISIBLE
                             basicDetailsGroup.visibility = View.GONE
                         }
-                        is EventInfoViewModel.ErrorState -> {
+                        is ErrorState -> {
                             progressGroup.visibility = View.GONE
                             Toast.makeText(this, R.string.event_info_error_msg, Toast.LENGTH_LONG).show()
                             Timber.d(state.throwable, "error occurred with operation = {${state.operation}}")

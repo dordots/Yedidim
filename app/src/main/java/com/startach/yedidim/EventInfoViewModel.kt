@@ -16,19 +16,21 @@ interface EventInfoViewModel {
         fun returnHandled(): Observable<Any>
     }
 
-    interface State
 
-    class HandlingState : State
-    class ProcessingState : State
-    class AlreadyTakenState : State
-    class ExitState : State
-    class ErrorState(val operation: OperationType, val throwable: Throwable) : State {
-        enum class OperationType { Cancel, Take, Close, Ignore }
-    }
 
     fun bindViewModel(event: Event, inputs: Inputs)
 
     fun event(): Observable<Event>
 
     fun viewState(): Observable<State>
+}
+
+sealed class State
+
+class HandlingState : State()
+class ProcessingState : State()
+class AlreadyTakenState : State()
+class ExitState : State()
+class ErrorState(val operation: OperationType, val throwable: Throwable) : State() {
+    enum class OperationType { Cancel, Take, Close, Ignore }
 }
