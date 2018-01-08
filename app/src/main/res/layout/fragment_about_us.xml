@@ -16,19 +16,21 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo" />
 
-    <TextView
+
+    <WebView
         android:id="@+id/about_us_content"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="30dp"
+
+
+        android:layout_margin="20dp"
         android:layout_marginBottom="8dp"
-        android:text="@string/aboutus"
         android:textColor="#ffffff"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logo"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_height="0dp"
+        android:layout_width="0dp" />
 
 </android.support.constraint.ConstraintLayout>
