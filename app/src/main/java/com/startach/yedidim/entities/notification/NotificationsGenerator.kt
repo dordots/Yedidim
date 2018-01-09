@@ -3,6 +3,8 @@ package com.startach.yedidim.entities.notification
 import android.app.Notification
 import android.app.PendingIntent
 import android.content.Context
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import com.startach.yedidim.EventInfoActivity
@@ -24,6 +26,8 @@ class NotificationsGenerator(val context: Context, val event: Event) {
 
         notification = NotificationCompat.Builder(context)
                 .setSmallIcon(R.mipmap.ic_launcher)
+                .setLargeIcon(BitmapFactory.decodeResource(context.resources,R.mipmap.ic_launcher))
+                .setSound(Uri.parse("android.resource://"+context.packageName +"/"+R.raw.car_alarm))
                 .setContentIntent(pendingIntent)
                 .setContentTitle(context.getString(R.string.notif_event_title, case))
                 .setContentText(event.details?.fullAddress)
@@ -31,6 +35,7 @@ class NotificationsGenerator(val context: Context, val event: Event) {
                 .setGroupSummary(false)
                 .setAutoCancel(true)
                 .build()
+
     }
 
     fun notifyNow(){
