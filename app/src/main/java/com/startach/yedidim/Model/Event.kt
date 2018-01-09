@@ -23,6 +23,8 @@ data class Event(
 ): Parcelable {
     constructor(caseIn: Int?) : this(Details(case = caseIn))
     constructor(caseIn: Int?, lat: Double?, lon: Double?) : this(Details(case = caseIn,geo = Geo(lat,lon)))
+	constructor(key: String?,status: String?) : this(details = null,dispatcher = null,key = key,lastMessage = null,psid = null,source = null,status = status,timestamp = null,assignedTo = null)
+	constructor(key: String?,status: String?,assignedTo: String?) : this(details = null,dispatcher = null,key = key,lastMessage = null,psid = null,source = null,status = status,timestamp = null,assignedTo = assignedTo)
 }
 
 @Parcelize
