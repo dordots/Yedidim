@@ -17,6 +17,8 @@ androidExtensions {
     experimental = true
 }
 
+def appId = "com.startach.yedidim"
+
 android {
     compileSdkVersion 25
     buildToolsVersion '26.0.2'
@@ -35,6 +37,9 @@ android {
             }
         }
     }
+
+    flavorDimensions "default"
+
     // used by Room, to test migrations
     sourceSets {
         androidTest.assets.srcDirs +=
@@ -50,6 +55,18 @@ android {
         stg {
             debuggable true
             signingConfig signingConfigs.debug
+        }
+    }
+
+    productFlavors {
+        develop {
+            applicationId "${appId}" + '.dev'
+            resValue "string", "app_name", "ידידים פיתוח"
+        }
+
+        production {
+            applicationId appId
+            resValue "string", "app_name", "ידידים"
         }
     }
 

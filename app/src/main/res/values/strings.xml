@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ידידים</string>
+    <!--<string name="app_name">ידידים</string>-->
     <string name="title_activity_splash_screen">SplashScreenActivity</string>
     <string name="first_login">התחברות ראשונית</string>
     <string name="main_page">עמוד ראשי</string>

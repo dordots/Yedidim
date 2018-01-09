@@ -1,6 +1,8 @@
 package com.startach.yedidim.modules.network
 
 import com.startach.yedidim.BuildConfig
+import com.startach.yedidim.FirbaseParams
+import com.startach.yedidim.FirbaseParams.*
 import com.startach.yedidim.network.YedidimApiService
 import com.startach.yedidim.network.YedidimCloudFunctionsApiService
 import dagger.Module
@@ -17,16 +19,11 @@ import javax.inject.Singleton
 @Module
 class NetworkModule {
 
-    companion object {
-        val CONNECTION_TIMEOUT_SEC = 10L
-        val BASE_URL = "https://yedidim-sandbox-2.firebaseio.com/"
-        val BASE_URL_CLOUD_FUNCTIONS = " https://us-central1-yedidim-sandbox-2.cloudfunctions.net/"
-    }
 
     @Singleton
     @Provides
     fun providesRetrofit(): Retrofit {
-        return createRetrofit(BASE_URL)
+        return createRetrofit(FirbaseParams.BASE_URL)
     }
 
     @Singleton
