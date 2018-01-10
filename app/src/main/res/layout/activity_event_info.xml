@@ -39,144 +39,122 @@
         android:id="@+id/title_event"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:text="@string/event_info_title_event"
-        android:textColor="@android:color/white"
-        android:textSize="32sp"
-        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title" />
+        app:layout_constraintTop_toBottomOf="@id/title"
+        style="@style/EventHeaders"/>
 
     <TextView
         android:id="@+id/event_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:textColor="@android:color/white"
-        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/title_event"
         app:layout_constraintStart_toEndOf="@id/title_event"
         app:layout_constraintTop_toTopOf="@+id/title_event"
-        tools:text="ר'צנפ" />
+        tools:text="ר'צנפ"
+        style="@style/EventText"
+        />
 
     <TextView
         android:id="@+id/title_details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:text="@string/event_info_details_title"
-        android:textColor="@android:color/white"
-        android:textSize="32sp"
-        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title_event" />
+        app:layout_constraintTop_toBottomOf="@id/title_event"
+        style="@style/EventHeaders"/>
 
     <TextView
         android:id="@+id/details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/white"
-        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title_details"
-        tools:text="כל הצמיגים ללא אויר" />
+        tools:text="כל הצמיגים ללא אויר"
+        style="@style/EventText"
+        />
 
     <TextView
         android:id="@+id/title_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:text="@string/event_info_loctaion"
         android:textColor="@android:color/white"
-        android:textSize="32sp"
-        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/details" />
+        app:layout_constraintTop_toBottomOf="@+id/details"
+        style="@style/EventHeaders"/>
 
     <TextView
         android:id="@+id/address"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:textColor="@android:color/white"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/title_address"
         app:layout_constraintStart_toEndOf="@+id/title_address"
-        app:layout_constraintTop_toTopOf="@+id/title_address"
-        tools:text="ויצמן 6, תל אביב" />
+        app:layout_constraintTop_toBottomOf="@+id/title_address"
+        tools:text="ויצמן 6, תל אביב"
+        style="@style/EventText"
+        />
 
     <TextView
         android:id="@+id/title_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:text="@string/event_info_title_name"
-        android:textColor="@android:color/white"
-        android:textSize="32sp"
-        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/address" />
+        app:layout_constraintTop_toBottomOf="@+id/address"
+        style="@style/EventHeaders"
+        />
 
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:textColor="@android:color/white"
-        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/title_name"
         app:layout_constraintStart_toEndOf="@+id/title_name"
         app:layout_constraintTop_toTopOf="@+id/title_name"
-        tools:text="משה אופניק" />
+        tools:text="משה אופניק"
+        style="@style/EventText"
+        />
 
     <TextView
         android:id="@+id/title_phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:text="@string/event_info_phone"
-        android:textColor="@android:color/white"
-        android:textSize="32sp"
-        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title_name" />
+        app:layout_constraintTop_toBottomOf="@+id/title_name"
+        style="@style/EventHeaders"/>
 
     <TextView
         android:id="@+id/phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:textColor="@android:color/white"
-        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/title_phone"
         app:layout_constraintStart_toEndOf="@+id/title_phone"
         app:layout_constraintTop_toTopOf="@+id/title_phone"
-        tools:text="משה אופניק" />
+        tools:text="משה אופניק"
+        style="@style/EventText"
+        />
 
     <TextView
         android:id="@+id/title_car"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:text="@string/event_info_car_type"
-        android:textColor="@android:color/white"
-        android:textSize="32sp"
-        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title_phone" />
+        app:layout_constraintTop_toBottomOf="@+id/title_phone"
+        style="@style/EventHeaders"/>
 
     <TextView
         android:id="@+id/car"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:textColor="@android:color/white"
-        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/title_car"
         app:layout_constraintStart_toEndOf="@+id/title_car"
         app:layout_constraintTop_toTopOf="@+id/title_car"
-        tools:text="חיפושית" />
+        tools:text="חיפושית"
+        style="@style/EventText"
+        />
 
     <Button
         android:id="@+id/btn_call"
@@ -184,11 +162,13 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="8dp"
-        android:backgroundTint="@android:color/holo_green_dark"
         android:drawableStart="@android:drawable/stat_sys_phone_call"
+        android:background="@drawable/rounded_button"
+        android:padding="8dp"
         android:gravity="center_horizontal"
         android:text="@string/event_info_call"
         android:textSize="24sp"
+
         app:layout_constraintBottom_toTopOf="@id/btn_navigate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -211,7 +191,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="8dp"
-        android:backgroundTint="@android:color/darker_gray"
+        android:background="@drawable/rounded_gray_button"
+        android:padding="8dp"
         android:drawableStart="@android:drawable/ic_menu_compass"
         android:gravity="center_horizontal"
         android:text="@string/event_info_navigate"
@@ -223,6 +204,7 @@
     <Button
         android:id="@+id/btn_ignore_event"
         android:layout_width="0dp"
+
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
@@ -230,9 +212,11 @@
         android:backgroundTint="@android:color/holo_red_light"
         android:drawableEnd="@android:drawable/ic_menu_close_clear_cancel"
         android:gravity="left"
-        android:padding="16dp"
+        android:background="@drawable/rounded_red_button"
+        android:padding="8dp"
         android:text="@string/event_info_ignore_event"
         android:textSize="24sp"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -244,9 +228,9 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
-        android:backgroundTint="@android:color/holo_green_light"
         android:drawableEnd="@android:drawable/checkbox_on_background"
-        android:padding="16dp"
+        android:background="@drawable/rounded_button"
+        android:padding="8dp"
         android:text="@string/event_info_take_event"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -267,9 +251,9 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
-        android:backgroundTint="@android:color/holo_green_light"
         android:drawableEnd="@android:drawable/checkbox_on_background"
-        android:padding="16dp"
+        android:background="@drawable/rounded_button"
+        android:padding="8dp"
         android:text="@string/event_info_close_event"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -285,10 +269,10 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:backgroundTint="@android:color/holo_red_light"
         android:drawableEnd="@android:drawable/ic_menu_close_clear_cancel"
         android:gravity="left"
-        android:padding="16dp"
+        android:background="@drawable/rounded_red_button"
+        android:padding="8dp"
         android:text="@string/event_info_cancel_event"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
