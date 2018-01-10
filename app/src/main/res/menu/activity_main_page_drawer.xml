@@ -15,6 +15,10 @@
             android:icon="@drawable/ic_info"
             android:title="@string/title_nav_about_us" />
         <item
+            android:id="@+id/nav_about_startach"
+            android:icon="@drawable/ic_info"
+            android:title="@string/title_nav_about_startach" />
+        <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_settings"
             android:title="@string/title_nav_settings" />
