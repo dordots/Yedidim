@@ -27,8 +27,50 @@ public class ChatHeadService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+
         yedidimCurrentEvent = (Event) intent.getExtras().get(SERVICE_EVENT);
         ownEvent = intent.getBooleanExtra(SERVICE_MY_EVENT,false);
+
+
+        mChatHeadView = LayoutInflater.from(this).inflate(R.layout.chat_head_event, null);
+
+        //Add the view to the window.
+        final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.TYPE_PHONE,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                PixelFormat.TRANSLUCENT);
+
+        params.gravity = Gravity.TOP | Gravity.RIGHT;
+        params.x = 0;
+        params.y = 100;
+
+        //Add the view to the window
+        mWindowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
+        mWindowManager.addView(mChatHeadView, params);
+
+        final ImageView chatHeadImage = (ImageView) mChatHeadView.findViewById(R.id.chat_head_event_page);
+        final ImageView chatHeadImageGet = (ImageView) mChatHeadView.findViewById(R.id.chat_head_get_event);
+        final ImageView chatHeadImageGiveUp = (ImageView) mChatHeadView.findViewById(R.id.chat_head_giveup_event);
+        final ImageView panel = (ImageView) mChatHeadView.findViewById(R.id.panel);
+
+        chatHeadImageGet.setVisibility(ownEvent ? View.GONE : View.VISIBLE);
+        chatHeadImageGiveUp.setVisibility(ownEvent ? View.GONE : View.VISIBLE);
+        panel.setVisibility(ownEvent ? View.GONE : View.VISIBLE);
+
+        chatHeadImage.setOnClickListener(v -> {
+            //Open the chat conversation click.
+            returnBackToEventActivity(ownEvent ? EventState.Handling : EventState.PreDecision);
+        });
+
+        chatHeadImageGet.setOnClickListener(v -> {
+            returnBackToEventActivity(EventState.Take);
+        });
+
+        chatHeadImageGiveUp.setOnClickListener(v -> {
+            returnBackToEventActivity(EventState.GiveUp);
+        });
 
         return flags;
     }
@@ -46,46 +88,6 @@ public class ChatHeadService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        //Inflate the chat head layout we created
-        mChatHeadView = LayoutInflater.from(this).inflate(R.layout.chat_head_event, null);
-
-
-        //Add the view to the window.
-        final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-                WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.TYPE_PHONE,
-                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-                PixelFormat.TRANSLUCENT);
-
-
-        params.gravity = Gravity.TOP | Gravity.RIGHT;
-        params.x = 0;
-        params.y = 100;
-
-        //Add the view to the window
-        mWindowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
-        mWindowManager.addView(mChatHeadView, params);
-
-        final ImageView chatHeadImage = (ImageView) mChatHeadView.findViewById(R.id.chat_head_event_page);
-        final ImageView chatHeadImageGet = (ImageView) mChatHeadView.findViewById(R.id.chat_head_get_event);
-        final ImageView chatHeadImageGiveUp = (ImageView) mChatHeadView.findViewById(R.id.chat_head_giveup_event);
-
-
-        chatHeadImage.setOnClickListener(v -> {
-            //Open the chat conversation click.
-            returnBackToEventActivity(ownEvent ? EventState.Handling : EventState.PreDecision);
-        });
-
-        chatHeadImageGet.setOnClickListener(v -> {
-            returnBackToEventActivity(EventState.Take);
-        });
-
-        chatHeadImageGiveUp.setOnClickListener(v -> {
-            returnBackToEventActivity(EventState.GiveUp);
-        });
-
-
     }
 
     private void returnBackToEventActivity(EventState eventState) {

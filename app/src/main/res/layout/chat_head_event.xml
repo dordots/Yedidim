@@ -2,21 +2,21 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="65dp"
+    android:layout_width="wrap_content"
     android:id="@+id/chat_head_root"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <!--Profile image for the chat head.-->
+
     <ImageView
         android:id="@+id/chat_head_event_page"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginTop="8dp"
+        android:layout_alignEnd="@+id/chat_head_get_event"
+        android:layout_alignTop="@+id/panel"
         android:src="@drawable/chat_head_return"
-        tools:ignore="ContentDescription"
-        android:layout_alignParentTop="true"
-        />
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/chat_head_get_event"
@@ -31,6 +31,16 @@
         android:layout_height="60dp"
         android:layout_below="@+id/chat_head_get_event"
         android:src="@drawable/chat_head_giveup"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/panel"
+        android:layout_width="18dp"
+        android:layout_height="180dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="8dp"
+        android:layout_toEndOf="@+id/chat_head_event_page"
+        android:src="@drawable/panel"
         tools:ignore="ContentDescription" />
 
     <!--&lt;!&ndash;Close button&ndash;&gt;-->
