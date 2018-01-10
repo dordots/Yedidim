@@ -12,9 +12,10 @@ import com.startach.yedidim.entities.authentication.AuthEntity;
 import com.startach.yedidim.modules.App;
 import com.startach.yedidim.modules.auth.AuthModule;
 import com.startach.yedidim.modules.splashactivity.SplashActivityModule;
-import com.startach.yedidim.testfairy.TestFairyInit;
 
 import javax.inject.Inject;
+
+import testfairy.TestFairyInit;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
