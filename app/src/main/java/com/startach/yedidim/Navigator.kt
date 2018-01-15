@@ -17,6 +17,9 @@ class Navigator(private val context: Context) {
         Timber.d("Navigating to lat : %s, lon : %s", geo?.lat, geo?.lon)
         val uri = String.format(Locale.ENGLISH, "geo:%f,%f", geo?.lat, geo?.lon)
         val intentNav = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
+                .also {
+                    it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                }
         context.startActivity(Intent.createChooser(intentNav, "Select your maps app"))
 
         val intent = Intent(context, ChatHeadService::class.java)
@@ -31,6 +34,9 @@ class Navigator(private val context: Context) {
         val phonenumber = event.details?.phoneNumber
         Timber.d("Calling phone number : $phonenumber")
         val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phonenumber"))
+                .also {
+                    it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                }
         context.startActivity(intent)
     }
 }

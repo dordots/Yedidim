@@ -19,10 +19,10 @@ class EventApi(private val userManager: UserManager,
     fun takeEvent(eventKey: String): Single<Boolean> {
         return userManager.getCurrentUser()
                 .flatMap { user ->
-                    if (user.id == null) {
+                    if (user.mobilePhone == null) {
                         return@flatMap Single.error<Boolean>(Exception("User not logged in"))
                     } else
-                        return@flatMap cloudFunctionsApiService.takeEvent(TakeEventRequest(eventKey, user.id))
+                        return@flatMap cloudFunctionsApiService.takeEvent(TakeEventRequest(eventKey, user.mobilePhone))
                                 .flatMap responseFlatMap@ { res ->
                                     when (res.code()) {
                                         200 -> return@responseFlatMap Single.just(true)

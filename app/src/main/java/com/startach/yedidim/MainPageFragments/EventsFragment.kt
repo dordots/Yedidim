@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -35,6 +36,14 @@ class EventsFragment : Fragment() {
     @BindView(R.id.loding_progress)
     lateinit var progressBar : ProgressBar
 
+    @BindView(R.id.events_list)
+    lateinit var recycler : RecyclerView
+
+    @BindView(R.id.swipeRefreshLayout)
+    lateinit var swipeRefreshLayout : SwipeRefreshLayout
+
+    lateinit var myEventItemRecyclerViewAdapter : MyEventItemRecyclerViewAdapter
+
     private var mListener: OnListFragmentInteractionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,25 +60,36 @@ class EventsFragment : Fragment() {
         val view = inflater!!.inflate(R.layout.fragment_eventitem_list, container, false)
         ButterKnife.bind(this,view)
 
-        val recycler = view.findViewById(R.id.events_list) as RecyclerView
+        recycler.layoutManager = LinearLayoutManager(view.context)
+        myEventItemRecyclerViewAdapter = MyEventItemRecyclerViewAdapter(emptyList(), mListener, resources)
 
-        disposables.add(eventapi.listOfEvents()
-                ?.observeOn(AndroidSchedulers.mainThread())
-                ?.subscribe { data ->
-                    progressBar.visibility = View.GONE
+        progressBar.visibility = View.VISIBLE
+        refreshEventsList()
 
-                    Timber.d(data.size.toString())
-                    val currentActivity = activity
-                    if (currentActivity != null) {
-                        val context = view.getContext()
-                        recycler.layoutManager = LinearLayoutManager(context)
-                        recycler.adapter = MyEventItemRecyclerViewAdapter(data.toList(), mListener, resources)
-                    }
-                } ?: Disposables.empty())
+        swipeRefreshLayout.setOnRefreshListener {
+            refreshEventsList()
+        }
 
         return view
     }
 
+    private fun refreshEventsList() {
+        disposables.clear()
+        disposables.add(eventapi.listOfEvents()
+                ?.observeOn(AndroidSchedulers.mainThread())
+                ?.subscribe { data ->
+                    progressBar.visibility = View.GONE
+                    swipeRefreshLayout.isRefreshing = false
+
+                    Timber.d(data.size.toString())
+                    val currentActivity = activity
+                    if (currentActivity != null) {
+
+                        myEventItemRecyclerViewAdapter.setmValues(data.toList())
+                        recycler.adapter = myEventItemRecyclerViewAdapter
+                    }
+                } ?: Disposables.empty())
+    }
 
 
     override fun onAttach(context: Context?) {

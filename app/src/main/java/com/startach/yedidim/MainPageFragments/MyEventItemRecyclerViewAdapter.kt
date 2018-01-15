@@ -20,7 +20,15 @@ import java.util.*
  * specified [OnListFragmentInteractionListener].
  * TODO: Replace the implementation with code for your data type.
  */
-class MyEventItemRecyclerViewAdapter(private val mValues: List<Event>, private val mListener: OnListFragmentInteractionListener?, val resources: Resources) : RecyclerView.Adapter<MyEventItemRecyclerViewAdapter.ViewHolder>() {
+class MyEventItemRecyclerViewAdapter(private var mValues: List<Event>,
+                                     private val mListener: OnListFragmentInteractionListener?,
+                                     val resources: Resources)
+    : RecyclerView.Adapter<MyEventItemRecyclerViewAdapter.ViewHolder>() {
+
+    fun setmValues(newDate : List<Event>){
+        mValues = newDate
+        this.notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
