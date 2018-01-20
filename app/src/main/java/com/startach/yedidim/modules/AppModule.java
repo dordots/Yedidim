@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.Context;
 
 import com.startach.yedidim.BuildConfig;
-import com.startach.yedidim.Navigator;
 import com.startach.yedidim.modules.log.ReleaseTimberTree;
 
 import javax.inject.Singleton;
@@ -40,9 +39,4 @@ public class AppModule {
                 new ReleaseTimberTree();
     }
 
-    @Provides
-    @Singleton
-    Navigator providesNavigator() {
-        return new Navigator(mApplication);
-    }
 }

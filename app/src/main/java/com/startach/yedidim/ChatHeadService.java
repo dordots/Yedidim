@@ -93,6 +93,7 @@ public class ChatHeadService extends Service {
     private void returnBackToEventActivity(EventState eventState) {
 
         Intent intent = EventInfoActivity.Companion.createIntent(ChatHeadService.this, yedidimCurrentEvent,eventState);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         stopSelf();
     }
