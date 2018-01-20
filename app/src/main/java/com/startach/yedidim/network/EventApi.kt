@@ -22,7 +22,7 @@ class EventApi(private val userManager: UserManager,
                     if (user.mobilePhone == null) {
                         return@flatMap Single.error<Boolean>(Exception("User not logged in"))
                     } else
-                        return@flatMap cloudFunctionsApiService.takeEvent(TakeEventRequest(eventKey, user.mobilePhone))
+                        return@flatMap cloudFunctionsApiService.takeEvent(TakeEventRequest(eventKey, "+972${user.mobilePhone.drop(1)}"))
                                 .flatMap responseFlatMap@ { res ->
                                     when (res.code()) {
                                         200 -> return@responseFlatMap Single.just(true)
