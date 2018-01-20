@@ -12,6 +12,8 @@ import android.widget.ImageView;
 
 import com.startach.yedidim.Model.Event;
 
+import testfairy.TestFairyInit;
+
 /**
  * Created by yb34982 on 25/12/2017.
  */
@@ -88,6 +90,7 @@ public class ChatHeadService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        TestFairyInit.start(this, "ChatHeadService");
     }
 
     private void returnBackToEventActivity(EventState eventState) {

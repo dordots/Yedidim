@@ -4,13 +4,14 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.google.gson.Gson
 import com.startach.yedidim.Model.Event
+import testfairy.TestFairyInit
 import timber.log.Timber
 
 
 class YedidimFirebaseNotificationService : FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-
+        TestFairyInit.start(this, "YedidimFirebaseNotificationService.onMessageReceived")
         Timber.d("From: " + remoteMessage.from)
         if (remoteMessage.data.isNotEmpty()) {
             Timber.d("Message data payload: " + remoteMessage.data)

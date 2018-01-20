@@ -21,6 +21,7 @@ import com.startach.yedidim.utils.showDialog
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import testfairy.TestFairyInit
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -74,6 +75,7 @@ class EventInfoActivity : AppCompatActivity(), EventInfoViewModel.Inputs {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        TestFairyInit.start(this, "EventInfoActivity")
         setContentView(R.layout.activity_event_info)
         ButterKnife.bind(this)
 

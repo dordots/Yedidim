@@ -26,7 +26,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        TestFairyInit.start(this);
+        TestFairyInit.start(this, "SplashScreenActivity");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
