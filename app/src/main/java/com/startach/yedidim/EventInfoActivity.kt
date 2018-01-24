@@ -14,10 +14,12 @@ import butterknife.ButterKnife
 import com.jakewharton.rxbinding2.view.RxView
 import com.startach.yedidim.Model.Event
 import com.startach.yedidim.Model.displayableCase
+import com.startach.yedidim.entities.usermanagement.UserManager
 import com.startach.yedidim.modules.App
 import com.startach.yedidim.modules.eventinfoactivity.EventInfoActivityModule
 import com.startach.yedidim.utils.plusAssign
 import com.startach.yedidim.utils.showDialog
+import com.testfairy.TestFairy
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -70,6 +72,7 @@ class EventInfoActivity : AppCompatActivity(), EventInfoViewModel.Inputs {
 
 
     @Inject lateinit var vm: EventInfoViewModel
+    @Inject lateinit var userManager : UserManager
     private val disposables: CompositeDisposable = CompositeDisposable()
     lateinit var extenalEventStatePublishSubject : Observable<EventState>
 
@@ -82,6 +85,8 @@ class EventInfoActivity : AppCompatActivity(), EventInfoViewModel.Inputs {
         (application as App).component
                 .newEventInfoActivitySubComponent(EventInfoActivityModule(this))
                 .inject(this)
+        testFairyUserInit()
+
         val event = extractEvent(intent)
         val eventState = extractEventState(intent)
         extenalEventStatePublishSubject = Observable.just(eventState)
@@ -133,6 +138,17 @@ class EventInfoActivity : AppCompatActivity(), EventInfoViewModel.Inputs {
                     }
 
                 }
+    }
+
+    private fun testFairyUserInit() {
+        userManager.getCurrentUser()
+                .subscribe({ volunteer ->
+                    if (volunteer.id != null) {
+                        Timber.d("User Data : %s,%s", volunteer.lastName, volunteer.emailAddress)
+                        val userName = String.format("%s %s", volunteer.firstName, volunteer.lastName)
+                        TestFairy.setUserId(userName)
+                    }
+                })
     }
 
     override fun onDestroy() {

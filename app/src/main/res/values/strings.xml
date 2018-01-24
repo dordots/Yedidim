@@ -95,7 +95,8 @@
         <item>יום חמישי</item>
     </string-array>
     <string name="title_activity_event_info">EventInfoActivity</string>
-    <string name="notif_event_title">אירוע חדש - %s</string>
+    <string name="notif_new_event">אירוע חדש </string>
+    <string name="notif_event_title">סוג אירוע - %s, רכב - %s </string>
     <string name="Logout">התנתקות</string>
     <string name="event_info_title_event">האירוע:</string>
     <string name="event_info_title">פרטי האירוע</string>
