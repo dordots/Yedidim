@@ -1,6 +1,7 @@
 package com.startach.yedidim
 
 import com.startach.yedidim.Model.Event
+import com.startach.yedidim.repository.EventsRepository
 import io.reactivex.Observable
 
 
@@ -18,7 +19,7 @@ interface EventInfoViewModel {
 
 
 
-    fun bindViewModel(event: Event, inputs: Inputs)
+    fun bindViewModel(event: Event, inputs: Inputs, eventsRepository: EventsRepository)
 
     fun event(): Observable<Event>
 

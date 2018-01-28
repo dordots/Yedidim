@@ -17,6 +17,7 @@ import com.startach.yedidim.Model.displayableCase
 import com.startach.yedidim.entities.usermanagement.UserManager
 import com.startach.yedidim.modules.App
 import com.startach.yedidim.modules.eventinfoactivity.EventInfoActivityModule
+import com.startach.yedidim.repository.EventsRepository
 import com.startach.yedidim.utils.plusAssign
 import com.startach.yedidim.utils.showDialog
 import com.testfairy.TestFairy
@@ -73,6 +74,8 @@ class EventInfoActivity : AppCompatActivity(), EventInfoViewModel.Inputs {
 
     @Inject lateinit var vm: EventInfoViewModel
     @Inject lateinit var userManager : UserManager
+    @Inject lateinit var eventsRepository: EventsRepository
+
     private val disposables: CompositeDisposable = CompositeDisposable()
     lateinit var extenalEventStatePublishSubject : Observable<EventState>
 
@@ -91,7 +94,7 @@ class EventInfoActivity : AppCompatActivity(), EventInfoViewModel.Inputs {
         val eventState = extractEventState(intent)
         extenalEventStatePublishSubject = Observable.just(eventState)
         Timber.d("event = " + event)
-        vm.bindViewModel(event, this)
+        vm.bindViewModel(event, this,eventsRepository )
 
         disposables += vm.event()
                 .observeOn(AndroidSchedulers.mainThread())

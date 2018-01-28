@@ -3,11 +3,12 @@ package com.startach.yedidim.modules;
 import android.app.Application;
 
 import com.crashlytics.android.Crashlytics;
-import io.fabric.sdk.android.Fabric;
 import com.startach.yedidim.modules.network.NetworkModule;
+import com.startach.yedidim.room.RoomModule;
 
 import javax.inject.Inject;
 
+import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;
 
 /**
@@ -26,6 +27,7 @@ public class App extends Application {
         component = DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
                 .networkModule(new NetworkModule())
+                .roomModule(new RoomModule(this))
                 .notificationSyncerModule(new NotificationSyncerModule())
                 .build();
         component.inject(this);

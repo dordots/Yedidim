@@ -18,6 +18,7 @@ import com.startach.yedidim.modules.splashactivity.SplashActivityModule;
 import com.startach.yedidim.modules.splashactivity.SplashSubComponent;
 import com.startach.yedidim.modules.testactivity.TestActivitySubComponent;
 import com.startach.yedidim.modules.testactivity.TestModule;
+import com.startach.yedidim.room.RoomModule;
 
 import javax.inject.Singleton;
 
@@ -28,7 +29,7 @@ import dagger.Component;
  */
 
 @Singleton
-@Component(modules = {AppModule.class, NetworkModule.class, NotificationSyncerModule.class})
+@Component(modules = {AppModule.class, NetworkModule.class, NotificationSyncerModule.class, RoomModule.class})
 public interface AppComponent {
 
     void inject(App app);

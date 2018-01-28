@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
         <io.ghyeok.stickyswitch.widget.StickySwitch
             android:id="@+id/sticky_switch"
             android:layout_width="wrap_content"
@@ -29,6 +30,10 @@
             app:ss_textColor="@color/colorPrimaryDark"
             app:ss_textSize="20sp"
             app:ss_animationType="line"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/existEvent"/>
 
 
 
